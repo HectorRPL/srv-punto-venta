@@ -1,0 +1,51 @@
+<uib-tabset>
+    <!--NOTA-->
+    <uib-tab heading="Nota de Mostrador" active="tab.active" class="dsads"><br>
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- Datos de entrega del cliente -->
+                <datos-entrega></datos-entrega>
+            </div>
+            <!--
+            <div class="col-sm-6 text-right" ng-hide="tabsNotaFacDev.pedido.mostrarCliente">
+                <datos-entrega></datos-entrega>
+            </div>
+            -->
+        </div>
+        <div class="table-responsive m-t">
+            <listado-productos pedido="tabsNotaFacDev.pedido"></listado-productos>
+        </div>
+        <!--DESGLOSE DEL PAGO CUANDO ES NOTA | FACTURA-->
+        <desglose-pago></desglose-pago>
+        <!--BOTÓN GENERAR NOTA -->
+        <generar-nota-factura></generar-nota-factura>
+    </uib-tab>
+    <!--FACTURA-->
+    <uib-tab heading="Factura"><br>
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- Datos de entrega del cliente -->
+                <datos-entrega></datos-entrega>
+            </div>
+            <!--Cliente -->
+            <div class="col-sm-6 text-right" ng-hide="tabsNotaFacDev.pedido.mostrarCliente">
+                <datos-fiscales-cliente></datos-fiscales-cliente>
+            </div>
+        </div>
+        <div class="table-responsive m-t">
+            <listado-productos pedido="tabsNotaFacDev.pedido"></listado-productos>
+        </div>
+        <!--DESGLOSE DEL PAGO CUANDO ES NOTA | FACTURA-->
+        <desglose-pago></desglose-pago>
+        <!--BOTÓN GENERAR FACTURA-->
+        <generar-nota-factura></generar-nota-factura>
+    </uib-tab>
+    <!--NOTA DE CRÉDITO-->
+    <uib-tab heading="Devolución"><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Hace falta definición de esta Pantalla</h1>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

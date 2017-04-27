@@ -1,0 +1,59 @@
+<table class="table table-hover invoice-table">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <!--<th>Lista</th>-->
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Descuento</th>
+            <th>%</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="fila in listadoProductos.pedido">
+            <td>
+                <div>
+                    <button type="button"
+                            class="pull-left close"
+                            uib-popover="Quitar producto"
+                            popover-trigger="'mouseenter'"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            ng-click="listadoProductos.pedido.quitarArticulo($index)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    &nbsp;&nbsp; {{fila.marca}} {{fila.clase}} {{fila.medida}} {{fila.nombre}}
+                    ({{fila.metrosCajaTotal = (fila.metrosCaja * fila.cantidad)  | number : 2}} mts²)
+                </div>
+            </td>
+            <!--<td>{{fila.lista}}</td>-->
+            <td class="text-navy">
+                <input class="text-right"
+                       uib-popover="Introduce el número de artículos para la venta"
+                       popover-trigger="'mouseenter'"
+                       style="-webkit-appearance:none background-color: transparent; border: 0px solid;  max-width: 50px; font-weight: bolder;"
+                       type="number"
+                       ng-model="fila.cantidad">
+            </td>
+            <td>
+                <a style="color: inherit">
+                    {{fila.precioUnitario  | number : 2}}
+                </a>
+            </td>
+            <td>
+                <a ng-click="listadoProductos.pedido.aplicarDescuento()">
+                    <span class="text-navy">${{fila.subImporte = (((fila.cantidad * fila.precioUnitario))*((fila.descuento)*(.01))) | number : 2 }}</span>
+                </a>
+            </td>
+            <!--DESCUENTO EN PORCENTAJE-->
+            <td>
+                <a>
+                    <span class="text-navy pull-right">(- {{fila.descuento  | number : 0}}%)</span>
+                </a>
+            </td>
+            <!--TOTAL-->
+            <td>${{fila.importe = (((fila.cantidad * fila.precioUnitario))-(fila.subImporte)) | number : 2}}</td>
+        </tr>
+    </tbody>
+</table>

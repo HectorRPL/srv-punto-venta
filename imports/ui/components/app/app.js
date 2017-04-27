@@ -4,7 +4,7 @@
 import {name as Navigation} from "./navigation/navigation";
 import {name as Topnavbar} from "./topnavbar/topnavbar";
 import {name as Footer} from "./footer/footer";
-import {name as Prueba} from "../prueba/prueba";
+import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import "metismenu/dist/metisMenu.js";
 import "./app.html";
 
@@ -24,7 +24,7 @@ export default angular
         Navigation,
         Topnavbar,
         Footer,
-        Prueba
+        PuntoVenta
     ]).component(name, {
         templateUrl: `imports/ui/components/${name}/${name}.html`,
         controllerAs: name,

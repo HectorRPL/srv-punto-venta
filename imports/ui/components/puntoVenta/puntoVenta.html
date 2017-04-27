@@ -1,0 +1,38 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <form>
+        <div class="row">
+            <!-- PANEL: AGREGAR BUSCAR | PRODUCTOS | CLIENTES | VENDEDORES -->
+            <div class="col-xs-3">
+                <div class="row">
+                    <br>
+                    <div class="col-lg-12">
+                        <panel-agregar-buscar
+                                productoseleccionado="puntoVenta.productoSeleccionado"
+                                productoseleccionado="{{puntoVenta.productoSeleccionado}}"
+                                probandoobjeto="puntoVenta.probandoobjeto"
+                                probandoobjeto="{{puntoVenta.probandoobjeto}}"
+                                probandostring="puntoVenta.probandostring"
+                                probandostring="{{puntoVenta.probandostring}}">
+                        </panel-agregar-buscar>
+                        <pre> {{  puntoVenta.productoseleccionado | json}} </pre>
+                        <pre> {{  puntoVenta.probandoobjeto | json}} </pre>
+                        <pre> {{  puntoVenta.probandostring | json}} </pre>
+
+                    </div>
+                </div>
+            </div>
+            <!-- PANEL: NOTA | FACTURA | NOTA CRÉDITO-->
+            <div class="col-xs-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="wrapper wrapper-content">
+                            <div class="ibox-content p-xl">
+                                <tabs-nota-fac-dev pedido="puntoVenta.listadoCompras"></tabs-nota-fac-dev>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
