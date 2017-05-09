@@ -1,0 +1,111 @@
+<ng-form role="form" id="eligeProductoInventariosFrmId" name="eligeProductoInventariosFrm" novalidate>
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <!--TITULO MODAL-->
+        <div class="col-sm-10">
+            <h2>{{eligeProductoInventarios.resolve.idProducto + 'DALTILE 1A 33X33 1 ALTHEA LIGTH GRAY (1.50 mts²)'}}
+                <small></small>
+            </h2>
+        </div>
+        <!-- TACHE (CERRAR MODAL)-->
+        <div class="col-sm-2">
+            <div class="ibox-tools">
+                <br>
+                <a ng-click="eligeProductoInventarios.cancelarCerrar()"><i class="fa fa-times"></i></a>
+            </div>
+        </div>
+        <!-- BODY MODAL -->
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="ibox-content">
+                    <!-- ALERTAS -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- ALERTA -->
+                            <alertas tipo="eligeProductoInventarios.tipoMsj" mensaje="eligeProductoInventarios.msj"></alertas>
+                        </div>
+                    </div>
+                    <!-- EXISTENCIA EN MI TIENDA -->
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="widget style1 navy-bg">
+                                <div class="row vertical-align">
+                                    <div class="col-sm-8">
+                                        <h2 class="font-bold">217 <small style="color: white;">Unidades en Inventario</small></h2>
+                                    </div>
+                                    <div class="col-sm-4 text-right" ng-repeat="tienda in eligeProductoInventarios.miTienda">
+                                        <input class="form-control text-navy input-lg"
+                                               style="margin-bottom: -5px; margin-top: -5px; text-align: center"
+                                               placeholder="Captura cantidad"
+                                               type="number"
+                                               min="0"
+                                               max="5000"
+                                               ng-change="eligeProductoInventarios.calcularTotaRequerido(tienda)"
+                                               ng-model="tienda.cantidadSolicitada">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="widget style1 lazur-bg">
+                                <div class="row vertical-align">
+                                    <div class="col-xs-3">
+                                        <h2><strong>TOTAL</strong></h2>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <h2 class="font-bold">{{ eligeProductoInventarios.totalSolicitado() }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- EXISTECIA EN OTRAS TIENDAS -->
+                    <br>
+
+                    <div class="row">
+                        <hr style="margin: 8px" >
+                        <h4 class="text-center">Existencia en otras tiendas</h4><br>
+                        <div class="col-sm-6" ng-repeat="tienda in eligeProductoInventarios.tiendas"><!--  -->
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-default btn-group-justified">{{tienda.exitencia}}</button>
+                                </div>
+                                <div class="col-sm-7">
+                                    {{tienda.nombre}}
+                                </div>
+                                <div class="col-sm-3">
+                                    <input class="form-control text-navy"
+                                           id="{{tienda.idTienda}}"
+                                           uib-popover="Ingresa la cantidad requerida"
+                                           popover-trigger="'mouseenter'"
+                                           type="number"
+                                           min="0"
+                                           max="{{tienda.exitencia}}"
+                                           ng-change="eligeProductoInventarios.calcularTotaRequerido(tienda)"
+                                           ng-model="tienda.cantidadSolicitada">
+                                </div>
+                            </div>
+                            <hr style="margin: 3px" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!--FOOTER MODAL-->
+        <div class="inmodal">
+            <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
+            <div class="modal-footer">
+                <!--BOTON CERRAR -->
+                <button type="button"
+                        class="btn btn-default"
+                        ng-click="eligeProductoInventarios.cancelarCerrar()">
+                    Cancelar
+                </button>
+                <button type="button"
+                        class="btn btn-primary"
+                        ng-disabled="eligeProductoInventariosFrm.$invalid"
+                        ng-click="eligeProductoInventarios.aceptar()">
+                    Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-form>
