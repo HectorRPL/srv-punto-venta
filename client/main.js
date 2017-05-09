@@ -3,6 +3,7 @@ import angularMeteor from "angular-meteor";
 import oclazyload from "oclazyload";
 import uiRouter from "angular-ui-router";
 import angularUBoostrap from "angular-ui-bootstrap";
+import angularMessages from "angular-messages";
 import "./stylesheets/animate.css";
 import "jquery/dist/jquery";
 import "angular-ui-grid/ui-grid.css";
@@ -19,6 +20,7 @@ export default angular
     .module('app-operativo', [
         angularMeteor,
         angularUBoostrap,
+        angularMessages,
         oclazyload,
         uiRouter,
         App,

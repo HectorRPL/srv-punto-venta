@@ -1,0 +1,221 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3 class="text-navy">CERAGRES XOCHIMILCO
+                        <small>CERAGRES XOCHIMILCO S.A. DE C.V.</small>
+                    </h3>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <ng-form name="busquedaProveedorForm">
+                            <!-- BUSCAR OTRO PRODUCTO -->
+                            <div class="col-sm-6">
+                                <div class="form-group" ng-class="{ 'has-error' : busquedaProveedorForm.claveProveedor.$invalid && !busquedaProveedorForm.claveProveedor.$pristine}">
+                                    <div ng-messages="busquedaProveedorForm.claveProveedor.$dirty && busquedaProveedorForm.claveProveedor.$error" role="alert">
+                                        <label>Buscar Productos
+                                            <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 1, max 50 letras</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
+                                        </label>
+                                        <input id="nombreId"
+                                               class="form-control texto-en-mayusculas"
+                                               name="claveProveedor"
+                                               type="text"
+                                               placeholder="Buscar producto..."
+                                               aria-describedby="sizing-addon1"
+                                               minlength="2"
+                                               maxlength="51"
+                                               ng-minlength="2"
+                                               ng-maxlength="50"
+                                               ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                                               ng-model="buscarProductoTiendas.datos.claveProveedor">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- EXISTENCIA -->
+                            <div class="col-sm-1">
+                                <div class="form-group" ng-class="{ 'has-error' : busquedaProveedorForm.cantidad.$invalid && !busquedaProveedorForm.cantidad.$pristine}">
+                                    <div ng-messages="busquedaProveedorForm.cantidad.$dirty && busquedaProveedorForm.cantidad.$error" role="alert">
+                                        <label> Existencia
+                                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="nombreProveedor">incorrecto</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                                        </label>
+                                        <input id="nombreProveedorId"
+                                               class="form-control texto-en-mayusculas"
+                                               name="nombreProveedor"
+                                               type="number"
+                                               aria-describedby="sizing-addon1"
+                                               minlength="5"
+                                               maxlength="51"
+                                               ng-minlength="5"
+                                               ng-maxlength="50"
+                                               disabled
+                                               ng-model="buscarProductoTiendas.datos.cantidad">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- CANTIDAD REQUERIDA -->
+                            <div class="col-sm-1">
+                                <div class="form-group" ng-class="{ 'has-error' : busquedaProveedorForm.cantidad.$invalid && !busquedaProveedorForm.cantidad.$pristine}">
+                                    <div ng-messages="busquedaProveedorForm.cantidad.$dirty && busquedaProveedorForm.cantidad.$error" role="alert">
+                                        <label> Solicitar
+                                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="nombreProveedor">incorrecto</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                                        </label>
+                                        <input id="nombreProveedorId"
+                                               class="form-control texto-en-mayusculas"
+                                               name="nombreProveedor"
+                                               type="number"
+                                               aria-describedby="sizing-addon1"
+                                               minlength="5"
+                                               maxlength="51"
+                                               ng-minlength="5"
+                                               ng-maxlength="50"
+                                               ng-model="buscarProductoTiendas.datos.cantidad">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- PRECIO -->
+                            <div class="col-sm-1">
+                                <div class="form-group" ng-class="{ 'has-error' : busquedaProveedorForm.cantidad.$invalid && !busquedaProveedorForm.cantidad.$pristine}">
+                                    <div ng-messages="busquedaProveedorForm.cantidad.$dirty && busquedaProveedorForm.cantidad.$error" role="alert">
+                                        <label> Precio
+                                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="nombreProveedor">incorrecto</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                                        </label>
+                                        <input id="nombreProveedorId"
+                                               class="form-control texto-en-mayusculas"
+                                               name="nombreProveedor"
+                                               type="number"
+                                               aria-describedby="sizing-addon1"
+                                               minlength="5"
+                                               maxlength="51"
+                                               ng-minlength="5"
+                                               ng-maxlength="50"
+                                               ng-model="buscarProductoTiendas.datos.cantidad">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- IMPORTE -->
+                            <div class="col-sm-1">
+                                <div class="form-group" ng-class="{ 'has-error' : busquedaProveedorForm.cantidad.$invalid && !busquedaProveedorForm.cantidad.$pristine}">
+                                    <div ng-messages="busquedaProveedorForm.cantidad.$dirty && busquedaProveedorForm.cantidad.$error" role="alert">
+                                        <label> Importe
+                                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="nombreProveedor">incorrecto</span>
+                                            <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                                        </label>
+                                        <input id="nombreProveedorId"
+                                               class="form-control texto-en-mayusculas"
+                                               name="nombreProveedor"
+                                               type="number"
+                                               aria-describedby="sizing-addon1"
+                                               minlength="5"
+                                               maxlength="51"
+                                               ng-minlength="5"
+                                               ng-maxlength="50"
+                                               ng-model="buscarProductoTiendas.datos.cantidad">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- BOTÓN AÑADIR PRODUCTO -->
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <div role="alert">
+                                        <label> Acción
+                                        </label>
+                                        <button type="button"
+                                                class="btn btn-block">
+                                            <i class="fa fa-bolt" aria-hidden="true"></i> Agregar Partida
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+
+                    <br>
+                    <br>
+
+                    <div class="table-responsive m-t">
+                        <table class="table invoice-table">
+                            <thead>
+                            <tr>
+                                <th>&nbsp; Clave</th>
+                                <th data-hide="phone">Descripción</th>
+                                <th data-hide="phone">Cantidad</th>
+                                <th data-hide="phone">Precio</th>
+                                <th data-hide="phone,tablet" >Importe</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="fila in ordenCompraTienda.pedido">
+                                <!-- CLAVE -->
+                                <td>
+                                    <button type="button"
+                                            class="pull-left close"
+                                            uib-popover="Quitar producto"
+                                            popover-trigger="'mouseenter'"
+                                            data-dismiss="modal"
+                                            aria-label="Close"
+                                            ng-click="puntoVenta.pedido.quitarArticulo($index)">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> &nbsp;
+                                    {{fila.claveProducto}}
+                                </td>
+                                <!--DESCRIPCIÓN DE PRODUCTO-->
+                                <td>
+                                    <div class="text-left">
+                                        &nbsp;&nbsp; {{fila.marca}} {{fila.clase}} {{fila.medida}} {{fila.nombre}}
+                                        ({{fila.metrosCajaTotal = (fila.metrosCaja * fila.cantidad)  | number : 2}}
+                                        mts²)
+                                    </div>
+                                </td>
+                                <!-- CANTIDAD -->
+                                <td style="text-align: left" class="text-navy">
+                                    {{fila.cantidad}}
+                                </td>
+                                <!--PRECIO-->
+                                <td>
+                                    {{fila.precioUnitario  | number : 2}}
+                                </td>
+                                <!--IMPORTE-->
+                                <td>
+                                    {{fila.importe = (fila.cantidad * fila.precioUnitario) | number : 2}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <table class="table invoice-total">
+                        <tbody>
+                        <tr>
+                            <td><strong>Sub Total :</strong></td>
+                            <td>$1026.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IVA :</strong></td>
+                            <td>$235.98</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL :</strong></td>
+                            <td>$1261.98</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <button class="btn btn-primary">Crear orden (Ceragres Xochimilco)</button>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-offset-3 col-xs-6">
+                            <div class="input-group">
+                                <input type="text" placeholder="Producto" class="input form-control">
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn btn-primary"> <i class="fa fa-search"></i> Buscar</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive m-t">
+                        <table class="footable table table-stripped toggle-arrow-tiny  table-hover">
+                            <thead>
+                            <tr>
+                                <th>Clave</th>
+                                <th data-hide="phone">Descripción</th>
+                                <th data-hide="phone">Tienda</th>
+                                <th data-hide="phone">Existencia</th>
+                                <th data-hide="phone,tablet" >Precio</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="fila in buscarProductoTiendas.pedido">
+                                    <!-- CLAVE -->
+                                    <td><a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">{{fila.claveProducto}}</a></td>
+                                    <!--DESCRIPCIÓN DE PRODUCTO-->
+                                    <td>
+                                        <a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">
+                                            <div class="text-left">
+                                                &nbsp;&nbsp; {{fila.marca}} {{fila.clase}} {{fila.medida}} {{fila.nombre}}
+                                                ({{fila.metrosCajaTotal = (fila.metrosCaja * fila.cantidad)  | number : 2}}
+                                                mts²)
+                                            </div>
+                                        </a>
+                                    </td>
+                                    <!--TIENDA-->
+                                    <td style="text-align: left" class="text-navy">
+                                        <a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">
+                                            {{fila.tienda}}
+                                        </a>
+                                    </td>
+                                    <!--EXISTENCIA-->
+                                    <td class="text-navy">
+                                        <a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">
+                                            {{fila.existencia}}
+                                        </a>
+                                    </td>
+                                    <!--PRECIO-->
+                                    <td>
+                                        <a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">
+                                            {{fila.precioUnitario  | number : 2}}
+                                        </a>
+                                    </td>
+                                    <!--IMPORTE-->
+                                    <td>
+                                        <a ui-sref="app.compras.ordencompratienda" style="color: inherit !important;">
+                                            {{fila.importe = (((fila.cantidad * fila.precioUnitario))-(fila.subImporte)) | number : 2}}
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="7">
+                                    <ul class="pagination pull-right"></ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
