@@ -1,5 +1,13 @@
 ﻿APP CCP OPERATIVO
 
+    UsUaRIoMaStEr
+    U$u4r1OM4$73R
+
+BASE DE DATOS MONGO
+    Intrucciones para respladar la base y restaurar
+    	mongodump --out ~/Documents/ccp/db/backup/ --db ccp-dev1
+
+    	mongorestore --db demos-dev ~/Documents/ccp/db/backup/backup/ccp-dev1
     Levantar el proyecto en la consola:
         meteor npm start
     Crear la base
@@ -10,10 +18,32 @@
             Linux:
                 export MONGO_URL=mongodb://localhost:27017/ccp-dev1
             Windows:
-                SET MONGO_URL=mongodb://localhost:27017/ccp-dev1
+                SET MONGO_URL=mongodb://127.0.0.1:27017/ccp-dev1
     Importar / Exportar Collections
         mongoexport --db ccp-dev1 --collection tallas --out tallas.json
-        mongoimport --host localhost --port 27017 --collection puestos --db ccp-dev1 --file puestos.json
+        
+        mongoimport --host localhost --port 27017 --collection marcas --db ccp-dev1 --file marcas.json
+                
+        mongoimport --host localhost --port 27017 --db ccp-dev1 --collection marcas --type csv --headerline --file marcas.csv
+        // Aunque de momento este ya no lo estamos usando porque estamos con los fixtures importando las collections alojadas en
+        la carpeta /private
+        
+        
+    Respaldar base de datos
+    
+        RESPALDAR:
+            Linux
+                mongodump --out ~/Documents/demos/baseDatos/backup/ --db ccp-dev1
+        
+            Windows
+                mongodump --out C:\a1\ccp\db\backup --db ccp-dev1
+            
+        RESTAURAR:
+            Linux
+                mongorestore --db demos-dev ~/Documents/demos/baseDatos/backup/demos-dev1
+            
+            Windows
+                mongorestore --db ccp-dev1 C:/respandos_mongo/ccp-dev1-170330
 
     COMANDOS GIT
         Iniciar Git
@@ -49,6 +79,7 @@
             $ meteor npm --save install bcrypt@0.8.7
             $ meteor npm --save install bootstrap-social@5.0.0
             $ meteor npm --save install font-awesome@4.7.0
+            $ meteor npm install --save csvtojson // ¡PENDIENTE DE INSTALAR (si es que queremos instalarla)!
             $ meteor add angular-templates@1.0.9
             $ meteor add pbastowski:angular-babel@1.3.7
             $ meteor add accounts-password@1.3.3
