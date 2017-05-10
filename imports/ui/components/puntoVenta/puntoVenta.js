@@ -3,6 +3,7 @@
  */
 import './puntoVenta.html';
 import {name as EligeProductoInventarios} from './eligeProductoInventarios/eligeProductoInventarios';
+import {name as CrearOrdenVenta} from './crearOrdenVenta/crearOrdenVenta';
 
 
 class PuntoVenta {
@@ -68,15 +69,13 @@ const name = 'puntoVenta';
 
 export default angular
     .module(name, [
-        EligeProductoInventarios
+        EligeProductoInventarios,
+        CrearOrdenVenta
     ])
     .component(name, {
         templateUrl: `imports/ui/components/${name}/${name}.html`,
         controllerAs: name,
-        controller: PuntoVenta,
-        bindings: {
-            productoseleccionado: '@',
-        }
+        controller: PuntoVenta
     })
     .config(config);
 
