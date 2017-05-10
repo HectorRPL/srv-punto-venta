@@ -3,7 +3,6 @@
  */
 import {name as Navigation} from "./navigation/navigation";
 import {name as Topnavbar} from "./topnavbar/topnavbar";
-import {name as Footer} from "./footer/footer";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import {name as Compras} from "../compras/compras";
 import "metismenu/dist/metisMenu.js";
@@ -24,7 +23,6 @@ export default angular
     .module(name, [
         Navigation,
         Topnavbar,
-        Footer,
         PuntoVenta,
         Compras
     ]).component(name, {
