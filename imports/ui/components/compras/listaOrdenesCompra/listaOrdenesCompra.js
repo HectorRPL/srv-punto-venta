@@ -23,7 +23,6 @@ class ListaOrdenesCompra {
 
 const name = 'listaOrdenesCompra';
 
-// create a module
 export default angular
     .module(name, [])
     .component(name, {

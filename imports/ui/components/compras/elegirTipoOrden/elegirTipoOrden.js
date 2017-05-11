@@ -3,6 +3,7 @@
  */
 import "./elegirTipoOrden.html";
 import {name as BuscarProductoTiendas} from './buscarProductoTiendas/buscarProductoTiendas';
+import {name as BuscarProductoProveedores} from './buscarProductoProveedores/buscarProductoProveedores';
 
 class ElegirTipoOrden {
     constructor($scope, $reactive) {
@@ -17,7 +18,8 @@ const name = 'elegirTipoOrden';
 // create a module
 export default angular
     .module(name, [
-        BuscarProductoTiendas
+        BuscarProductoTiendas,
+        BuscarProductoProveedores
     ])
     .component(name, {
         templateUrl: `imports/ui/components/compras/${name}/${name}.html`,
