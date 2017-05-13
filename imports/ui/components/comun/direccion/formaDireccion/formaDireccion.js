@@ -2,7 +2,7 @@
  * Created by Héctor on 09/04/2017.
  */
 import angular from "angular";
-import {name as CodigosPostales} from "../../comun/inputs/codigosPostales/codigosPostales";
+import {name as CodigosPostales} from "../../inputs/codigosPostales/codigosPostales";
 import "./formaDireccion.html";
 
 class FormaDireccion {
@@ -20,7 +20,7 @@ export default angular
         CodigosPostales
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/direccion/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/comun/direccion/${name}/${name}.html`,
         controllerAs: name,
         controller: FormaDireccion,
         bindings: {

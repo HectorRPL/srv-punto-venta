@@ -1,8 +1,8 @@
 /**
  * Created by Héctor on 09/05/2017.
  */
-import {name as FormaDireccion} from '../../direccion/formaDireccion/formaDireccion';
-import {name as FormaDatosFiscales} from '../../datosFiscales/formaDatosFiscales/formaDatosFiscales';
+import {name as FormaDireccion} from '../../comun/direccion/formaDireccion/formaDireccion';
+import {name as FormaDatosFiscales} from '../../comun/datosFiscales/formaDatosFiscales/formaDatosFiscales';
 import './crearOrdenVenta.html';
 
 class CrearOrdenVenta {

@@ -32,7 +32,7 @@ const name = 'formaDatosFiscales';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/datosFiscales/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/comun/datosFiscales/${name}/${name}.html`,
         controllerAs: name,
         controller: FormaDatosFiscales,
         bindings: {
