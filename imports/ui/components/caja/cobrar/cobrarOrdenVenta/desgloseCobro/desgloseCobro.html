@@ -1,0 +1,32 @@
+<table class="table invoice-total">
+    <tbody>
+        <tr>
+            <td><strong>Sub Total :</strong></td>
+            <td>{{desgloseCobro.datos.subtotal | currency}}</td>
+        </tr>
+        <tr>
+            <td><strong>IVA %:</strong></td>
+            <td>{{(desgloseCobro.datos.subtotal)*(1 + (desgloseCobro.datos.iva/100))-(desgloseCobro.datos.subtotal) | currency}}</td>
+        </tr>
+        <tr>
+            <td><strong>TOTAL :</strong></td>
+            <td><strong>{{(desgloseCobro.datos.subtotal)*(1 + (desgloseCobro.datos.iva/100)) | currency}}</strong></td>
+        </tr>
+    </tbody>
+</table>
+<table class="table invoice-total">
+    <tbody>
+        <tr ng-repeat="pago in desgloseCobro.pagos">
+            <td><strong>{{pago.formaPago}} {{pago.nombreBanco}} {{pago.ultimosCuatroDigitos}} {{pago.cuenta}}:</strong></td>
+            <td>{{pago.monto | currency}}</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table invoice-total">
+    <tbody>
+        <tr>
+            <td><strong>Por cobrar:</strong></td>
+            <td><strong>{{((desgloseCobro.datos.subtotal)*(1 + (desgloseCobro.datos.iva/100)))-(desgloseCobro.calcularSaldoXCobrar()) | currency}}</strong></td>
+        </tr>
+    </tbody>
+</table>

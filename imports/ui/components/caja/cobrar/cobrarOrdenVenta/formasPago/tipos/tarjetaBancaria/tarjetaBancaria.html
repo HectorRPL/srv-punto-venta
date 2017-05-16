@@ -1,0 +1,94 @@
+<ng-form name="tarjetaBancariaFrm">
+    <div class="col-sm-8">
+        <h4>Tarjeta</h4>
+        <!-- BOTONES = CREDITO / DEBITO -->
+        <div class="col-sm-12">
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button id="pagoTotalId"
+                            class="btn btn-default"
+                            name="pagoTotal"
+                            type="button"
+                            uib-btn-radio="false"
+                            ng-click="tarjetaBancaria.credito()"
+                            ng-model="tarjetaBancaria.parcialTotal">Crédito
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button id="pagoParcialId"
+                            class="btn btn-default"
+                            name="pagoParcial"
+                            type="button"
+                            uib-btn-radio="true"
+                            ng-click="tarjetaBancaria.debito()"
+                            ng-model="tarjetaBancaria.parcialTotal">Débito
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="row" ng-show="tarjetaBancaria.creditoDebito != undefined">
+            <!-- VISA / MASTERCARD / AMERICAN EXPRESS -->
+            <div class="col-sm-6">
+                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.tarjetaBancaria.$invalid && !tipoPagoForm.tarjetaBancaria.$pristine}">
+                    <div ng-messages="tipoPagoForm.tarjetaBancaria.$dirty && tipoPagoForm.tarjetaBancaria.$error" role="alert">
+                        <label>Formato
+                            <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                        </label>
+                        <select id="efectivoId"
+                                class="form-control"
+                                name="efectivo"
+                                type="text"
+                                aria-describedby="sizing-addon1"
+                                required
+                                ng-model="formasPago.tipoPago">
+                            <option value="">Selecciona</option>
+                            <option value="1">Visa</option>
+                            <option value="2">Master Card</option>
+                            <option value="3">American Express</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <!-- ÚLTIMOS CUATRO DÍGITOS -->
+            <div class="col-sm-6">
+                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.tarjetaDebito.$invalid && !tipoPagoForm.tarjetaDebito.$pristine}">
+                    <div ng-messages="tipoPagoForm.tarjetaDebito.$dirty && tipoPagoForm.tarjetaDebito.$error" role="alert">
+                        <label>Últimos 4 díjitos
+                            <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                        </label>
+                        <input class="form-control"
+                               name="tarjetaDebito"
+                               type="number"
+                               aria-describedby="sizing-addon1"
+                               required
+                               ng-model="formasPago.formaPago.cambio">
+                    </div>
+                </div>
+            </div>
+            <!-- CANTIDAD A PAGAR -->
+            <div class="col-sm-6">
+                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.ultimosCuatroDigitos.$invalid && !tipoPagoForm.ultimosCuatroDigitos.$pristine}">
+                    <div ng-messages="tipoPagoForm.ultimosCuatroDigitos.$dirty && tipoPagoForm.ultimosCuatroDigitos.$error" role="alert">
+                        <label>Ingresa la cantidad
+                            <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                        </label>
+                        <input class="form-control"
+                               name="ultimosCuatroDigitos"
+                               type="number"
+                               aria-describedby="sizing-addon1"
+                               required
+                               ng-model="formasPago.formaPago.tarjetaDebito.ultimosCuatroDigitos">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>
+

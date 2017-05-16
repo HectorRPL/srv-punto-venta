@@ -1,0 +1,132 @@
+<ng-form name="efectivoFrm">
+    <div class="col-sm-8">
+        <h4>Efectivo</h4>
+        <div class="row"    >
+            <!-- BOTONES = PERSONA FISICA / PERSONA MORAL -->
+            <div class="col-sm-12">
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button id="pagoTotalId"
+                                class="btn btn-default"
+                                name="pagoTotal"
+                                type="button"
+                                uib-btn-radio="false"
+                                ng-click="efectivo.pagoTotal()"
+                                ng-model="efectivo.parcialTotal">Pago Total
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button id="pagoParcialId"
+                                class="btn btn-default"
+                                name="pagoParcial"
+                                type="button"
+                                uib-btn-radio="true"
+                                ng-click="efectivo.pagoParcial()"
+                                ng-model="efectivo.parcialTotal">Pago Parcial
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <!--PAGO TOTAL-->
+            <span ng-show="efectivo.parcialTotal === 1">
+                <!-- PAGO EN EFECTIVO -->
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{ 'has-error' : efectivoFrm.efectivo.$invalid && !efectivoFrm.efectivo.$pristine}">
+                        <div ng-messages="efectivoFrm.efectivo.$dirty && efectivoFrm.efectivo.$error" role="alert">
+                            <label>Recibido
+                                <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            </label>
+                            <input class="form-control"
+                                   name="efectivo"
+                                   placeholder="Ingresa cantidad"
+                                   type="number"
+                                   aria-describedby="sizing-addon1"
+                                   required
+                                   ng-model="efectivo.efectivo">
+                        </div>
+                    </div>
+                </div>
+                    <!-- CAMBIO -->
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{ 'has-error' : efectivoFrm.cambio.$invalid && !efectivoFrm.cambio.$pristine}">
+                        <div ng-messages="efectivoFrm.cambio.$dirty && efectivoFrm.cambio.$error" role="alert">
+                            <label>Cambio
+                                <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            </label>
+                            <input class="form-control"
+                                   name="cambio"
+                                   type="number"
+                                   aria-describedby="sizing-addon1"
+                                   required
+                                   ng-disabled="true"
+                                   ng-model="efectivo.cambio">
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <!--PAGO PARCIAL-->
+            <span ng-show="efectivo.parcialTotal === 2">
+                <!-- INGRESA EL ANTICIPO -->
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{ 'has-error' : efectivoFrm.efectivo.$invalid && !efectivoFrm.efectivo.$pristine}">
+                        <div ng-messages="efectivoFrm.efectivo.$dirty && efectivoFrm.efectivo.$error" role="alert">
+                            <label>Anticipo
+                                <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            </label>
+                            <input class="form-control"
+                                   name="efectivo"
+                                   placeholder="¿De cuánto es el anticipo?"
+                                   type="number"
+                                   aria-describedby="sizing-addon1"
+                                   required
+                                   ng-model="efectivo.efectivo">
+                        </div>
+                    </div>
+                </div>
+                <!-- INGRESA LO RECIBIDO -->
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{ 'has-error' : efectivoFrm.efectivo.$invalid && !efectivoFrm.efectivo.$pristine}">
+                        <div ng-messages="efectivoFrm.efectivo.$dirty && efectivoFrm.efectivo.$error" role="alert">
+                            <label>Recibido
+                                <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            </label>
+                            <input class="form-control"
+                                   name="efectivo"
+                                   placeholder="Ingresa cantidad"
+                                   type="number"
+                                   aria-describedby="sizing-addon1"
+                                   required
+                                   ng-model="efectivo.efectivo">
+                        </div>
+                    </div>
+                </div>
+                <!-- CAMBIO -->
+                <div class="col-sm-6">
+                    <div class="form-group" ng-class="{ 'has-error' : efectivoFrm.cambio.$invalid && !efectivoFrm.cambio.$pristine}">
+                        <div ng-messages="efectivoFrm.cambio.$dirty && efectivoFrm.cambio.$error" role="alert">
+                            <label>Cambio
+                                <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            </label>
+                            <input class="form-control"
+                                   name="cambio"
+                                   type="number"
+                                   aria-describedby="sizing-addon1"
+                                   required
+                                   ng-disabled="true"
+                                   ng-model="efectivo.cambio">
+                        </div>
+                    </div>
+                </div>
+            </span>
+
+        </div>
+    </div>
+</ng-form>

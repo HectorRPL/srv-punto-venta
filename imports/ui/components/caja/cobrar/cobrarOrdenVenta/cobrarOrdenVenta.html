@@ -1,0 +1,41 @@
+<div class="full-height">
+    <div class="full-height-scroll gray-bg border-left animated fadeInRight" full-scroll>
+        <div class="element-detail-box">
+            <div class="tab-content">
+                <div class="small text-muted">
+                    <i class="fa fa-clock-o"></i> Monday, 21 May 2014, 10:32 am
+                </div>
+                <h1 style="margin: 3px">4845625</h1>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Forma de Pago</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <formas-pago></formas-pago>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Resumen</h5>
+                                <div ibox-tools></div>
+                            </div>
+                            <div class="ibox-content wizard">
+                                <desglose-cobro
+                                        pagos="cobrarOrdenVenta.pagosOrdenesVenta"
+                                        datos="cobrarOrdenVenta.ordenVenta">
+                                </desglose-cobro>
+                                <div class="text-right">
+                                    <button class="btn btn-primary"><i class="fa fa-dollar"></i> Make A Payment</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
