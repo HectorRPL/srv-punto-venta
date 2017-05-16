@@ -49,6 +49,7 @@
                                ng-maxlength="50"
                                ng-pattern="/^[a-zA-ZñÑ\s]+$/"
                                required
+                               uib-typeahead="banco as banco.nombre for banco in tarjetaBancaria.buscarBanco($viewValue)"
                                ng-model="tarjetaBancaria.datos.nombre">
                     </div>
                 </div>

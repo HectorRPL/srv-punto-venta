@@ -1,6 +1,8 @@
 /**
  * Created by Héctor on 15/05/2017.
  */
+import {Proveedores} from "../../../../../../../../api/catalogos/bancos/collection";
+import {buscarBanco} from "../../../../../../../../api/catalogos/bancos/methods";
 import "./tarjetaBancaria.html";
 
 class TarjetaBancaria {
@@ -14,6 +16,14 @@ class TarjetaBancaria {
     }
     elegirDebito() {
         this.datos.credito = false;
+    }
+
+    buscarBanco(valor) {
+        return buscarBanco.callPromise({
+            nombre: valor
+        }).then(function (result) {
+            return result;
+        });
     }
 }
 

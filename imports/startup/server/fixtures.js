@@ -6,8 +6,114 @@ import { Inventarios } from '../../api/inventarios/collection';
 import { Clientes } from '../../api/clientes/collection';
 import { Marcas } from '../../api/marcas/collection';
 import { Tiendas } from '../../api/tiendas/collection';
+import { Bancos } from '../../api/catalogos/bancos/collection';
 
 Meteor.startup(function () {
+    // BANCOS
+    /*
+     if (Bancos.find().count() === 0) {
+         const bancos =[
+             {"_id": "002", "nombre": "BANAMEX"},
+             {"_id": "006", "nombre": "BANCOMEXT"},
+             {"_id": "009", "nombre": "BANOBRAS"},
+             {"_id": "012", "nombre": "BBVA BANCOMER"},
+             {"_id": "014", "nombre": "SANTANDER"},
+             {"_id": "019", "nombre": "BANJERCITO"},
+             {"_id": "021", "nombre": "HSBC"},
+             {"_id": "030", "nombre": "BAJIO"},
+             {"_id": "032", "nombre": "IXE"},
+             {"_id": "036", "nombre": "INBURSA"},
+             {"_id": "037", "nombre": "INTERACCIONES"},
+             {"_id": "042", "nombre": "MIFEL"},
+             {"_id": "044", "nombre": "SCOTIABANK"},
+             {"_id": "058", "nombre": "BANREGIO"},
+             {"_id": "059", "nombre": "INVEX"},
+             {"_id": "060", "nombre": "BANSI"},
+             {"_id": "062", "nombre": "AFIRME"},
+             {"_id": "072", "nombre": "BANORTE"},
+             {"_id": "102", "nombre": "THE ROYAL BANK"},
+             {"_id": "103", "nombre": "AMERICAN EXPRESS"},
+             {"_id": "106", "nombre": "BAMSA"},
+             {"_id": "108", "nombre": "TOKYO"},
+             {"_id": "110", "nombre": "JP MORGAN"},
+             {"_id": "112", "nombre": "BMONEX"},
+             {"_id": "113", "nombre": "VE POR MAS"},
+             {"_id": "116", "nombre": "ING"},
+             {"_id": "124", "nombre": "DEUTSCHE"},
+             {"_id": "126", "nombre": "CREDIT SUISSE"},
+             {"_id": "127", "nombre": "AZTECA"},
+             {"_id": "128", "nombre": "AUTOFIN"},
+             {"_id": "129", "nombre": "BARCLAYS"},
+             {"_id": "130", "nombre": "COMPARTAMOS"},
+             {"_id": "131", "nombre": "BANCO FAMSA"},
+             {"_id": "132", "nombre": "BMULTIVA"},
+             {"_id": "133", "nombre": "ACTINVER"},
+             {"_id": "134", "nombre": "WAL-MART"},
+             {"_id": "135", "nombre": "NAFIN"},
+             {"_id": "136", "nombre": "INTERBANCO"},
+             {"_id": "137", "nombre": "BANCOPPEL"},
+             {"_id": "138", "nombre": "ABC CAPITAL"},
+             {"_id": "139", "nombre": "UBS BANK"},
+             {"_id": "140", "nombre": "CONSUBANCO"},
+             {"_id": "141", "nombre": "VOLKSWAGEN"},
+             {"_id": "143", "nombre": "CIBANCO"},
+             {"_id": "145", "nombre": "BBASE"},
+             {"_id": "166", "nombre": "BANSEFI"},
+             {"_id": "168", "nombre": "HIPOTECARIA FEDERAL"},
+             {"_id": "600", "nombre": "MONEXCB"},
+             {"_id": "601", "nombre": "GBM"},
+             {"_id": "602", "nombre": "MASARI"},
+             {"_id": "605", "nombre": "VALUE"},
+             {"_id": "606", "nombre": "ESTRUCTURADORES"},
+             {"_id": "607", "nombre": "TIBER"},
+             {"_id": "608", "nombre": "VECTOR"},
+             {"_id": "610", "nombre": "B&B"},
+             {"_id": "614", "nombre": "ACCIVAL"},
+             {"_id": "615", "nombre": "MERRILL LYNCH"},
+             {"_id": "616", "nombre": "FINAMEX"},
+             {"_id": "617", "nombre": "VALMEX"},
+             {"_id": "618", "nombre": "UNICA"},
+             {"_id": "619", "nombre": "MAPFRE"},
+             {"_id": "620", "nombre": "PROFUTURO"},
+             {"_id": "621", "nombre": "CB ACTINVER"},
+             {"_id": "622", "nombre": "OACTIN OPERADORA"},
+             {"_id": "623", "nombre": "SKANDIA"},
+             {"_id": "626", "nombre": "CBDEUTSCHE"},
+             {"_id": "627", "nombre": "ZURICH"},
+             {"_id": "628", "nombre": "ZURICHVI"},
+             {"_id": "629", "nombre": "SU CASITA"},
+             {"_id": "630", "nombre": "CB INTERCAM"},
+             {"_id": "631", "nombre": "CI BOLSA"},
+             {"_id": "632", "nombre": "BULLTICK CB"},
+             {"_id": "633", "nombre": "STERLING"},
+             {"_id": "634", "nombre": "FINCOMUN"},
+             {"_id": "636", "nombre": "HDI SEGUROS"},
+             {"_id": "637", "nombre": "ORDER"},
+             {"_id": "638", "nombre": "AKALA"},
+             {"_id": "640", "nombre": "CB JPMORGAN"},
+             {"_id": "642", "nombre": "REFORMA"},
+             {"_id": "646", "nombre": "STP"},
+             {"_id": "647", "nombre": "TELECOMM"},
+             {"_id": "648", "nombre": "EVERCORE"},
+             {"_id": "649", "nombre": "SKANDIA"},
+             {"_id": "651", "nombre": "SEGMTY"},
+             {"_id": "652", "nombre": "ASEA"},
+             {"_id": "653", "nombre": "KUSPIT"},
+             {"_id": "655", "nombre": "SOFIEXPRESS"},
+             {"_id": "656", "nombre": "UNAGRA"},
+             {"_id": "659", "nombre": "OPCIONES EMPRESARIALES DEL NOROESTE"},
+             {"_id": "901", "nombre": "CLS"},
+             {"_id": "902", "nombre": "INDEVAL"},
+             {"_id": "670", "nombre": "LIBERTAD"},
+             {"_id": "999", "nombre": "OTRO"}
+         ];
+
+         bancos.forEach((banco) => {
+             Bancos.insert(banco)
+         });
+     }
+     */
+
     /*
     if (Inventarios.find().count() === 0) {
         const inventario =[
