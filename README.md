@@ -75,7 +75,6 @@ BASE DE DATOS MONGO
             $ meteor npm --save install angular-animate@1.5.8
             $ meteor npm --save install angular-messages@1.5.8
             $ meteor npm --save install angular-ui-bootstrap@2.5.0
-            $ meteor npm --save install angular-ui-grid@4.0.2
             $ meteor npm --save install bcrypt@0.8.7
             $ meteor npm --save install bootstrap-social@5.0.0
             $ meteor npm --save install font-awesome@4.7.0

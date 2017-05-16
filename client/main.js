@@ -1,12 +1,10 @@
 import angular from "angular";
 import angularMeteor from "angular-meteor";
-import oclazyload from "oclazyload";
 import uiRouter from "angular-ui-router";
 import angularUBoostrap from "angular-ui-bootstrap";
 import angularMessages from "angular-messages";
 import "./stylesheets/animate.css";
 import "jquery/dist/jquery";
-import "angular-ui-grid/ui-grid.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import {name as App} from "../imports/ui/components/app/app";
@@ -21,7 +19,6 @@ export default angular
         angularMeteor,
         angularUBoostrap,
         angularMessages,
-        oclazyload,
         uiRouter,
         App,
         Login
