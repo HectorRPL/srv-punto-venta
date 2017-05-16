@@ -9,11 +9,11 @@ class TarjetaBancaria {
         $reactive(this).attach($scope);
     }
 
-    credito() {
-        this.creditoDebito = 'credito'
+    elegirCredito() {
+        this.datos.credito = true;
     }
-    debito() {
-        this.creditoDebito = 'debito'
+    elegirDebito() {
+        this.datos.credito = false;
     }
 }
 
