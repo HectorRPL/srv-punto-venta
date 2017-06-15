@@ -3,7 +3,9 @@
  */
 import './puntoVenta.html';
 import {name as EligeProductoInventarios} from './eligeProductoInventarios/eligeProductoInventarios';
-import {name as CrearOrdenVenta} from './crearOrdenVenta/crearOrdenVenta';
+import {name as OrdenVenta} from './ordenVenta/ordenVenta';
+import {buscarProductoDescp} from "../../../api/catalogos/productos/methods"
+import {Session} from "meteor/session";
 
 
 class PuntoVenta {
@@ -12,56 +14,57 @@ class PuntoVenta {
         'ngInject';
         $reactive(this).attach($scope);
         this.$uibModal = $uibModal;
-        this.importe = 0;
+        this.subTotal = 0;
+        this.importeIva = 0;
+        this.total = 0;
+        this.iva = 16;
         this.pedido = [];
+        this.productoSelec = '';
+        this.tiendaId = Session.get('estacionTrabajoId');
+        console.log('punto de venta ', Session.get('estacionTrabajoId'));
+
     }
 
-    buscarProducto(productoBuscado) {
-        const BUSCA_ESTO = productoBuscado;
+    abrirModal(prodBuscado) {
+        prodBuscado.tiendaId = this.tiendaId;
         var modalInstance = this.$uibModal.open({
             animation: true,
             component: "EligeProductoInventarios",
             size: 'lg',
             resolve: {
-                idProducto: function () {
-                    return BUSCA_ESTO;
+                producto: function () {
+                    return prodBuscado;
                 }
+
             }
         }).result.then(this.$bindToContext((result) => {
-            console.log("Se ha cerrado el modal y trajo consigo: ->", result);
-            this.pedido.push(result);
+            const index = this.pedido.findIndex((item)=> {
+                return item._id === result._id;
+            });
+            if (index === -1) {
+                this.pedido.push(result);
+            } else {
+                this.pedido.splice(index, 1, result);
+            }
 
-        }, function(reason) {
-            console.log("Se cerró el modal la razón fue: ->" + reason);
+
+        }, function (reason) {
+
         }));
     }
 
-    // CALCULAR Y DESGLOSAR
-    getTotal() {
-        var total = 0;
-        for(var i = 0; i < this.pedido.length; i++){
-            var product = this.pedido[i];
-            total += (this.pedido[i].precioUnitario * this.pedido[i].cantidad);
-        }
-        console.log('total', total);
-        return total;
+    prueba(item) {
+        this.abrirModal(item);
     }
 
-    quitarArticulo(index) {
-        console.log(index);
-        if (index > -1) {
-            this.pedido.splice(index, 1);
-        }
+    buscarProducto(valor) {
+        return buscarProductoDescp.callPromise({
+            codigo: valor
+        }).then(function (result) {
+            return result;
+        });
     }
 
-    limpiarTodo() {
-        this.cliente = {};
-        this.pedido = [];
-        this.mostrarCliente = true;
-        this.mostrarClienteMostrador = false;
-        this.vendedorActivo = '';
-
-    }
 
 }
 
@@ -70,7 +73,7 @@ const name = 'puntoVenta';
 export default angular
     .module(name, [
         EligeProductoInventarios,
-        CrearOrdenVenta
+        OrdenVenta
     ])
     .component(name, {
         templateUrl: `imports/ui/components/${name}/${name}.html`,
@@ -83,8 +86,8 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.puntoventa', {
-            url: '/puntoventa',
+        .state('app.venta', {
+            url: '/venta',
             template: '<punto-venta></punto-venta>'
         });
 }

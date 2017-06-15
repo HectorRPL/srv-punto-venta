@@ -1,0 +1,5 @@
+<select id="departamentoId" class="form-control m-b" name="departamento"
+        required ng-model="elegirDepartamento.departamento">
+    <option value="">ELEGIR</option>
+    <option ng-repeat="depto in elegirDepartamento.departamentos" value="{{depto._id}}">{{depto._id}}</option>
+</select>

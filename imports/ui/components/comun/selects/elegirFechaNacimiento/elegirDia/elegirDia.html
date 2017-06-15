@@ -1,0 +1,7 @@
+<select id="elegirDiaId" class="form-control" name="elegirDia" type="button" required
+        ng-model="elegirDia.diaid">
+    <option value="">
+        Dia
+    </option>
+    <option ng-repeat="dia in elegirDia.dias" value="{{dia._id}}">{{dia.descripcion}}</option>
+</select>

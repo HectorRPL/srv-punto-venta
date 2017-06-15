@@ -1,0 +1,5 @@
+<div class="animated fadeIn" uib-alert ng-show="alertas.tipo" ng-class="'alert-'+ alertas.tipo">
+    <span ng-class="{'fa fa-check': alertas.tipo =='success', 'fa fa-exclamation-triangle': alertas.tipo=='danger',  'fa fa-exclamation-circle': alertas.tipo=='warning'}">
+    </span>
+    <strong> {{alertas.mensaje}} </strong>
+</div>

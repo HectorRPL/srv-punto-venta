@@ -1,0 +1,31 @@
+<ng-form name="existenciaOtrasTiendasFrm">
+    <!-- EXISTECIA EN OTRAS TIENDAS -->
+    <small>Existencia en otros Tiendas</small>
+    <ul class="list-group clear-list m-t">
+        <li class="list-group-item" ng-repeat="productoTienda in existenciaOtrasTiendas.otrosInventarios"
+        ng-if="productoTienda.tiendaId != existenciaOtrasTiendas.tiendaid">
+                                <span class="pull-right" ng-class="{ 'has-error' : existenciaOtrasTiendasFrm.cantidad{{$index}}.$invalid
+                                    && !existenciaOtrasTiendasFrm.cantidad{{$index}}.$pristine}">
+                                        <input class="form-control input-sm text-navy "
+                                               name="cantidad{{$index}}"
+                                               uib-popover="Ingresa la cantidad requerida"
+                                               popover-trigger="'mouseenter'"
+                                               type="number"
+                                               min="0"
+                                               max="{{productoTienda.cantidad}}"
+                                               ng-minlength="0"
+                                               ng-maxlength="{{productoTienda.cantidad}}"
+                                               ng-change="existenciaOtrasTiendas.totalProductosTiendas()"
+                                               ng-model="productoTienda.numProds">
+                                        <!-- div ng-messages="existenciaOtrasTiendasFrm['cantidad'+$index].$dirty
+                                                && existenciaOtrasTiendasFrm['cantidad'+$index].$error" role="alert">
+                                                <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">Cantidad invalida</span>
+                                        </div -->
+                                </span>
+            <span class="label label-default">{{productoTienda.cantidad}}</span>&nbsp;&nbsp;
+            <small>
+                {{productoTienda.tienda().nombre}}
+            </small>
+        </li>
+    </ul>
+</ng-form>

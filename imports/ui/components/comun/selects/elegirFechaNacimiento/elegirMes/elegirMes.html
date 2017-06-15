@@ -1,0 +1,7 @@
+<select id="elegirMesId" class="form-control" name="elegirMes" required
+        ng-model="elegirMes.mesid">
+    <option value="">
+        Mes
+    </option>
+    <option ng-repeat="mes in elegirMes.meses" value="{{mes._id}}">{{mes.descripcion}}</option>
+</select>

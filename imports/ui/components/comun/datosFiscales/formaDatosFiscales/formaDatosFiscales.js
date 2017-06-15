@@ -1,27 +1,30 @@
 /**
- * Created by Héctor on 09/05/2017.
+ * Created by Héctor on 06/04/2017.
  */
 import "./formaDatosFiscales.html";
+import {existeRFC} from "../../../../../api/datosFiscales/methods";
+import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegirTipoSociedad"
 
 class FormaDatosFiscales {
-    constructor($scope, $reactive) {
+    constructor($scope) {
         'ngInject';
-        $reactive(this).attach($scope);
-        this.pasoDos = false;
-        this.habilitarCampos = true;
+        this.abreviacion = '';
     }
 
     esPersonaMoral() {
-        this.datos = {};
-        this.pasoDos = true;
-        this.datos.personaFisica = false;
-        this.habilitarCampos = false;
+        delete this.datos.email;
+        delete this.datos.nombre;
+        delete this.datos.apellidoPaterno;
+        delete this.datos.apellidoMaterno;
+        delete this.datos._id;
+        this.datos.tipoPersona = 'PM';
     }
     esPersonaFisica() {
-        this.datos = {};
-        this.pasoDos = true;
-        this.datos.personaFisica = true;
-        this.habilitarCampos = true;
+        delete this.datos.email;
+        delete this.datos.razonSocial;
+        delete this.datos._id;
+        this.datos.tipoPersona = 'PF';
+
     }
 
 }
@@ -30,7 +33,9 @@ const name = 'formaDatosFiscales';
 
 // create a module
 export default angular
-    .module(name, [])
+    .module(name, [
+        ElegirTipoSociedad
+    ])
     .component(name, {
         templateUrl: `imports/ui/components/comun/datosFiscales/${name}/${name}.html`,
         controllerAs: name,
@@ -38,4 +43,24 @@ export default angular
         bindings: {
             datos: '='
         }
-    });
+    })
+    .directive('existeRfc', ['$q', function ($q) {
+        return {
+            restrict: 'EA',
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModel) {
+                ngModel.$asyncValidators.existerfc = function (modelValue, viewValue) {
+                    let rfc = modelValue || viewValue;
+                    return existeRFC.callPromise({
+                        rfc: rfc
+                    }).then(function (result) {
+                        if (result) {
+                            return $q.reject('RFC encontrado');
+                        }
+                    }).catch(function (err) { // cacha el error (¿dos veces?)
+                        return $q.reject('Error encontrado');
+                    });
+                };
+            }
+        };
+    }]);

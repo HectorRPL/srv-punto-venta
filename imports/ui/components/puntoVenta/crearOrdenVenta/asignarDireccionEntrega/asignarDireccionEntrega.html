@@ -1,0 +1,54 @@
+<div class="steps clearfix">
+    <div class="row">
+        <div class="col-md-4">
+            <button type="button" class="btn btn-block btn-default" ng-disabled="true">
+                <i class="fa fa-user"></i> <strong>Cliente</strong>
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="button"  class="btn btn-block btn-primary">
+                <i class="fa fa-map-marker"></i> <strong>Dirección Entrega</strong>
+            </button>
+        </div>
+        <div class="col-md-4">
+            <button type="button"  class="btn btn-block btn-default" ng-disabled="true">
+                <i class="fa fa-address-card-o"></i> <strong>Nota ó Factura</strong>
+            </button>
+        </div>
+    </div>
+</div>
+<div class="wizard">
+    <div class="content">
+        <form role="form" class="p-lg" id="asignarDireccionEntregaFrmId" name="asignarDireccionEntregaFrm" novalidate>
+            <fieldset>
+                <h2>Dirección Entrega</h2>
+                <!--BOTON AÑADIR TELÉFONO -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <forma-direccion direccion="asignarDireccionEntrega.direccionCliente"></forma-direccion>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-7">
+                        <alertas tipo="asignarDireccionEntrega.tipoMsj" mensaje="asignarDireccionEntrega.msj"></alertas>
+                    </div>
+                    <div class="col-xs-3">
+                        <!-- BOTON GUARDAR DATOS GENERALES (Del paso 1 al paso 2) -->
+                        <button type="button" class="btn btn-primary pull-right"
+                                ng-hide="asignarDireccionEntrega.direccionCliente._id"
+                                ng-disabled="asignarDireccionEntregaFrm.$invalid"
+                                ng-click="asignarDireccionEntrega.guardar()">
+                            Guardar
+                        </button>
+                        <button type="button" class="btn btn-primary pull-right"
+                                ng-show="asignarDireccionEntrega.direccionCliente._id"
+                                ng-disabled="asignarDireccionEntregaFrm.$invalid"
+                                ng-click="asignarDireccionEntrega.actualizar()">
+                            Actualizas
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

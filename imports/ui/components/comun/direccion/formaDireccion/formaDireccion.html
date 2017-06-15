@@ -1,6 +1,6 @@
 <ng-form name="direccionForm">
     <!-- CÓDIGO POSTAL -->
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error' : direccionForm.codigoPostal.$invalid && !direccionForm.codigoPostal.$pristine}">
             <div ng-messages="direccionForm.codigoPostal.$dirty && direccionForm.codigoPostal.$error" role="alert">
                 <label>
@@ -15,7 +15,7 @@
         </div>
     </div>
     <!-- COLONIA -->
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error' : direccionForm.colonia.$invalid && !direccionForm.colonia.$pristine}">
             <div ng-messages="direccionForm.colonia.$dirty && direccionForm.colonia.$error" role="alert">
                 <label>Colonia *
@@ -31,7 +31,7 @@
         </div>
     </div>
     <!-- ESTADO -->
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group">
             <label>Estado</label>
             <input id="estadoId" class="form-control texto-en-mayusculas" name="estado" type="text"
@@ -39,7 +39,7 @@
         </div>
     </div>
     <!-- DELEGACIÓN o MUNICIPIO -->
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group">
             <label>Delegación/Muninicipio</label>
             <input id="delMpioId" class="form-control texto-en-mayusculas" name="delMpio" type="text"
@@ -47,30 +47,29 @@
         </div>
     </div>
     <!-- CALLE -->
-    <div class="col-sm-2">
+    <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error' : direccionForm.calle.$invalid && !direccionForm.calle.$pristine}">
             <div ng-messages="direccionForm.calle.$dirty && direccionForm.calle.$error" role="alert">
                 <label>
                     Calle *
-                    <span class="animated fadeIn" style="color:red;" ng-message="maxlength">min 1, max 30 letras</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="maxlength">min 1, max 45 letras</span>
                     <span class="animated fadeIn" style="color:red;" ng-message="pattern">sólo letras y/o números</span>
                     <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                 </label>
-                <input id="calleId" autocomplete="off"
-                       class="form-control texto-en-mayusculas" name="calle" type="text"
+                <input id="calleId" class="form-control texto-en-mayusculas" name="calle" type="text"
                        aria-describedby="sizing-addon1"
-                       maxlength="31" ng-maxlength="30"
+                       maxlength="50" ng-maxlength="50"
                        required ng-pattern="/^[a-zA-Z-/.&ÑñáéíóúÁÉÍÓÚ-\s\d]+$/"
                        ng-model="formaDireccion.direccion.calle">
             </div>
         </div>
     </div>
     <!-- NÚMERO EXTERIOR -->
-    <div class="col-sm-1">
+    <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error' : direccionForm.numExt.$invalid && !direccionForm.numExt.$pristine}">
             <div ng-messages="direccionForm.numExt.$dirty && direccionForm.numExt.$error" role="alert">
                 <label>
-                    N Exterior *
+                    N° Exterior *
                     <span class="animated fadeIn" style="color:red;" ng-message="maxlength">min 1, max 10 letras</span>
                     <span class="animated fadeIn" style="color:red;" ng-message="pattern">sólo letras y/o números</span>
                     <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
@@ -84,11 +83,11 @@
         </div>
     </div>
     <!-- NÚMERO INTERIOR -->
-    <div class="col-sm-1">
+    <div class="col-sm-6">
         <div class="form-group" ng-class="{ 'has-error' : direccionForm.numInt.$invalid && !direccionForm.numInt.$pristine}">
             <div ng-messages="direccionForm.numInt.$dirty && direccionForm.numInt.$error" role="alert">
                 <label>
-                    N Interior
+                    N° Interior
                     <span class="animated fadeIn" style="color:red;" ng-message="maxlength">min 1, max 10 letras</span>
                     <span class="animated fadeIn" style="color:red;" ng-message="pattern">sólo letras y/o números</span>
                 </label>

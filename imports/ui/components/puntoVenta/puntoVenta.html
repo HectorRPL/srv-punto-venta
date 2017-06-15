@@ -6,116 +6,15 @@
 
                 <div class="row">
                     <div class="col-sm-offset-3 col-xs-6">
-                        <div class="input-group">
-                            <input type="text"
-                                   placeholder="Agrega un producto"
-                                   class="input form-control"
-                                   ng-model="puntoVenta.productoBuscado">
-                            <span class="input-group-btn">
-                                    <button  type="button"
-                                             class="btn btn btn-primary"
-                                             ng-click="puntoVenta.buscarProducto(puntoVenta.productoBuscado)"> <i class="fa fa-search"></i> Buscar
-                                    </button>
-                            </span>
+                        <div class="ibox float-e-margins">
+                            <input type="text" class="form-control" ng-model="puntoVenta.prodSelec" typeahead-on-select="puntoVenta.prueba($item, $model, $label, $event)"
+                                   uib-typeahead="producto as producto.campoBusqueda for producto in puntoVenta.buscarProducto($viewValue)"
+                                   placeholder="Codigo Proveedor">
                         </div>
                     </div>
                 </div>
-
                 <br>
-                <span ng-hide="puntoVenta.pedido.length === 0">
-                    <div class="table-responsive m-t">
-                        <table class="table table-hover invoice-table">
-                            <thead>
-                            <tr>
-                                <th style="text-align: center"> </th>
-                                <th style="text-align: center">Cantidad</th>
-                                <th style="text-align: center">Unidad</th>
-                                <th style="text-align: center">Descripción</th>
-                                <th style="text-align: center">Precio</th>
-                                <th style="text-align: center">%</th>
-                                <th style="text-align: center">Descuento</th>
-                                <th style="text-align: center">Importe</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="fila in puntoVenta.pedido">
-                                    <!--QUITAR ARTÍCULO-->
-                                    <td>
-
-                                    </td>
-                                    <!--CANTIDAD-->
-                                    <td>
-                                        <button type="button"
-                                                class="pull-left close"
-                                                uib-popover="Quitar producto"
-                                                popover-trigger="'mouseenter'"
-                                                data-dismiss="modal"
-                                                aria-label="Close"
-                                                ng-click="puntoVenta.pedido.quitarArticulo($index)">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        {{fila.cantidad}}
-                                    </td>
-                                    <!--UNIDAD-->
-                                    <td>{{fila.tipoUnidad}}</td>
-                                    <!--DESCRIPCIÓN DE PRODUCTO-->
-                                    <td>
-                                        <div class="text-left">
-                                            &nbsp;&nbsp; {{fila.marca}} {{fila.clase}} {{fila.medida}} {{fila.nombre}}
-                                        </div>
-                                    </td>
-                                    <!--PRECIO-->
-                                    <td>
-                                        <a style="color: inherit">
-                                            {{fila.precioUnitario  | number : 2}}
-                                        </a>
-                                    </td>
-                                    <!--DESCUENTO EN PORCENTAJE-->
-                                    <td>
-                                        <a>
-                                            <span class="text-navy pull-right">(- {{fila.descuento  | number : 0}}%)</span>
-                                        </a>
-                                    </td>
-
-                                    <!--DESCUENTO-->
-                                    <td style="text-align: right !important;">
-                                        <a ng-click="puntoVenta.pedido.aplicarDescuento()">
-                                            <span class="text-navy">${{fila.subImporte = (((fila.cantidad * fila.precioUnitario))*((fila.descuento)*(.01))) | number : 2 }}</span>
-                                        </a>
-                                    </td>
-                                    <!--IMPORTE-->
-                                    <td>${{fila.importe = (((fila.cantidad * fila.precioUnitario))-(fila.subImporte)) | number : 2}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <table class="table invoice-total">
-                        <tbody>
-                        <tr>
-                            <td><strong>Sub Total :</strong></td>
-                            <td>$1026.00</td>
-                        </tr>
-                        <tr>
-                            <td><strong>IVA :</strong></td>
-                            <td>$235.98</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TOTAL :</strong></td>
-                            <td>$1261.98</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div class="text-right">
-                        <button ui-sref="app.crearordenventa" class="btn btn-primary"><i class="fa fa-dollar"></i> Make A Payment</button>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="checkbox"><i></i> Requiere Factura
-                            </div>
-                        </div>
-                    </div>
-                </span>
+                <orden-venta tiendaid="puntoVenta.tiendaId" pedidogrl="puntoVenta.pedido" iva="puntoVenta.iva" ng-if="puntoVenta.pedido.length > 0"></orden-venta>
             </div>
         </div>
     </div>

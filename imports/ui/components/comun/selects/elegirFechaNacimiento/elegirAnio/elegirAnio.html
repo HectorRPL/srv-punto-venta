@@ -1,0 +1,7 @@
+<select id="elegirAnioId" class="form-control" name="elegirAnio" required
+        ng-model="elegirAnio.anioid">
+    <option value="">
+        Año
+    </option>
+    <option ng-repeat="anio in elegirAnio.anios" value="{{anio._id}}">{{anio.descripcion}}</option>
+</select>

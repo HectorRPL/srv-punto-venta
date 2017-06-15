@@ -1,122 +1,14 @@
-<form name="crearOrdenVentaFrm" novalidate>
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h3>Dirección de Entrega
-                            <small>Lugar donde se entregará la mercancía</small>
-                        </h3>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <ng-form name="datosGeneralesForm">
-                                <!-- NOMBRE -->
-                                <div class="col-sm-4">
-                                    <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm.nombre.$invalid && !datosGeneralesForm.nombre.$pristine}">
-                                        <div ng-messages="datosGeneralesForm.nombre.$dirty && datosGeneralesForm.nombre.$error" role="alert">
-                                            <label>Nombre *
-                                                <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
-                                                <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 1, max 50 letras</span>
-                                                <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
-                                            </label>
-                                            <input id="nombreId"
-                                                   class="form-control texto-en-mayusculas"
-                                                   name="nombre"
-                                                   type="text"
-                                                   aria-describedby="sizing-addon1"
-                                                   minlength="2" maxlength="51"
-                                                   ng-minlength="2"
-                                                   ng-maxlength="50"
-                                                   ng-pattern="/^[a-zA-ZñÑ\s]+$/"
-                                                   required
-                                                   ng-model="crearOrdenVenta.datosEntrega.nombre">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- TELÉFONOS DE CONTACTO-->
-                                <span class="animated fadeIn" ng-repeat="telefono in crearOrdenVenta.datosEntrega.telefonos track by $index">
-                                    <div class="col-sm-2">
-                                        <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm['telefono'+$index].$invalid && !datosGeneralesForm['telefono'+$index].$pristine}">
-                                            <div ng-messages="datosGeneralesForm['telefono'+$index].$dirty && datosGeneralesForm['telefono'+$index].$error" role="alert">
-                                                <label> Teléfono <span class="font-bold text-navy">{{$index + 1}}</span> *
-                                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">10 dígitos</span>
-                                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">inválido</span>
-                                                </label>
-                                                <input id="telefonosId" class="form-control" type="text" name="telefono{{$index}}"
-                                                       aria-describedby="sizing-addon1" maxlength="10"
-                                                       ng-pattern="/^[0-9]{10}$/" required
-                                                       ng-model="telefono['telefono']">
-                                            </div>
-                                        </div>
-                                    </div>
-                                            <!-- TELÉFONO EXTENSIÓN -->
-                                    <div class="col-sm-2">
-                                        <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm['extension'+$index].$invalid && !datosGeneralesForm['extension'+$index].$pristine}">
-                                            <div ng-messages="datosGeneralesForm['extension'+$index].$dirty && datosGeneralesForm['extension'+$index].$error" role="alert">
-                                                <label>&nbsp;
-                                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">número</span>
-                                                </label>
-                                                <input id="extensionId" class="form-control texto-en-mayusculas" type="text" name="extension{{$index}}"
-                                                       placeholder="Ext"
-                                                       aria-describedby="sizing-addon1" maxlength="5"
-                                                       ng-pattern="/^([0-9])*$/"
-                                                       ng-model="telefono['extension']">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </span>
-                            </ng-form>
-                            <div class="col-xs-12">
-                                <hr>
-                            </div>
-                            <!-- DIRECCION DE ENTREGA -->
-                            <forma-direccion direccion="crearOrdenVenta.datosEntrega.direccion"></forma-direccion>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h3>Datos Fiscales
-                            <small>Datos necesarios para generar factura</small>
-                        </h3>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="row">
-                            <ng-form name="datosFiscalesForm">
-                                <forma-datos-fiscales datos="crearOrdenVenta.datosFiscales"></forma-datos-fiscales>
-                                <div class="col-xs-12">
-                                    <hr>
-                                </div>
-                                <forma-direccion direccion="crearOrdenVenta.datosFiscales"
-                                                 class="animated fadeIn"
-                                                 ng-show="crearOrdenVenta.datosFiscales.personaFisica != undefined">
-
-                                </forma-direccion>
-                            </ng-form>
-                        </div>
-                    </div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="ibox">
+                <div class="ibox-content wizard">
+                    <div ui-view=""></div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <button class="btn btn-primary btn-group-justified"
-                        ng-click="crearOrdenVenta.generarCobro(crearOrdenVenta.datosEntrega, crearOrdenVenta.datosFiscales)">
-                    <i class="fa fa-chevron-left" aria-hidden="true"></i> Editar Pedido
-                </button>
-            </div>
-            <div class="col-sm-offset-8 col-sm-2">
-                <button class="btn btn-primary btn-group-justified"
-                        ng-disabled="crearOrdenVentaFrm.$invalid"
-                        ng-click="crearOrdenVenta.generarCobro(crearOrdenVenta.datosEntrega, crearOrdenVenta.datosFiscales)">
-                    <i class="fa fa-dollar"></i> Generar Cobro
-                </button>
-            </div>
+        <div class="col-sm-4">
+            <resumen-orden-venta otraformaid="crearOrdenVenta.otraOrdenId" mesesinteresid=""></resumen-orden-venta>
         </div>
     </div>
-</form>
-<br><br>
+</div>

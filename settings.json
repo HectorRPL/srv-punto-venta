@@ -1,3 +1,7 @@
 {
-  "public": {}
+  "public": {
+    "tiendaConf" :{
+      "tiendaId": "KadrHXDZTcAKSy3E4"
+    }
+  }
 }

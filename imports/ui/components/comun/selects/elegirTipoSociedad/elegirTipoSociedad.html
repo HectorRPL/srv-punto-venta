@@ -1,0 +1,8 @@
+<select id="elegirTipoSociedadId"
+        class="form-control m-b"
+        name="elegirTipoSociedad"
+        required
+        ng-model="elegirTipoSociedad.tiposociedad">
+    <option value="">ELEGIR</option>
+    <option ng-repeat="tipoSociedad in elegirTipoSociedad.abreviaturas" value="{{tipoSociedad.abreviacion}}">{{tipoSociedad.abreviacion}}</option>
+</select>
