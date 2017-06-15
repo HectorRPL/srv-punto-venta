@@ -1,6 +1,8 @@
 /**
  * Created by Héctor on 15/05/2017.
  */
+import {Proveedores} from "../../../../../../../../api/catalogos/bancos/collection";
+import {buscarBanco} from "../../../../../../../../api/catalogos/bancos/methods";
 import "./tarjetaBancaria.html";
 
 class TarjetaBancaria {
@@ -9,11 +11,19 @@ class TarjetaBancaria {
         $reactive(this).attach($scope);
     }
 
-    credito() {
-        this.creditoDebito = 'credito'
+    elegirCredito() {
+        this.datos.credito = true;
     }
-    debito() {
-        this.creditoDebito = 'debito'
+    elegirDebito() {
+        this.datos.credito = false;
+    }
+
+    buscarBanco(valor) {
+        return buscarBanco.callPromise({
+            nombre: valor
+        }).then(function (result) {
+            return result;
+        });
     }
 }
 

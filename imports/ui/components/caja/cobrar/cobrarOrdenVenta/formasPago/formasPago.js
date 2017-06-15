@@ -22,5 +22,9 @@ export default angular
     .component(name, {
         templateUrl: `imports/ui/components/caja/cobrar/cobrarOrdenVenta/${name}/${name}.html`,
         controllerAs: name,
-        controller: FormasPago
+        controller: FormasPago,
+        bindings: {
+            pagos: '=',
+            datos: '='
+        }
     });

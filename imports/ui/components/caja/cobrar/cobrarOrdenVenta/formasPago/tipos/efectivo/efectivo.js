@@ -10,11 +10,13 @@ class Efectivo {
     }
 
     pagoTotal() {
-        this.parcialTotal = 1;
+        this.pago = {};
+        this.parcialTotal = true;
     }
 
     pagoParcial() {
-        this.parcialTotal = 2;
+        this.pago = {};
+        this.parcialTotal = false;
     }
 }
 

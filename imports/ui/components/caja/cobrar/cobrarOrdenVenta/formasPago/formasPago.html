@@ -24,13 +24,13 @@
             </div>
         </div>
     </div>
-    <efectivo ng-show="formasPago.tipoPago === '1'"></efectivo>
+    <efectivo class="animated fadeInRight" ng-if="formasPago.tipoPago === '1'"></efectivo>
     <!-- TARJETA BANCARIA -->
-    <tarjeta-bancaria ng-show="formasPago.tipoPago === '2'"></tarjeta-bancaria>
+    <tarjeta-bancaria class="animated fadeInRight" ng-if="formasPago.tipoPago === '2'"></tarjeta-bancaria>
     <!-- TRASFERENCIA BANCARÍA -->
-    <div class="col-sm-8" ng-show="formasPago.tipoPago === '3'"></div>
+    <div class="col-sm-8" ng-if="formasPago.tipoPago === '3'"></div>
     <!-- CHEQUE -->
-    <div class="col-sm-8" ng-show="formasPago.tipoPago === '4'"></div>
+    <div class="col-sm-8" ng-if="formasPago.tipoPago === '4'"></div>
     <!-- NOTA DE CRÉDITO -->
-    <div class="col-sm-8" ng-show="formasPago.tipoPago === '5'"></div>
+    <div class="col-sm-8" ng-if="formasPago.tipoPago === '5'"></div>
 </div>

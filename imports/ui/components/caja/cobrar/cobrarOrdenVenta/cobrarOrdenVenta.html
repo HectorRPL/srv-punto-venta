@@ -13,7 +13,10 @@
                                 <h5>Forma de Pago</h5>
                             </div>
                             <div class="ibox-content">
-                                <formas-pago></formas-pago>
+                                <formas-pago
+                                        pagos="cobrarOrdenVenta.pagosOrdenesVenta"
+                                        datos="cobrarOrdenVenta.ordenVenta">
+                                </formas-pago>
                             </div>
                         </div>
                     </div>
@@ -29,7 +32,7 @@
                                         datos="cobrarOrdenVenta.ordenVenta">
                                 </desglose-cobro>
                                 <div class="text-right">
-                                    <button class="btn btn-primary"><i class="fa fa-dollar"></i> Make A Payment</button>
+                                    <button class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</button>
                                 </div>
                             </div>
                         </div>

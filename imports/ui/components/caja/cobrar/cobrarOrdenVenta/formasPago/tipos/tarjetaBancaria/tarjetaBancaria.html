@@ -10,8 +10,8 @@
                             name="pagoTotal"
                             type="button"
                             uib-btn-radio="false"
-                            ng-click="tarjetaBancaria.credito()"
-                            ng-model="tarjetaBancaria.parcialTotal">Crédito
+                            ng-click="tarjetaBancaria.elegirCredito()"
+                            ng-model="tarjetaBancaria.datos.elegirCreditoDebito">Crédito
                     </button>
                 </div>
                 <div class="btn-group" role="group">
@@ -20,8 +20,8 @@
                             name="pagoParcial"
                             type="button"
                             uib-btn-radio="true"
-                            ng-click="tarjetaBancaria.debito()"
-                            ng-model="tarjetaBancaria.parcialTotal">Débito
+                            ng-click="tarjetaBancaria.elegirDebito()"
+                            ng-model="tarjetaBancaria.datos.elegirCreditoDebito">Débito
                     </button>
                 </div>
             </div>
@@ -29,22 +29,46 @@
         <br>
         <br>
         <br>
-        <div class="row" ng-show="tarjetaBancaria.creditoDebito != undefined">
+        <span class="animated fadeInRight" ng-show="tarjetaBancaria.datos.credito != undefined">
+            <!-- NOMBRE DEL BANCO -->
+            <div class="col-sm-12">
+                <div class="form-group" ng-class="{ 'has-error' : tarjetaBancariaFrm.nombre.$invalid && !tarjetaBancariaFrm.nombre.$pristine}">
+                    <div ng-messages="tarjetaBancariaFrm.nombre.$dirty && tarjetaBancariaFrm.nombre.$error" role="alert">
+                        <label>Nombre de Banco *
+                            <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 1, max 50 letras</span>
+                            <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
+                        </label>
+                        <input id="nombreId"
+                               class="form-control texto-en-mayusculas"
+                               name="nombre"
+                               type="text"
+                               aria-describedby="sizing-addon1"
+                               minlength="2" maxlength="51"
+                               ng-minlength="2"
+                               ng-maxlength="50"
+                               ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                               required
+                               uib-typeahead="banco as banco.nombre for banco in tarjetaBancaria.buscarBanco($viewValue)"
+                               ng-model="tarjetaBancaria.datos.nombre">
+                    </div>
+                </div>
+            </div>
             <!-- VISA / MASTERCARD / AMERICAN EXPRESS -->
             <div class="col-sm-6">
-                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.tarjetaBancaria.$invalid && !tipoPagoForm.tarjetaBancaria.$pristine}">
-                    <div ng-messages="tipoPagoForm.tarjetaBancaria.$dirty && tipoPagoForm.tarjetaBancaria.$error" role="alert">
-                        <label>Formato
+                <div class="form-group" ng-class="{ 'has-error' : tarjetaBancariaFrm.tipo.$invalid && !tarjetaBancariaFrm.tipo.$pristine}">
+                    <div ng-messages="tarjetaBancariaFrm.tipo.$dirty && tarjetaBancariaFrm.tipo.$error" role="alert">
+                        <label>Tipo *
                             <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
                             <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
                         </label>
                         <select id="efectivoId"
                                 class="form-control"
-                                name="efectivo"
+                                name="tipo"
                                 type="text"
                                 aria-describedby="sizing-addon1"
                                 required
-                                ng-model="formasPago.tipoPago">
+                                ng-model="tarjetaBancaria.datos.tipo">
                             <option value="">Selecciona</option>
                             <option value="1">Visa</option>
                             <option value="2">Master Card</option>
@@ -56,26 +80,28 @@
             </div>
             <!-- ÚLTIMOS CUATRO DÍGITOS -->
             <div class="col-sm-6">
-                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.tarjetaDebito.$invalid && !tipoPagoForm.tarjetaDebito.$pristine}">
-                    <div ng-messages="tipoPagoForm.tarjetaDebito.$dirty && tipoPagoForm.tarjetaDebito.$error" role="alert">
-                        <label>Últimos 4 díjitos
+                <div class="form-group" ng-class="{ 'has-error' : tarjetaBancariaFrm.tarjetaDebito.$invalid && !tarjetaBancariaFrm.tarjetaDebito.$pristine}">
+                    <div ng-messages="tarjetaBancariaFrm.tarjetaDebito.$dirty && tarjetaBancariaFrm.tarjetaDebito.$error" role="alert">
+                        <label>Referencia *
                             <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
-                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="maxlength">4 dígitos</span>
                         </label>
                         <input class="form-control"
                                name="tarjetaDebito"
                                type="number"
+                               placeholder="Últimos 4 dígitos"
+                               maxlength="4"
                                aria-describedby="sizing-addon1"
                                required
-                               ng-model="formasPago.formaPago.cambio">
+                               ng-model="tarjetaBancaria.datos.cuatroDigitos">
                     </div>
                 </div>
             </div>
             <!-- CANTIDAD A PAGAR -->
             <div class="col-sm-6">
-                <div class="form-group" ng-class="{ 'has-error' : tipoPagoForm.ultimosCuatroDigitos.$invalid && !tipoPagoForm.ultimosCuatroDigitos.$pristine}">
-                    <div ng-messages="tipoPagoForm.ultimosCuatroDigitos.$dirty && tipoPagoForm.ultimosCuatroDigitos.$error" role="alert">
-                        <label>Ingresa la cantidad
+                <div class="form-group" ng-class="{ 'has-error' : tarjetaBancariaFrm.ultimosCuatroDigitos.$invalid && !tarjetaBancariaFrm.ultimosCuatroDigitos.$pristine}">
+                    <div ng-messages="tarjetaBancariaFrm.ultimosCuatroDigitos.$dirty && tarjetaBancariaFrm.ultimosCuatroDigitos.$error" role="alert">
+                        <label>Cantidad a pagar *
                             <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
                             <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
                         </label>
@@ -84,9 +110,21 @@
                                type="number"
                                aria-describedby="sizing-addon1"
                                required
-                               ng-model="formasPago.formaPago.tarjetaDebito.ultimosCuatroDigitos">
+                               ng-model="tarjetaBancaria.datos.monto">
                     </div>
                 </div>
+            </div>
+        </span>
+    </div>
+
+    <div class="col-sm-12">
+        <hr>
+        <div class="ibox">
+            <div class="text-right">
+                <button class="btn btn-primary animated fadeInRight"
+                        ng-disabled="tarjetaBancariaFrm.$invalid"
+                        ng-show="tarjetaBancaria.datos.credito != undefined"><i class="fa fa-dollar"></i> Realizar Corbro
+                </button>
             </div>
         </div>
     </div>
