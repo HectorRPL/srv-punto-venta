@@ -2,7 +2,7 @@
  * Created by Héctor on 15/05/2017.
  */
 import {Proveedores} from "../../../../../../../../api/catalogos/bancos/collection";
-import {buscarBanco} from "../../../../../../../../api/catalogos/bancos/methods";
+import {buscarBanco} from "../../../../../../../../api/catalogos/bancos/busquedas";
 import "./tarjetaBancaria.html";
 
 class TarjetaBancaria {

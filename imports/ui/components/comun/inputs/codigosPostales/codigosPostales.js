@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 29/03/2017.
  */
-import {obtenerColonias} from "../../../../../api/catalogos/codigosPostales/methods";
+import {buscarColonias} from "../../../../../api/catalogos/codigosPostales/busquedas";
 import "./codigosPostales.html";
 
 class CodigosPostales {
@@ -32,7 +32,7 @@ export default angular
             link: function (scope, element, attrs, ngModel) {
                 ngModel.$asyncValidators.cpinvalido = function (modelValue, viewValue) {
                     let codigoPostal = modelValue || viewValue;
-                    return obtenerColonias.callPromise({
+                    return buscarColonias.callPromise({
                         cp: codigoPostal
                     }).then(function (result) {
                         scope.codigosPostales.direccion.colonias = result;

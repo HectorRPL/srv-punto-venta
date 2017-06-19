@@ -4,7 +4,7 @@
 import './puntoVenta.html';
 import {name as EligeProductoInventarios} from './eligeProductoInventarios/eligeProductoInventarios';
 import {name as OrdenVenta} from './ordenVenta/ordenVenta';
-import {buscarProductoDescp} from "../../../api/catalogos/productos/methods"
+import {buscarProductoDescp} from "../../../api/catalogos/productos/busquedas"
 import {Session} from "meteor/session";
 
 

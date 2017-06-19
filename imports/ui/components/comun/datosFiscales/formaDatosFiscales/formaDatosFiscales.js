@@ -2,7 +2,7 @@
  * Created by Héctor on 06/04/2017.
  */
 import "./formaDatosFiscales.html";
-import {existeRFC} from "../../../../../api/datosFiscales/methods";
+import {buscarRfc} from "../../../../../api/datosFiscales/busquedas";
 import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegirTipoSociedad"
 
 class FormaDatosFiscales {
@@ -51,7 +51,7 @@ export default angular
             link: function (scope, element, attrs, ngModel) {
                 ngModel.$asyncValidators.existerfc = function (modelValue, viewValue) {
                     let rfc = modelValue || viewValue;
-                    return existeRFC.callPromise({
+                    return buscarRfc.callPromise({
                         rfc: rfc
                     }).then(function (result) {
                         if (result) {

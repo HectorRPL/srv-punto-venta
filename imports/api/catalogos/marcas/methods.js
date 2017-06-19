@@ -23,22 +23,7 @@ export const insertar = new ValidatedMethod({
     }
 });
 
-export const obtenerMarcas = new ValidatedMethod({
-    name: 'marcas.obtenerMarcas',
-    mixins: [CallPromiseMixin],
-    validate: new SimpleSchema({
-        marca: {type: String}
-    }).validator(),
-    run({marca}) {
-        const selector = {nombre: {$regex: marca, $options: 'i'}};
-        let options = {fields: {_id: 1, nombre: 1}};
-        const resultado = Marcas.find(selector, options).fetch();
-        return resultado;
-    }
-});
-
-
-const MARCAS_METHODS = _.pluck([insertar, obtenerMarcas], 'name');
+const MARCAS_METHODS = _.pluck([insertar], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {
