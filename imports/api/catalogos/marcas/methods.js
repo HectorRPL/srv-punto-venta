@@ -12,8 +12,8 @@ const ID = ['_id'];
 
 const CAMPOS_FACTORES = ['nombre'];
 // Enviará un correo con un link al usuario para verificacar de registro
-export const insertar = new ValidatedMethod({
-    name: 'marcas.insertar',
+export const altaMarca = new ValidatedMethod({
+    name: 'marcas.altaMarca',
     validate: Marcas.simpleSchema().pick(CAMPOS_FACTORES).validator({
         clean: true,
         filter: false
@@ -23,7 +23,7 @@ export const insertar = new ValidatedMethod({
     }
 });
 
-const MARCAS_METHODS = _.pluck([insertar], 'name');
+const MARCAS_METHODS = _.pluck([altaMarca], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

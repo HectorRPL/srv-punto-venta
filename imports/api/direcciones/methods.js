@@ -12,8 +12,8 @@ const ID = ['_id'];
 const CAMPOS_DIRECCION = ['propietarioId', 'calle', 'delMpio', 'estado', 'estadoId', 'colonia', 'codigoPostal', 'numExt', 'numInt', 'codigoPais'];
 
 // CREAR CANDIDATO
-export const crearDireccion = new ValidatedMethod({
-    name: 'direcciones.crearDireccion',
+export const altaDireccion = new ValidatedMethod({
+    name: 'direcciones.altaDireccion',
     validate: Direcciones.simpleSchema().pick(CAMPOS_DIRECCION).validator({
         clean: true,
         filter: false
@@ -38,8 +38,8 @@ export const crearDireccion = new ValidatedMethod({
 });
 
 // ACTUALIZAR DIRECCIÓN
-export const actualizarDireccion = new ValidatedMethod({
-    name: 'direcciones.actualizarDireccion',
+export const cambiosDireccion = new ValidatedMethod({
+    name: 'direcciones.cambiosDireccion',
     mixins: [LoggedInMixin],
     checkLoggedInError: {
         error: 'noLogeado',
@@ -70,7 +70,7 @@ export const actualizarDireccion = new ValidatedMethod({
     }
 });
 
-const DIRECCIONES_METHODS = _.pluck([crearDireccion, actualizarDireccion], 'name');
+const DIRECCIONES_METHODS = _.pluck([altaDireccion, cambiosDireccion], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

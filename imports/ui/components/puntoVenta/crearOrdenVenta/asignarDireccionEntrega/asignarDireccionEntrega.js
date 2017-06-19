@@ -3,8 +3,8 @@
  */
 import {name as FormaDireccion} from '../../../comun/direccion/formaDireccion/formaDireccion';
 import {Direcciones} from '../../../../../api/direcciones/collection';
-import {actualizarDireccion, crearDireccion} from '../../../../../api/direcciones/methods';
-import {actualizarDireccionEntrega} from '../../../../../api/ordenesVentas/methods';
+import {cambiosDireccion, altaDireccion} from '../../../../../api/direcciones/methods';
+import {cambiosDireccionEntrega} from '../../../../../api/ordenesVentas/methods';
 import './asignarDireccionEntrega.html';
 
 class AsignarDireccionEntrega {
@@ -25,11 +25,13 @@ class AsignarDireccionEntrega {
 
     guardar() {
         this.crearDireccion();
-        crearDireccion.call(this.direccion, this.$bindToContext((err, result)=> {
+        altaDireccion.call(this.direccion, this.$bindToContext((err, result)=> {
             if (err) {
+                console.log('err', err);
 
             } else {
                 this.asignar(result);
+                console.log('result', result);
             }
         }));
     }
@@ -37,7 +39,7 @@ class AsignarDireccionEntrega {
     actualizar() {
         this.crearDireccion();
 
-        actualizarDireccion.call(this.direccion, this.$bindToContext((err)=> {
+        cambiosDireccion.call(this.direccion, this.$bindToContext((err)=> {
             if (err) {
 
             } else {
@@ -47,7 +49,7 @@ class AsignarDireccionEntrega {
     }
 
     asignar(direccionId) {
-        actualizarDireccionEntrega.call({clienteId: this.clienteId, direccionId: direccionId},
+        cambiosDireccionEntrega.call({clienteId: this.clienteId, direccionId: direccionId},
             this.$bindToContext((err)=> {
                 if(err){
 

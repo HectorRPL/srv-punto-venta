@@ -14,9 +14,8 @@ var pedidoSchema = new SimpleSchema({
     pedido: {type: [Object], blackbox: true}
 });
 
-
-export const crearOrdenVenta = new ValidatedMethod({
-    name: 'ordenesVenta.crear',
+export const altaOrdenVenta = new ValidatedMethod({
+    name: 'ordenesVenta.altaOrdenVenta',
     validate: new SimpleSchema({
         tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
         otraFormaPago: {type: pedidoSchema, optional: true},
@@ -31,11 +30,11 @@ export const crearOrdenVenta = new ValidatedMethod({
             };
 
             if (otraFormaPago.total > 0) {
-                ids.ordenOtraFormaId = OrdenesVentasOp.crearOrdenVenta(tiendaId, otraFormaPago, false);
+                ids.ordenOtraFormaId = OrdenesVentasOp.altaOrdenVenta(tiendaId, otraFormaPago, false);
             }
 
             if (mesesIntereses.total > 0) {
-                ids.ordenMesesId = OrdenesVentasOp.crearOrdenVenta(tiendaId, mesesIntereses, true);
+                ids.ordenMesesId = OrdenesVentasOp.altaOrdenVenta(tiendaId, mesesIntereses, true);
             }
 
             return ids;
@@ -45,8 +44,8 @@ export const crearOrdenVenta = new ValidatedMethod({
     }
 });
 
-export const actualizarCliente = new ValidatedMethod({
-    name: 'ordenesVenta.actualizarCliente',
+export const cambiosCliente = new ValidatedMethod({
+    name: 'ordenesVenta.cambiosCliente',
     validate: new SimpleSchema({
         ordenId: {type: String, regEx: SimpleSchema.RegEx.Id},
         clienteId: {type: String, regEx: SimpleSchema.RegEx.Id}
@@ -58,8 +57,8 @@ export const actualizarCliente = new ValidatedMethod({
 
 });
 
-export const actualizarDireccionEntrega = new ValidatedMethod({
-    name: 'ordenesVenta.actualizarDireccionEntrega',
+export const cambiosDireccionEntrega = new ValidatedMethod({
+    name: 'ordenesVenta.cambiosDireccionEntrega',
     validate: new SimpleSchema({
         ordenId: {type: String, regEx: SimpleSchema.RegEx.Id},
         direccionId: {type: String, regEx: SimpleSchema.RegEx.Id}
@@ -73,9 +72,9 @@ export const actualizarDireccionEntrega = new ValidatedMethod({
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
-        crearOrdenVenta,
-        actualizarCliente,
-        actualizarDireccionEntrega
+        altaOrdenVenta,
+        cambiosCliente,
+        cambiosDireccionEntrega
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

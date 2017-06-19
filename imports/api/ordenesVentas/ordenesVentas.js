@@ -10,7 +10,7 @@ const MENSAJE_ERROR_ORDEN_VENTA = 'Error al crear la orden de venta, reportar al
 
 OrdenesVentasOp = {
 
-    crearOrdenVenta(tiendaId, ordenVenta, mesesIntereses){
+    altaOrdenVenta(tiendaId, ordenVenta, mesesIntereses){
         const crearOrden = Meteor.wrapAsync(OrdenesVentas.insert, OrdenesVentas);
         try {
             const orden = {

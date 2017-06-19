@@ -1,8 +1,8 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {crearCliente} from '../../../../../api/clientes/methods';
-import {actualizarCliente} from '../../../../../api/ordenesVentas/methods';
+import {altaCliente} from '../../../../../api/clientes/methods';
+import {cambiosCliente} from '../../../../../api/ordenesVentas/methods';
 import {name as Alertas} from '../../../comun/alertas/alertas';
 import './asignarCliente.html';
 
@@ -16,7 +16,7 @@ class AsignarCliente {
     }
 
     insertarCliente() {
-        crearCliente.call(this.datos, this.$bindToContext((err, result)=> {
+        altaCliente.call(this.datos, this.$bindToContext((err, result)=> {
             if (err) {
                 this.tipoMsj = 'danger';
                 this.msj = 'Erro al crear al cliente, intentar mas tarde';
@@ -28,7 +28,7 @@ class AsignarCliente {
 
     asignarCliente(clienteId) {
 
-        actualizarCliente.call({ordenId: this.ordenId, clienteId: clienteId}, this.$bindToContext((err)=> {
+        cambiosCliente.call({ordenId: this.ordenId, clienteId: clienteId}, this.$bindToContext((err)=> {
             if (err) {
                 this.tipoMsj = 'danger';
                 this.msj = 'Erro al crear al cliente, intentar mas tarde';

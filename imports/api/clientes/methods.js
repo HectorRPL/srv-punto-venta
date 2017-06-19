@@ -10,8 +10,8 @@ import {Clientes} from "./collection";
 
 const CAMPOS_CLIENTES = ['nombre', 'apellidoPaterno','apellidoMaterno'];
 
-export const crearCliente = new ValidatedMethod({
-    name: 'clientes.crearCliente',
+export const altaCliente = new ValidatedMethod({
+    name: 'clientes.altaCliente',
     validate: Clientes.simpleSchema().pick(CAMPOS_CLIENTES).validator({
         clean: true,
         filter: false
@@ -25,7 +25,7 @@ export const crearCliente = new ValidatedMethod({
     }
 });
 
-const CLIENTES_METHODS = _.pluck([crearCliente], 'name');
+const CLIENTES_METHODS = _.pluck([altaCliente], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

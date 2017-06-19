@@ -3,10 +3,8 @@
  */
 import './ordenVenta.html';
 import {name as CrearOrdenVenta} from '../crearOrdenVenta/crearOrdenVenta';
-import {crearOrdenVenta} from '../../../../api/ordenesVentas/methods';
+import {altaOrdenVenta} from '../../../../api/ordenesVentas/methods';
 import {name as Alertas} from '../../comun/alertas/alertas';
-
-
 
 class OrdenVenta {
 
@@ -80,7 +78,7 @@ class OrdenVenta {
             mesesIntereses: this.mesesIntereses,
             tiendaId: this.tiendaid
         };
-        crearOrdenVenta.call(ordenCompra, this.$bindToContext((err, result)=>{
+        altaOrdenVenta.call(ordenCompra, this.$bindToContext((err, result)=>{
             if(err){
                 console.log(err);
                 this.tipoMsj = 'danger';
