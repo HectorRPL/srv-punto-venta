@@ -3,7 +3,7 @@
  */
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
-import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {Marcas} from "./collection";
@@ -33,4 +33,3 @@ if (Meteor.isServer) {
         },
     }, 5, 1000);
 }
-

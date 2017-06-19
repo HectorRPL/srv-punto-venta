@@ -8,7 +8,6 @@ import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {DatosFiscales} from "./collection";
 
-
 export const buscarRfc = new ValidatedMethod({
     name: 'datosFiscales.buscarRfc',
     mixins: [CallPromiseMixin],

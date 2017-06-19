@@ -3,10 +3,10 @@
  */
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
-import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
-import {CodigosPostales} from "./collection";
+import {CodigosPostales} from "./collection.js";
 
 export const buscarColonias = new ValidatedMethod({
     name: 'codigosPostales.buscarColonias',
@@ -20,15 +20,14 @@ export const buscarColonias = new ValidatedMethod({
     }
 });
 
-const BUSQUEDAS_CODIGOS_POSTALES_METHODS = _.pluck([buscarColonias], 'name');
+const BUSQUEDAS_CODIGOS_POSTALES_METODOS = _.pluck([buscarColonias], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {
-            return _.contains(BUSQUEDAS_CODIGOS_POSTALES_METHODS, name);
+            return _.contains(BUSQUEDAS_CODIGOS_POSTALES_METODOS, name);
         },
         connectionId() {
             return true;
         },
     }, 5, 1000);
 }
-

@@ -1,15 +1,11 @@
 /**
  * Created by Héctor on 19/06/2017.
  */
-/**
- * Created by Héctor on 12/03/2017.
- */
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {Productos} from "./collection";
-
 
 export const buscarProductoDescp = new ValidatedMethod({
     name: 'marcas.buscarProductoDescp',
