@@ -1,8 +1,8 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {name as FormaDatosFiscales} from '../../../../comun/datosFiscales/formaDatosFiscales/formaDatosFiscales';
-import {name as FormaDireccion} from '../../../../comun/direccion/formaDireccion/formaDireccion';
+import {name as FormaDatosFiscales} from '../../../../comun/formas/formaDatosFiscales/formaDatosFiscales';
+import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/formaDireccion';
 import './asignarDatosFiscales.html';
 
 class AsignarDatosFiscales {

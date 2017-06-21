@@ -1,7 +1,7 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {name as FormaDireccion} from '../../../../comun/direccion/formaDireccion/formaDireccion';
+import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/formaDireccion';
 import {Direcciones} from '../../../../../../api/direcciones/collection';
 import {cambiosDireccion, altaDireccion} from '../../../../../../api/direcciones/methods';
 import {cambiosDireccionEntrega} from '../../../../../../api/ordenesVentas/methods';

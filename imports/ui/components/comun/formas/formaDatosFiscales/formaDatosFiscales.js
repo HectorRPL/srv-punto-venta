@@ -37,14 +37,14 @@ export default angular
         ElegirTipoSociedad
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/datosFiscales/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/comun/formas/${name}/${name}.html`,
         controllerAs: name,
         controller: FormaDatosFiscales,
         bindings: {
             datos: '='
         }
     })
-    .directive('existeRfc', ['$q', function ($q) {
+    .directive('buscarRfc', ['$q', function ($q) {
         return {
             restrict: 'EA',
             require: '?ngModel',

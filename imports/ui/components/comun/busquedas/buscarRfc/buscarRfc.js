@@ -2,28 +2,28 @@
  * Created by Héctor on 06/04/2017.
  */
 import {buscarRfc} from "../../../../../api/validarRfc/methods";
-import "./validarRfc.html";
+import "./buscarRfc.html";
 
-class ValidarRfc {
+class BuscarRfc {
     constructor($scope) {
         'ngInject';
     }
 }
 
-const name = 'validarRfc';
+const name = 'buscarRfc';
 // create a module
 
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/inputs/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/comun/busquedas/${name}/${name}.html`,
         controllerAs: name,
         bindings: {
             rfc: '='
         },
-        controller: ValidarRfc
+        controller: BuscarRfc
     })
-    .directive('rfcEncontrado', ['$q', function ($q) {
+    .directive('buscarRfc', ['$q', function ($q) {
         return {
             restrict: 'EA',
             require: '?ngModel',

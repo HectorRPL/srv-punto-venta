@@ -18,14 +18,14 @@ const name = 'codigosPostales';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/inputs/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/comun/busquedas/${name}/${name}.html`,
         controllerAs: name,
         bindings: {
             direccion: '='
         },
         controller: CodigosPostales
     })
-    .directive('cpInvalido', ['$q', function ($q) {
+    .directive('buscarColonias', ['$q', function ($q) {
         return {
             restrict: 'EA',
             require: '?ngModel',
