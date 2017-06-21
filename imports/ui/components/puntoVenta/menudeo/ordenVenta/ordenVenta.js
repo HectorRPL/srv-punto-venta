@@ -79,7 +79,6 @@ class OrdenVenta {
         };
         altaOrdenVenta.call(ordenCompra, this.$bindToContext((err, result)=>{
             if(err){
-                console.log(err);
                 this.tipoMsj = 'danger';
                 this.msj = err.message;
             } else {

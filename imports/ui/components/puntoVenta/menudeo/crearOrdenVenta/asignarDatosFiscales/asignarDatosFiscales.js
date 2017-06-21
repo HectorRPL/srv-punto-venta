@@ -18,8 +18,7 @@ class AsignarDatosFiscales {
     guardarDatosFiscales() {
         this.datos = angular.copy(this.datosFiscales);
         delete this.datos.colonias;
-        console.log('LINEA 21 Estos son los datos sin colonias this.datos:::::::', this.datos);
-        // this.altaDatosFiscales()
+        // this.altaDatosFiscales();
     }
 
     // altaDatosFiscales() {

@@ -13,14 +13,6 @@ class BuscarProductoProveedores{
         this.pasoActual = 1;
         this.tipoMsj = '';
 
-        /**/
-
-
-        console.log('Bueno, almenos esto está funcionando');
-
-
-        /**/
-
         this.pedido = [
             {claveProducto: 'FA215', existencia: 45, tienda: 'CERAGRES',         tipoUnidad: 'PZA', cantidad: 0, _id: '126321', marca: 'DALTILE', clase: '1A', medida: '33X33', lista: '1', metrosCaja: 1.5, precioUnitario: 100, descuento: 5,  nombre: 'ALTHEA LIGTH GRAY'},
             {claveProducto: 'FA215', existencia: 45, tienda: 'XOCHIMILCO',       tipoUnidad: 'PZA', cantidad: 0, _id: '126321', marca: 'DALTILE', clase: '1A', medida: '33X33', lista: '1', metrosCaja: 1.5, precioUnitario: 100, descuento: 5,  nombre: 'ALTHEA LIGTH GRAY'},

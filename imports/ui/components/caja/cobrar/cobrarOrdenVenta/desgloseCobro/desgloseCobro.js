@@ -24,7 +24,6 @@ class DesgloseCobro {
             for ( var i = 0, _len = this.length; i < _len; i++ ) {
                 total += this[i][prop]
             }
-            console.log(total);
             return total
         }
         return this.pagos.sum("monto");
