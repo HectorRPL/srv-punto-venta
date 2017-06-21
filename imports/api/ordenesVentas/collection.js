@@ -30,6 +30,7 @@ Schema.ordenesVentas = new SimpleSchema({
     total: {type: Number, decimal: true},
     numeroVenta: {type: Number, defaultValue: 0},
     factura: {type: Boolean, defaultValue: false},
+    // Faltan los datos fiscales Id
     estado: {type: Number, defaultValue: 0},
     mesesIntereses: {type: Boolean, defaultValue: false},
     ventaMayoreo: {type: String, defaultValue: '0'}

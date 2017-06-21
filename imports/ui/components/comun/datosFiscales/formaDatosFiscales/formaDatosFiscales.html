@@ -9,8 +9,7 @@
                         name="fisica"
                         type="button"
                         uib-btn-radio="'PF'"
-                        ng-click="formaDatosFiscales.esPersonaFisica()"
-                        ng-model="formaDatosFiscales.persona">Física
+                        ng-model="formaDatosFiscales.datos.tipoPersona">Física
                 </button>
             </div>
             <div class="btn-group" role="group">
@@ -19,15 +18,14 @@
                         name="moral"
                         type="button"
                         uib-btn-radio="'PM'"
-                        ng-click="formaDatosFiscales.esPersonaMoral()"
-                        ng-model="formaDatosFiscales.persona">Moral
+                        ng-model="formaDatosFiscales.datos.tipoPersona">Moral
                 </button>
             </div>
         </div>
     </div>
     <span class="animated fadeIn">
         <!-- PERSONA FISICA -->
-        <span class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PF'">
+        <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PF'">
             <!--RFC PERSONA FÍSCA-->
             <div class="col-sm-4">
                 <div class="form-group"
@@ -127,9 +125,9 @@
                     </div>
                 </div>
             </div>
-        </span>
+        </div>
         <!-- PERSONA MORAL -->
-        <span class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PM'">
+        <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PM'">
             <!--RFC PERSONA MORAL-->
             <div class="col-sm-4">
                 <div class="form-group"
@@ -173,7 +171,7 @@
             </div>
         </div>
             <!--RAZÓN SOCIAL-->
-            <div class="col-sm-10">
+            <div class="col-sm-8">
                 <div class="form-group"
                      ng-class="{ 'has-error' : datosFiscalesForm.razonSocial.$invalid && !datosFiscalesForm.razonSocial.$pristine}">
                     <div ng-messages="datosFiscalesForm.razonSocial.$dirty && datosFiscalesForm.razonSocial.$error"
@@ -192,7 +190,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-2">
+            <!--TIPO DE SOCIEDAD-->
+            <div class="col-sm-4">
                 <div class="form-group"
                      ng-class="{ 'has-error' : datosFiscalesForm.elegirTipoSociedad.$invalid && !datosFiscalesForm.elegirTipoSociedad.$pristine}">
                     <div ng-messages="datosFiscalesForm.elegirTipoSociedad.$dirty && datosFiscalesForm.elegirTipoSociedad.$error"
@@ -204,7 +203,6 @@
                     </div>
                 </div>
             </div>
-
-        </span>
+        </div>
     </span>
 </ng-form>

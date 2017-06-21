@@ -1,10 +1,10 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {name as FormaDireccion} from '../../../comun/direccion/formaDireccion/formaDireccion';
-import {Direcciones} from '../../../../../api/direcciones/collection';
-import {cambiosDireccion, altaDireccion} from '../../../../../api/direcciones/methods';
-import {cambiosDireccionEntrega} from '../../../../../api/ordenesVentas/methods';
+import {name as FormaDireccion} from '../../../../comun/direccion/formaDireccion/formaDireccion';
+import {Direcciones} from '../../../../../../api/direcciones/collection';
+import {cambiosDireccion, altaDireccion} from '../../../../../../api/direcciones/methods';
+import {cambiosDireccionEntrega} from '../../../../../../api/ordenesVentas/methods';
 import './asignarDireccionEntrega.html';
 
 class AsignarDireccionEntrega {
@@ -14,8 +14,8 @@ class AsignarDireccionEntrega {
         this.direccion = {};
         this.state = $state;
         this.clienteId = $stateParams.clienteId;
-        this.subscribe('direcciones.propietario', ()=> [{propietarioId: this.clienteId}]);
 
+        this.subscribe('direcciones.propietario', ()=> [{propietarioId: this.clienteId}]);
         this.helpers({
             direccionCliente(){
                 return Direcciones.findOne({propietarioId: this.clienteId}) || {};
@@ -27,21 +27,18 @@ class AsignarDireccionEntrega {
         this.crearDireccion();
         altaDireccion.call(this.direccion, this.$bindToContext((err, result)=> {
             if (err) {
-                console.log('err', err);
-
+                console.log('<<<<<<<<<< ERROR LINEA 31 >>>>>>>>>>', err);
             } else {
                 this.asignar(result);
-                console.log('result', result);
             }
         }));
     }
 
     actualizar() {
         this.crearDireccion();
-
         cambiosDireccion.call(this.direccion, this.$bindToContext((err)=> {
             if (err) {
-
+                console.log('<<<<<<<<<< ERROR LINEA 44 >>>>>>>>>>', err);
             } else {
                 this.asignar(this.direccion._id);
             }
@@ -49,21 +46,25 @@ class AsignarDireccionEntrega {
     }
 
     asignar(direccionId) {
-        cambiosDireccionEntrega.call({clienteId: this.clienteId, direccionId: direccionId},
+        cambiosDireccionEntrega.call(
+            {
+                ordenId: this.clienteId,
+                direccionId: direccionId
+            },
             this.$bindToContext((err)=> {
                 if(err){
-
+                    console.log('<<<<<<<<<< ERROR LINEA 55 >>>>>>>>>>', err);
                 } else{
-                    this.state.go('app.crearventa.fiscales', {clienteId: this.clienteId});
+                    this.state.go('app.venta.crearventa.fiscales', {clienteId: this.clienteId});
                 }
-
             }));
-
     }
 
     crearDireccion() {
         this.direccion = angular.copy(this.direccionCliente);
         delete this.direccion.colonias;
+        delete this.direccion.fechaCreacion;
+        this.direccion.propietarioId = this.clienteId;
     }
 }
 
@@ -75,7 +76,7 @@ export default angular
         FormaDireccion
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/crearOrdenVenta/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
         controllerAs: name,
         controller: AsignarDireccionEntrega
     })
@@ -85,7 +86,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.crearventa.direccion', {
+        .state('app.venta.crearventa.direccion', {
             url: '/:clienteId/direccion',
             template: '<asignar-direccion-entrega></asignar-direccion-entrega>'
         });

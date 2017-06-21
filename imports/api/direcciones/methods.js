@@ -11,7 +11,6 @@ const ID = ['_id'];
 
 const CAMPOS_DIRECCION = ['propietarioId', 'calle', 'delMpio', 'estado', 'estadoId', 'colonia', 'codigoPostal', 'numExt', 'numInt', 'codigoPais'];
 
-// CREAR CANDIDATO
 export const altaDireccion = new ValidatedMethod({
     name: 'direcciones.altaDireccion',
     validate: Direcciones.simpleSchema().pick(CAMPOS_DIRECCION).validator({
@@ -20,24 +19,12 @@ export const altaDireccion = new ValidatedMethod({
     }),
     run({propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais}) {
         if (Meteor.isServer) {
-            const direccion = {
-                propietarioId,
-                calle,
-                delMpio,
-                estado,
-                estadoId,
-                colonia,
-                codigoPostal,
-                numExt,
-                numInt,
-                codigoPais
-            };
+            const direccion = {propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais};
             return Direcciones.insert(direccion);
         }
     }
 });
 
-// ACTUALIZAR DIRECCIÓN
 export const cambiosDireccion = new ValidatedMethod({
     name: 'direcciones.cambiosDireccion',
     mixins: [LoggedInMixin],

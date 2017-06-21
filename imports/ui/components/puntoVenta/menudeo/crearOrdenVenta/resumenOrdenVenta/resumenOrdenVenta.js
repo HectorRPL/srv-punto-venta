@@ -1,8 +1,8 @@
 /**
  * Created by jvltmtz on 14/06/17.
  */
-import {OrdenesVentas} from '../../../../../api/ordenesVentas/collection'
-import {PartidasOrdenesVentas} from '../../../../../api/ordenesVentas/partidasOrdenesVentas/collection'
+import {OrdenesVentas} from '../../../../../../api/ordenesVentas/collection'
+import {PartidasOrdenesVentas} from '../../../../../../api/ordenesVentas/partidasOrdenesVentas/collection'
 import './resumenOrdenVenta.html';
 
 class ResumenOrdenVenta {
@@ -30,7 +30,7 @@ export default angular
 
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/crearOrdenVenta/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
         controllerAs: name,
         controller: ResumenOrdenVenta,
         bindings: {

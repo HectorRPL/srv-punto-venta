@@ -1,0 +1,118 @@
+<form name="ordenVentaFrm" id="ordenVentaFrmId">
+    <div class="table-responsive m-t">
+        <table class="table table-hover invoice-table">
+            <thead>
+            <tr>
+                <th style="text-align: center">Cantidad</th>
+                <th style="text-align: center">Unidad</th>
+                <th style="text-align: center">Descripción</th>
+                <th style="text-align: center">Precio</th>
+                <th style="text-align: center">% Descuento</th>
+                <th style="text-align: center">Precio Final</th>
+                <th style="text-align: center">Importe</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="producto in ordenVenta.pedidogrl"
+                    ng-init="ordenVenta.generarSubTotal(producto)">
+                    <!--CANTIDAD-->
+                    <td>
+                        <button type="button"
+                                class="pull-left close"
+                                uib-popover="Quitar producto"
+                                popover-trigger="'mouseenter'"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                ng-click="ordenVenta.quitarArticulo($index)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{producto.total}}
+                    </td>
+                    <!--UNIDAD-->
+                    <td class="text-center">
+                        {{producto.unidad}}
+                    </td>
+                    <!--DESCRIPCIÓN DE PRODUCTO-->
+                    <td>
+                        <div class="text-center">
+                            &nbsp;&nbsp; {{producto.marcaDesc}} {{producto.descripcion}}
+                        </div>
+                    </td>
+                    <!--PRECIO-->
+                    <td class="text-center">
+                        ${{producto.precioBase | number : 2}}
+                    </td>
+                    <!--DESCUENTO EN PORCENTAJE Y CANTIDAD-->
+                    <td class="text-center">
+                        <a>
+                            <span class="text-navy pull-right">
+                                (- {{producto.descuento  | number : 0}}
+                                %)&nbsp;&nbsp;${{producto.precioBase * (producto.descuento/100) | number : 2}}
+                            </span>
+                        </a>
+                    </td>
+                    <!--PRECIO FINAL DESCUENTO-->
+                    <td class="text-right">
+                        ${{producto.precioFinal  | number : 2}}
+                    </td>
+                    <!--IMPORTE-->
+                    <td>${{(producto.precioFinal * producto.total) | number : 2}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <table class="table invoice-total">
+        <tbody>
+            <tr>
+                <td><strong>Sub Total :</strong></td>
+                <td>${{ordenVenta.otraFormaPago.subTotal | number : 2}}</td>
+            </tr>
+            <tr>
+                <td><strong>IVA :</strong></td>
+                <td>${{ordenVenta.otraFormaPago.importeIva   | number : 2}}</td>
+            </tr>
+            <tr>
+                <td><strong>TOTAL :</strong></td>
+                <td>${{ordenVenta.otraFormaPago.total | number : 2}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table invoice-total">
+        <h3>Totales meses sin intereses</h3>
+        <tbody>
+            <tr>
+                <td><strong>Sub Total :</strong></td>
+                <td>${{ordenVenta.mesesIntereses.subTotal | number : 2}}</td>
+            </tr>
+            <tr>
+                <td><strong>IVA :</strong></td>
+                <td>${{ordenVenta.mesesIntereses.importeIva   | number : 2}}</td>
+            </tr>
+            <tr>
+                <td><strong>TOTAL :</strong></td>
+                <td>${{ordenVenta.mesesIntereses.total | number : 2}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <!-- div class="col-md-3">
+            <h4>Tipo de comprobante</h4>
+            <div class="btn-group">
+                <label class="btn btn-default" ng-class="{'btn-primary': ordenVenta.factura}"
+                       ng-model="ordenVenta.factura" uib-btn-radio="false" required>Nota
+                </label>
+                <label class="btn btn-default" ng-model="ordenVenta.factura" uib-btn-radio="true" required>Factura</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div -->
+        <div class="col-md-offset-9 col-md-3">
+            <button class="btn btn-primary pull-right"
+                    ng-disabled="ordenVentaFrm.$invalid"
+                    ng-click="ordenVenta.generar()">
+                <i class="fa fa-dollar"></i> Generar Orden de Compra
+            </button>
+        </div>
+    </div>
+</form>

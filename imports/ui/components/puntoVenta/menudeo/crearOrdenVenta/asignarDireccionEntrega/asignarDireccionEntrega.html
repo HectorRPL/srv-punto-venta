@@ -22,7 +22,6 @@
         <form role="form" class="p-lg" id="asignarDireccionEntregaFrmId" name="asignarDireccionEntregaFrm" novalidate>
             <fieldset>
                 <h2>Dirección Entrega</h2>
-                <!--BOTON AÑADIR TELÉFONO -->
                 <div class="row">
                     <div class="col-xs-12">
                         <forma-direccion direccion="asignarDireccionEntrega.direccionCliente"></forma-direccion>
@@ -44,7 +43,7 @@
                                 ng-show="asignarDireccionEntrega.direccionCliente._id"
                                 ng-disabled="asignarDireccionEntregaFrm.$invalid"
                                 ng-click="asignarDireccionEntrega.actualizar()">
-                            Actualizas
+                            Actualizar
                         </button>
                     </div>
                 </div>

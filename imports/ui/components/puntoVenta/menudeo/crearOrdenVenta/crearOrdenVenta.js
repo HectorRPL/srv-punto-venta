@@ -28,7 +28,7 @@ export default angular
         ResumenOrdenVenta
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/puntoVenta/menudeo/${name}/${name}.html`,
         controllerAs: name,
         controller: CrearOrdenVenta
     })
@@ -38,10 +38,9 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.crearventa', {
-            url: '/venta/:ordenId/asignar',
+        .state('app.venta.crearventa', {
+            url: '/:ordenId/asignar',
             template: '<crear-orden-venta></crear-orden-venta>',
             abstract: true
         });
 }
-

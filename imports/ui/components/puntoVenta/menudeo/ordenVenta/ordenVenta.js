@@ -3,8 +3,8 @@
  */
 import './ordenVenta.html';
 import {name as CrearOrdenVenta} from '../crearOrdenVenta/crearOrdenVenta';
-import {altaOrdenVenta} from '../../../../api/ordenesVentas/methods';
-import {name as Alertas} from '../../comun/alertas/alertas';
+import {altaOrdenVenta} from '../../../../../api/ordenesVentas/methods';
+import {name as Alertas} from '../../../comun/alertas/alertas';
 
 class OrdenVenta {
 
@@ -24,7 +24,6 @@ class OrdenVenta {
             total: 0
         };
         this.state = $state;
-
     }
 
     quitarArticulo(index) {
@@ -84,19 +83,14 @@ class OrdenVenta {
                 this.tipoMsj = 'danger';
                 this.msj = err.message;
             } else {
-                console.log('REsultado de generar las ordenes de compra ', result);
                 if(result.ordenMesesId && result.ordenOtraFormaId){
-                    //SE tiene que ir a la vista intermedia para seleccionar
-                    // nota o factura de cada ticket.
                     this.state.go();
                 } else {
-                    this.state.go('app.crearventa.cliente', {ordenId: result.ordenOtraFormaId});
+                    this.state.go('app.venta.crearventa.cliente', {ordenId: result.ordenOtraFormaId});
                 }
             }
         }));
     }
-
-
 }
 
 const name = 'ordenVenta';
@@ -107,7 +101,7 @@ export default angular
         Alertas
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/puntoVenta/menudeo/${name}/${name}.html`,
         controllerAs: name,
         controller: OrdenVenta,
         bindings: {
@@ -116,4 +110,3 @@ export default angular
             tiendaid: '<'
         }
     });
-

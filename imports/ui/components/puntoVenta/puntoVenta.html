@@ -1,20 +1,10 @@
-<div class="row">
-    <!--PRIMERA FILA-->
-    <div class="col-lg-12">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox-content p-xl">
-
-                <div class="row">
-                    <div class="col-sm-offset-3 col-xs-6">
-                        <div class="ibox float-e-margins">
-                            <input type="text" class="form-control" ng-model="puntoVenta.prodSelec" typeahead-on-select="puntoVenta.prueba($item, $model, $label, $event)"
-                                   uib-typeahead="producto as producto.campoBusqueda for producto in puntoVenta.buscarProducto($viewValue)"
-                                   placeholder="Codigo Proveedor">
-                        </div>
-                    </div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div ui-view></div>
                 </div>
-                <br>
-                <orden-venta tiendaid="puntoVenta.tiendaId" pedidogrl="puntoVenta.pedido" iva="puntoVenta.iva" ng-if="puntoVenta.pedido.length > 0"></orden-venta>
             </div>
         </div>
     </div>

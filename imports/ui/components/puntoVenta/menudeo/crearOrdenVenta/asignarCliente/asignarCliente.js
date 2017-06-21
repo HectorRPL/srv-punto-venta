@@ -1,9 +1,9 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {altaCliente} from '../../../../../api/clientes/methods';
-import {cambiosCliente} from '../../../../../api/ordenesVentas/methods';
-import {name as Alertas} from '../../../comun/alertas/alertas';
+import {altaCliente} from '../../../../../../api/clientes/methods';
+import {cambiosCliente} from '../../../../../../api/ordenesVentas/methods';
+import {name as Alertas} from '../../../../comun/alertas/alertas';
 import './asignarCliente.html';
 
 class AsignarCliente {
@@ -33,23 +33,20 @@ class AsignarCliente {
                 this.tipoMsj = 'danger';
                 this.msj = 'Erro al crear al cliente, intentar mas tarde';
             } else {
-                this.state.go('app.crearventa.direccion', {clienteId: clienteId})
+                this.state.go('app.venta.crearventa.direccion', {clienteId: clienteId})
             }
         }));
-
     }
-
 }
 
 const name = 'asignarCliente';
 
-// create a module
 export default angular
     .module(name, [
         Alertas
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/crearOrdenVenta/${name}/${name}.html`,
+        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
         controllerAs: name,
         controller: AsignarCliente
     })
@@ -59,7 +56,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.crearventa.cliente', {
+        .state('app.venta.crearventa.cliente', {
             url: '/cliente',
             template: '<asignar-cliente></asignar-cliente>'
         });
