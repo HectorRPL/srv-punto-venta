@@ -1,5 +1,4 @@
-import "./login.html";
-
+import template from './login.html';
 
 class Login {
     constructor($scope, $reactive, $state) {
@@ -15,7 +14,7 @@ const name = 'login';
 // create a module
 export default angular.module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/login/${name}.html`,
+        template,
         controllerAs: name,
         controller: Login
     })

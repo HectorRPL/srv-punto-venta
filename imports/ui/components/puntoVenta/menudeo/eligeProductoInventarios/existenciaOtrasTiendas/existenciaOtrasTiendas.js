@@ -1,8 +1,8 @@
 /**
  * Created by Héctor on 16/05/2017.
  */
-import "./existenciaOtrasTiendas.html";
-import {ProductosInventarios} from '../../../../../../api/inventarios/productosInventarios/collection'
+import template from "./existenciaOtrasTiendas.html";
+import {ProductosInventarios} from "../../../../../../api/inventarios/productosInventarios/collection";
 
 class ExistenciaOtrasTiendas {
     constructor($scope, $reactive) {
@@ -46,7 +46,7 @@ const name = 'existenciaOtrasTiendas';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/eligeProductoInventarios/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: ExistenciaOtrasTiendas,
         bindings: {

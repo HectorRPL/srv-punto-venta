@@ -2,7 +2,7 @@
  * Created by Héctor on 13/05/2017.
  */
 // import {name as FullScroll} from '../../../directives/fullScroll/fullScroll';
-import "./listadoOrdenesVenta.html";
+import template from "./listadoOrdenesVenta.html";
 
 class ListadoOrdenesVenta {
     constructor($scope, $stateParams, $reactive) {

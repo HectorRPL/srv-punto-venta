@@ -2,7 +2,7 @@
  * Created by Héctor on 29/03/2017.
  */
 import {buscarColonias} from "../../../../../api/catalogos/codigosPostales/busquedas";
-import "./codigosPostales.html";
+import template from "./codigosPostales.html";
 
 class CodigosPostales {
     constructor($scope) {
@@ -18,7 +18,7 @@ const name = 'codigosPostales';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/busquedas/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             direccion: '='

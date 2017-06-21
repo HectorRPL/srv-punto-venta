@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 06/03/2017.
  */
-import './puntoVenta.html';
+import template from "./puntoVenta.html";
 import {name as Menudeo} from "./menudeo/menudeo";
 
 class PuntoVenta {
@@ -19,7 +19,7 @@ export default angular
         Menudeo,
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: PuntoVenta
     })

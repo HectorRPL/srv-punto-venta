@@ -1,7 +1,7 @@
 /**
  * Created by jvltmtz on 8/03/17.
  */
-import "./tituloPrincipal.html";
+import template from "./tituloPrincipal.html";
 
 class TituloPrincipal {
     constructor($scope, $reactive, $state) {
@@ -16,7 +16,7 @@ const name = 'tituloPrincipal';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: TituloPrincipal,
         bindings: {

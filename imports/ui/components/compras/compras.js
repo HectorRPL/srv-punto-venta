@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 01/05/2017.
  */
-import "./compras.html";
+import template from "./compras.html";
 import {name as TituloPrincipal} from '../comun/tituloPrincipal/tituloPrincipal';
 import {name as ListaOrdenesCompra} from './listaOrdenesCompra/listaOrdenesCompra';
 import {name as ElegirTipoOrden} from './elegirTipoOrden/elegirTipoOrden';

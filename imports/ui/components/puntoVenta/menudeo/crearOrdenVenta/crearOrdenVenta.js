@@ -5,7 +5,7 @@ import {name as AsignarCliente} from './asignarCliente/asignarCliente';
 import {name as AsignarDireccionEntrega} from './asignarDireccionEntrega/asignarDireccionEntrega';
 import {name as AsignarDatosFiscales} from './asignarDatosFiscales/asignarDatosFiscales';
 import {name as ResumenOrdenVenta} from './resumenOrdenVenta/resumenOrdenVenta';
-import './crearOrdenVenta.html';
+import template from './crearOrdenVenta.html';
 
 class CrearOrdenVenta {
     constructor($scope, $reactive, $stateParams) {
@@ -28,7 +28,7 @@ export default angular
         ResumenOrdenVenta
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: CrearOrdenVenta
     })

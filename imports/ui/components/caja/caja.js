@@ -2,7 +2,7 @@
  * Created by Héctor on 11/05/2017.
  */
 import {name as Cobrar} from './cobrar/cobrar';
-import "./caja.html";
+import template from "./caja.html";
 
 class Caja {
     constructor() {

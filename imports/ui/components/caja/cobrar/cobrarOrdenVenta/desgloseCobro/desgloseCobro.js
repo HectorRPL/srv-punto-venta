@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 13/05/2017.
  */
-import "./desgloseCobro.html";
+import template from "./desgloseCobro.html";
 
 class DesgloseCobro {
     constructor($scope, $reactive) {

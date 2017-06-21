@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 04/05/2017.
  */
-import './ordenCompraTienda.html';
+import template from "./ordenCompraTienda.html";
 
 class OrdenCompraTienda{
 
@@ -28,7 +28,7 @@ export default angular
     .module(name, [
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/compras/elegirTipoOrden/buscarProductoTiendas/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: OrdenCompraTienda
     })

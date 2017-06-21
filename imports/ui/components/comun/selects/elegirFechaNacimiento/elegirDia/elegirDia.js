@@ -1,7 +1,7 @@
 import angular from "angular";
 import angularMeteor from "angular-meteor";
 import {Dias} from "../../../../../../api/catalogos/fechaNacimiento/dias/collection";
-import "./elegirDia.html";
+import template from "./elegirDia.html";
 
 class ElegirDia {
     constructor($scope, $reactive) {
@@ -26,7 +26,7 @@ export default angular
         angularMeteor
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/selects/elegirFechaNacimiento/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             diaid: '='

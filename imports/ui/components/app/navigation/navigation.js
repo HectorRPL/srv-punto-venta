@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 09/02/2017.
  */
-import "./navigation.html";
+import template from "./navigation.html";
 
 class Navigation {
     constructor() {
@@ -16,7 +16,7 @@ const name = 'navigation';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/app/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Navigation
     });

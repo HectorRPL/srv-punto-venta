@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 13/02/2017.
  */
-import "./minimalize.html";
+import template from "./minimalize.html";
 
 class Minimalize {
     constructor($scope, $reactive) {
@@ -41,7 +41,7 @@ const name = 'minimalize';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/app/topnavbar/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Minimalize
     });

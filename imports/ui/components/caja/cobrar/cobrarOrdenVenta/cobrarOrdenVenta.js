@@ -1,10 +1,10 @@
 /**
  * Created by Héctor on 13/05/2017.
  */
-import 'jquery-slimscroll/jquery.slimscroll.min'
-import {name as FormasPago} from './formasPago/formasPago';
-import {name as DesgloseCobro} from './desgloseCobro/desgloseCobro';
-import './cobrarOrdenVenta.html';
+import "jquery-slimscroll/jquery.slimscroll.min";
+import {name as FormasPago} from "./formasPago/formasPago";
+import {name as DesgloseCobro} from "./desgloseCobro/desgloseCobro";
+import template from "./cobrarOrdenVenta.html";
 
 class CobrarOrdenVenta {
     constructor($scope, $reactive, $stateParams) {
@@ -36,7 +36,7 @@ export default angular
         DesgloseCobro
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/caja/cobrar/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: CobrarOrdenVenta
     })

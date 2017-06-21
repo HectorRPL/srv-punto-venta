@@ -4,10 +4,10 @@
 import {name as Navigation} from "./navigation/navigation";
 import {name as Topnavbar} from "./topnavbar/topnavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
-import {name as Compras} from "../compras/compras";
-import {name as Caja} from "../caja/caja";
+// import {name as Compras} from "../compras/compras";
+// import {name as Caja} from "../caja/caja";
 import "metismenu/dist/metisMenu.js";
-import "./app.html";
+import template from "./app.html";
 import {Session} from "meteor/session";
 
 class App {
@@ -28,10 +28,10 @@ export default angular
         Navigation,
         Topnavbar,
         PuntoVenta,
-        Compras,
-        Caja
+        // Compras,
+        // Caja
     ]).component(name, {
-        templateUrl: `imports/ui/components/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: App
     }).config(config);

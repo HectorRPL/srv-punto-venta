@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 12/05/2017.
  */
-import "./efectivo.html";
+import template from "./efectivo.html";
 
 class Efectivo {
     constructor($scope, $reactive) {

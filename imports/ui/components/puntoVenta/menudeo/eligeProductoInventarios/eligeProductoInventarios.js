@@ -1,11 +1,11 @@
 /**
  * Created by Héctor on 04/05/2017.
  */
-import './eligeProductoInventarios.html';
-import {Productos} from '../../../../../api/catalogos/productos/collection'
-import {Marcas} from '../../../../../api/catalogos/marcas/collection'
-import {ProductosInventarios} from '../../../../../api/inventarios/productosInventarios/collection'
-import {name as ExistenciaOtrasTiendas} from './existenciaOtrasTiendas/existenciaOtrasTiendas'
+import template from "./eligeProductoInventarios.html";
+import {Productos} from "../../../../../api/catalogos/productos/collection";
+import {Marcas} from "../../../../../api/catalogos/marcas/collection";
+import {ProductosInventarios} from "../../../../../api/inventarios/productosInventarios/collection";
+import {name as ExistenciaOtrasTiendas} from "./existenciaOtrasTiendas/existenciaOtrasTiendas";
 
 class EligeProductoInventarios {
 
@@ -81,7 +81,7 @@ export default angular
         ExistenciaOtrasTiendas
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: EligeProductoInventarios,
         bindings: {

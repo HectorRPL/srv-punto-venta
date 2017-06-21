@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 06/04/2017.
  */
-import "./formaDatosFiscales.html";
+import template from "./formaDatosFiscales.html";
 import {buscarRfc} from "../../../../../api/datosFiscales/busquedas";
 import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegirTipoSociedad"
 
@@ -37,7 +37,7 @@ export default angular
         ElegirTipoSociedad
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/formas/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: FormaDatosFiscales,
         bindings: {

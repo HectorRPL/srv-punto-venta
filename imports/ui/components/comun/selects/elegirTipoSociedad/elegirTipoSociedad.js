@@ -2,7 +2,7 @@
  * Created by jvltmtz on 12/05/17.
  */
 import {TiposSociedades} from "../../../../../api/catalogos/tipoSociedades/collection";
-import "./elegirTipoSociedad.html";
+import template from "./elegirTipoSociedad.html";
 
 class ElegirTipoSociedad {
     constructor($scope, $reactive) {
@@ -25,7 +25,7 @@ const name = 'elegirTipoSociedad';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/selects/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             tiposociedad: '=',

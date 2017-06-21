@@ -65,6 +65,7 @@ BASE DE DATOS MONGO
             $ meteor remove insecure
             $ meteor remove autopublish
             $ meteor remove ecmascript
+            $ meteor remove angular-templates
             $ meteor npm --save install angular-meteor@1.3.11
             $ meteor npm --save install angular@1.5.8
             $ meteor npm --save install babel-runtime@6.22.0
@@ -79,6 +80,7 @@ BASE DE DATOS MONGO
             $ meteor npm --save install bootstrap-social@5.0.0
             $ meteor npm --save install font-awesome@4.7.0
             $ meteor npm install --save csvtojson // ¡PENDIENTE DE INSTALAR (si es que queremos instalarla)!
+            $ meteor add urigo:static-templates
             $ meteor add angular-templates@1.0.9
             $ meteor add pbastowski:angular-babel@1.3.7
             $ meteor add accounts-password@1.3.3

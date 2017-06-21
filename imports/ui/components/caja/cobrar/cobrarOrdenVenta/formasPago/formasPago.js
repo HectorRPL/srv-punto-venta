@@ -3,7 +3,7 @@
  */
 import {name as Efectivo} from './tipos/efectivo/efectivo';
 import {name as TarjetaBancaria} from './tipos/tarjetaBancaria/tarjetaBancaria';
-import "./formasPago.html";
+import template from "./formasPago.html";
 
 class FormasPago {
     constructor($scope, $reactive) {

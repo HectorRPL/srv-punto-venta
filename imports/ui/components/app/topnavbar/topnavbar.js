@@ -1,5 +1,5 @@
 import {name as Minimalize} from "./minimalize/minimalize";
-import "./topnavbar.html";
+import template from "./topnavbar.html";
 
 class Topnavbar {
     constructor($scope, $reactive) {
@@ -15,7 +15,7 @@ export default angular
         Minimalize
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/app/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Topnavbar
     });

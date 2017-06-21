@@ -4,7 +4,7 @@
 import {altaCliente} from '../../../../../../api/clientes/methods';
 import {cambiosCliente} from '../../../../../../api/ordenesVentas/methods';
 import {name as Alertas} from '../../../../comun/alertas/alertas';
-import './asignarCliente.html';
+import template from './asignarCliente.html';
 
 class AsignarCliente {
     constructor($scope, $reactive, $state, $stateParams) {
@@ -46,7 +46,7 @@ export default angular
         Alertas
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: AsignarCliente
     })

@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 03/05/2017.
  */
-import "./listaOrdenesCompra.html";
+import template from "./listaOrdenesCompra.html";
 
 class ListaOrdenesCompra {
     constructor($scope, $reactive) {
@@ -26,7 +26,7 @@ const name = 'listaOrdenesCompra';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/compras/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: ListaOrdenesCompra
     })

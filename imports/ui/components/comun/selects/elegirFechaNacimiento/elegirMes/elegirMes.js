@@ -1,7 +1,7 @@
 import angular from "angular";
 import angularMeteor from "angular-meteor";
 import {Meses} from "../../../../../../api/catalogos/fechaNacimiento/meses/collection";
-import "./elegirMes.html";
+import template from "./elegirMes.html";
 
 class ElegirMes {
     constructor($scope, $reactive) {
@@ -26,7 +26,7 @@ export default angular
         angularMeteor
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/selects/elegirFechaNacimiento/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             mesid: '='

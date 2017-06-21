@@ -1,10 +1,10 @@
 /**
  * Created by jvltmtz on 19/05/17.
  */
-import './ordenVenta.html';
-import {name as CrearOrdenVenta} from '../crearOrdenVenta/crearOrdenVenta';
-import {altaOrdenVenta} from '../../../../../api/ordenesVentas/methods';
-import {name as Alertas} from '../../../comun/alertas/alertas';
+import template from "./ordenVenta.html";
+import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
+import {altaOrdenVenta} from "../../../../../api/ordenesVentas/methods";
+import {name as Alertas} from "../../../comun/alertas/alertas";
 
 class OrdenVenta {
 
@@ -100,7 +100,7 @@ export default angular
         Alertas
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: OrdenVenta,
         bindings: {

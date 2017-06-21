@@ -3,7 +3,7 @@
  */
 import {Proveedores} from "../../../../../../../../api/catalogos/bancos/collection";
 import {buscarBanco} from "../../../../../../../../api/catalogos/bancos/busquedas";
-import "./tarjetaBancaria.html";
+import template from "./tarjetaBancaria.html";
 
 class TarjetaBancaria {
     constructor($scope, $reactive) {

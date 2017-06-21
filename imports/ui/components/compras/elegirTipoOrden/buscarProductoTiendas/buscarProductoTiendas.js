@@ -1,8 +1,8 @@
 /**
  * Created by Héctor on 01/05/2017.
  */
-import {name as OrdenCompraTienda} from './ordenCompraTienda/ordenCompraTienda';
-import './buscarProductoTiendas.html';
+import {name as OrdenCompraTienda} from "./ordenCompraTienda/ordenCompraTienda";
+import template from "./buscarProductoTiendas.html";
 
 class BuscarProductoTiendas{
 
@@ -55,7 +55,7 @@ export default angular
         OrdenCompraTienda
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/compras/elegirTipoOrden/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: BuscarProductoTiendas
     })

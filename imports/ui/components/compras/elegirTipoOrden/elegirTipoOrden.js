@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 01/05/2017.
  */
-import "./elegirTipoOrden.html";
+import template from "./elegirTipoOrden.html";
 import {name as BuscarProductoTiendas} from './buscarProductoTiendas/buscarProductoTiendas';
 import {name as BuscarProductoProveedores} from './buscarProductoProveedores/buscarProductoProveedores';
 

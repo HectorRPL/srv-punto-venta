@@ -1,7 +1,7 @@
 import angular from "angular";
 import angularMeteor from "angular-meteor";
 import {Anios} from "../../../../../../api/catalogos/fechaNacimiento/anios/collection";
-import "./elegirAnio.html";
+import template from "./elegirAnio.html";
 
 class ElegirAnio {
     constructor($scope, $reactive) {
@@ -26,7 +26,7 @@ export default angular
         angularMeteor
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/selects/elegirFechaNacimiento/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             anioid: '='

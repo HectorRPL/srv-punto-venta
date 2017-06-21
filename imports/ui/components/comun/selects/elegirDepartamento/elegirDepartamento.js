@@ -1,7 +1,7 @@
 /**
  * Created by jvltmtz on 4/04/17.
  */
-import "./elegirDepartamento.html";
+import template from "./elegirDepartamento.html";
 import {PuestosRoles} from "../../../../../api/catalogos/puestosRoles/collection"
 
 class ElegirDepartamento {
@@ -25,7 +25,7 @@ const name = 'elegirDepartamento';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/selects/${name}/${name}.html`,
+        template,
         controllerAs: name,
         bindings: {
             departamento: '='

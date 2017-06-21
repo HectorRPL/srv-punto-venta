@@ -1,7 +1,7 @@
 /**
  * Created by Héctor on 10/05/2017.
  */
-import './ordenCompraProveedor.html';
+import template from "./ordenCompraProveedor.html";
 
 class OrdenCompraProveedor{
 
@@ -26,7 +26,7 @@ const name = 'ordenCompraProveedor';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/compras/elegirTipoOrden/buscarProductoProveedores/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: OrdenCompraProveedor
     })

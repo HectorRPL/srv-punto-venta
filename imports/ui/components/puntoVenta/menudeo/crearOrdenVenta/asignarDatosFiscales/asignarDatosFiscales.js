@@ -3,7 +3,7 @@
  */
 import {name as FormaDatosFiscales} from '../../../../comun/formas/formaDatosFiscales/formaDatosFiscales';
 import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/formaDireccion';
-import './asignarDatosFiscales.html';
+import template from './asignarDatosFiscales.html';
 
 class AsignarDatosFiscales {
     constructor($scope, $reactive, $state, $stateParams) {
@@ -43,7 +43,7 @@ export default angular
         FormaDireccion
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: AsignarDatosFiscales
     })

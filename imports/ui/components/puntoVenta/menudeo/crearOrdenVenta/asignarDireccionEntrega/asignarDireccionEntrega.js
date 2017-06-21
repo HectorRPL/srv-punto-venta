@@ -5,7 +5,7 @@ import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/fo
 import {Direcciones} from '../../../../../../api/direcciones/collection';
 import {cambiosDireccion, altaDireccion} from '../../../../../../api/direcciones/methods';
 import {cambiosDireccionEntrega} from '../../../../../../api/ordenesVentas/methods';
-import './asignarDireccionEntrega.html';
+import template from './asignarDireccionEntrega.html';
 
 class AsignarDireccionEntrega {
     constructor($scope, $reactive, $state, $stateParams) {
@@ -76,7 +76,7 @@ export default angular
         FormaDireccion
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: AsignarDireccionEntrega
     })

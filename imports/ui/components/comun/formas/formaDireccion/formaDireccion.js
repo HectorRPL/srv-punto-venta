@@ -3,7 +3,7 @@
  */
 import angular from "angular";
 import {name as CodigosPostales} from "../../busquedas/codigosPostales/codigosPostales";
-import "./formaDireccion.html";
+import template from "./formaDireccion.html";
 
 class FormaDireccion {
     constructor($scope) {
@@ -20,7 +20,7 @@ export default angular
         CodigosPostales
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/comun/formas/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: FormaDireccion,
         bindings: {

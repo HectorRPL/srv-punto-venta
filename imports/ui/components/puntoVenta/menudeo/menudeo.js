@@ -1,11 +1,11 @@
 /**
  * Created by Héctor on 19/06/2017.
  */
-import './menudeo.html';
-import {name as EligeProductoInventarios} from './eligeProductoInventarios/eligeProductoInventarios';
-import {name as OrdenVenta} from './ordenVenta/ordenVenta';
-import {name as CrearOrdenVenta} from './crearOrdenVenta/crearOrdenVenta';
-import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas"
+import template from "./menudeo.html";
+import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
+import {name as OrdenVenta} from "./ordenVenta/ordenVenta";
+import {name as CrearOrdenVenta} from "./crearOrdenVenta/crearOrdenVenta";
+import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas";
 import {Session} from "meteor/session";
 
 
@@ -76,7 +76,7 @@ export default angular
         CrearOrdenVenta
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Menudeo
     })

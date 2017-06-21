@@ -1,10 +1,10 @@
 /**
  * Created by Héctor on 11/05/2017.
  */
-import 'jquery-slimscroll/jquery.slimscroll.min'
-import {name as ListadoOrdenesVenta} from './listadoOrdenesVenta/listadoOrdenesVenta';
-import {name as CobrarOrdenVenta} from './cobrarOrdenVenta/cobrarOrdenVenta';
-import './cobrar.html';
+import "jquery-slimscroll/jquery.slimscroll.min";
+import {name as ListadoOrdenesVenta} from "./listadoOrdenesVenta/listadoOrdenesVenta";
+import {name as CobrarOrdenVenta} from "./cobrarOrdenVenta/cobrarOrdenVenta";
+import template from "./cobrar.html";
 
 class Cobrar {
     constructor($scope, $reactive) {
@@ -21,7 +21,7 @@ export default angular
         CobrarOrdenVenta
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/caja/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Cobrar
     })

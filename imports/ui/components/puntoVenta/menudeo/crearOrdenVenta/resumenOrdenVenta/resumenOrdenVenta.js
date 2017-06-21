@@ -3,7 +3,7 @@
  */
 import {OrdenesVentas} from '../../../../../../api/ordenesVentas/collection'
 import {PartidasOrdenesVentas} from '../../../../../../api/ordenesVentas/partidasOrdenesVentas/collection'
-import './resumenOrdenVenta.html';
+import template from './resumenOrdenVenta.html';
 
 class ResumenOrdenVenta {
     constructor($scope, $reactive) {
@@ -30,7 +30,7 @@ export default angular
 
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/puntoVenta/menudeo/crearOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: ResumenOrdenVenta,
         bindings: {
