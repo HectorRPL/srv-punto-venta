@@ -20,7 +20,9 @@ export const altaDireccion = new ValidatedMethod({
     run({propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais}) {
         if (Meteor.isServer) {
             const direccion = {propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais};
-            return Direcciones.insert(direccion);
+            return Direcciones.insert(direccion, (err) => {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'direccion-no-creada');
+            });
         }
     }
 });
@@ -52,6 +54,10 @@ export const cambiosDireccion = new ValidatedMethod({
                 codigoPostal: codigoPostal,
                 numExt: numExt,
                 numInt: numInt
+            }
+        }, (err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'direccion-no-actualizada');
             }
         });
     }

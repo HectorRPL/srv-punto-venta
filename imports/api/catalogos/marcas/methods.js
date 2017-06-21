@@ -11,7 +11,7 @@ import {Marcas} from "./collection";
 const ID = ['_id'];
 
 const CAMPOS_FACTORES = ['nombre'];
-// Enviará un correo con un link al usuario para verificacar de registro
+
 export const altaMarca = new ValidatedMethod({
     name: 'marcas.altaMarca',
     validate: Marcas.simpleSchema().pick(CAMPOS_FACTORES).validator({
@@ -19,7 +19,11 @@ export const altaMarca = new ValidatedMethod({
         filter: false
     }),
     run({nombre}) {
-        return Marcas.insert({nombre});
+        return Marcas.insert({nombre}, (err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'marca-no-creada');
+            }
+        });
     }
 });
 

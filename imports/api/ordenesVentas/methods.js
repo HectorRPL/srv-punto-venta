@@ -65,7 +65,11 @@ export const cambiosDireccionEntrega = new ValidatedMethod({
     }).validator(),
     run({ordenId, direccionId}) {
 
-        return OrdenesVentas.update({_id: ordenId}, {$set: {direccionEntregaId: direccionId}});
+        return OrdenesVentas.update({_id: ordenId}, {$set: {direccionEntregaId: direccionId}}, (err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+            }
+        });
     }
 
 });

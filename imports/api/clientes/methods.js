@@ -17,10 +17,10 @@ export const altaCliente = new ValidatedMethod({
         filter: false
     }),
     run({nombre, apellidoPaterno, apellidoMaterno}) {
-        return Clientes.insert({
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
+        return Clientes.insert({nombre, apellidoPaterno, apellidoMaterno}, (err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+            }
         });
     }
 });

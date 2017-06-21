@@ -74,6 +74,10 @@ export const altaDatosFiscales = new ValidatedMethod({
             numInt,
             tipoPersona,
             curp
+        }, (err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'datos-fiscales-no-creados');
+            }
         });
     }
 });
