@@ -6,12 +6,12 @@
             </button>
         </div>
         <div class="col-md-4">
-            <button type="button"  class="btn btn-block btn-default" ng-disabled="true">
+            <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-map-marker"></i> <strong>Dirección Entrega</strong>
             </button>
         </div>
         <div class="col-md-4">
-            <button type="button"  class="btn btn-block btn-default" ng-disabled="true">
+            <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-address-card-o"></i> <strong>Nota ó Factura</strong>
             </button>
         </div>
@@ -79,6 +79,24 @@
                             </div>
                         </div>
                     </div>
+                    <!--SEGUNDO NOMBRE-->
+                    <div class="col-sm-6" >
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : asignarClienteFrm.segundoNombre.$invalid && !asignarClienteFrm.segundoNombre.$pristine}">
+                            <div ng-messages="asignarClienteFrm.segundoNombre.$dirty && asignarClienteFrm.segundoNombre.$error" role="alert">
+                                <label>Segundo Nombre
+                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
+                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
+                                </label>
+                                <input id="segundoNombreId" class="form-control texto-en-mayusculas"
+                                       name="segundoNombre" type="text" aria-describedby="sizing-addon1"
+                                       minlength="2" maxlength="30" ng-minlength="2" ng-maxlength="30"
+                                       ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                                       ng-model="asignarCliente.datos.segundoNombre">
+                            </div>
+                        </div>
+                    </div>
                     <!--APELLIDO PATERNO-->
                     <div class="col-sm-6">
                         <div class="form-group"
@@ -125,7 +143,7 @@
                         <alertas tipo="asignarCliente.tipoMsj" mensaje="asignarCliente.msj"></alertas>
                     </div>
                     <div class="col-xs-3">
-                        <!-- BOTON GUARDAR DATOS GENERALES (Del paso 1 al paso 2) -->
+                        <!--BOTON GUARDAR-->
                         <button type="button" class="btn btn-primary pull-right" ng-if="asignarCliente.nuevo"
                                 ng-disabled="asignarClienteFrm.$invalid"
                                 ng-click="asignarCliente.insertarCliente()">

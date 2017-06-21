@@ -26,6 +26,12 @@ Schema.clientes = new SimpleSchema({
             return this.value.toUpperCase()
         }
     },
+    segundoNombre: {
+        type: String, min: 2, max: 30, regEx: /^[a-zA-ZñÑ\s]+$/,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
     apellidoPaterno: {
         type: String, min: 2, max: 45, regEx: /^[a-zA-ZñÑ\s]+$/,
         autoValue: function () {
