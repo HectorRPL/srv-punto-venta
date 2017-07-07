@@ -20,11 +20,11 @@ export const buscarColonias = new ValidatedMethod({
     }
 });
 
-const BUSQUEDAS_CODIGOS_POSTALES_METODOS = _.pluck([buscarColonias], 'name');
+const BUSQUEDAS_CODIGOS_POSTALES_METHODS = _.pluck([buscarColonias], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {
-            return _.contains(BUSQUEDAS_CODIGOS_POSTALES_METODOS, name);
+            return _.contains(BUSQUEDAS_CODIGOS_POSTALES_METHODS, name);
         },
         connectionId() {
             return true;

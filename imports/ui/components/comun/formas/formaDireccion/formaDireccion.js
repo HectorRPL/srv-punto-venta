@@ -2,7 +2,7 @@
  * Created by Héctor on 29/03/2017.
  */
 import angular from "angular";
-import {name as CodigosPostales} from "../../busquedas/codigosPostales/codigosPostales";
+import {name as CodigosPostales} from "../../inputs/codigosPostales/codigosPostales";
 import template from "./formaDireccion.html";
 
 class FormaDireccion {
