@@ -22,7 +22,6 @@ class Menudeo {
         this.pedido = [];
         this.productoSelec = '';
         this.tiendaId = Session.get('estacionTrabajoId');
-        console.log('punto de venta ', Session.get('estacionTrabajoId'));
 
     }
 
