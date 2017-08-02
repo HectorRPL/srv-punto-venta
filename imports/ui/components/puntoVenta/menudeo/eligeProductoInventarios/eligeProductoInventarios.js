@@ -6,6 +6,7 @@ import {Productos} from "../../../../../api/catalogos/productos/collection";
 import {Marcas} from "../../../../../api/catalogos/marcas/collection";
 import {ProductosInventarios} from "../../../../../api/inventarios/productosInventarios/collection";
 import {name as ExistenciaOtrasTiendas} from "./existenciaOtrasTiendas/existenciaOtrasTiendas";
+import {name as ElegirMesesIntereses} from "../../../comun/selects/elegirMesesIntereses/elegirMesesIntereses";
 
 class EligeProductoInventarios {
 
@@ -17,7 +18,6 @@ class EligeProductoInventarios {
         this.productosTiendas = new Map();
         this.precioFinal = '';
         this.descuentoFinal = 0;
-        this.mesesSinInteres = false;
         this.subscribe('productos.id', ()=> [{_id: this.getReactively('resolve.producto._id')}]);
         this.subscribe('marcas.id', ()=> [{_id: this.getReactively('resolve.producto.marcaId')}]);
         this.subscribe('productosInventarios.miInventario', ()=> [
@@ -52,11 +52,16 @@ class EligeProductoInventarios {
             precioFinal: this.precioFinal,
             precioBase: this.miInventario.precioUno(),
             descuento: this.descuentoFinal,
-            mesesSinInteres: this.mesesSinInteres,
             total: this.cantidadSolicitada + this.totalProductosTiendas
         };
-
+        if(this.mesesSinInteres){
+            prod.mesesSinInteres = this.mesesSinInteres
+        }
         this.modalInstance.close(prod);
+    }
+
+    calcularPrecioMeses() {
+
     }
 
     cancelarCerrar() {
@@ -67,8 +72,8 @@ class EligeProductoInventarios {
         this.descuentoFinal = desc;
     }
 
-    asignarMeses() {
-        this.mesesSinInteres = true;
+    asignarMeses(meses) {
+        this.mesesSinInteres = meses;
     }
 
 }
@@ -78,7 +83,8 @@ const name = 'eligeProductoInventarios';
 // Módulo
 export default angular
     .module(name, [
-        ExistenciaOtrasTiendas
+        ExistenciaOtrasTiendas,
+        ElegirMesesIntereses
     ])
     .component(name, {
         template,

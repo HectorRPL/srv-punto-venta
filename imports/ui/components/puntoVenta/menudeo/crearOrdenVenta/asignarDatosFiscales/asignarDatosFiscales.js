@@ -53,7 +53,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.crearventa.fiscales', {
+        .state('app.venta.orden.fiscales', {
             url: '/:clienteId/fiscales',
             template: '<asignar-datos-fiscales></asignar-datos-fiscales>'
         });

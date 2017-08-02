@@ -33,7 +33,8 @@ Schema.productosInventarios = new SimpleSchema({
     fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
     cantidad: {type: Number, defaultValue: 0},
     costo: {type: Number, decimal: true},
-    promocionId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    promocionId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    comisionId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true}
 });
 
 ProductosInventarios.attachSchema(Schema.productosInventarios);
@@ -73,11 +74,15 @@ ProductosInventarios.helpers({
         let precio = 0;
         if (this.promocionId) {
             const promo = Promociones.findOne({_id: this.promocionId});
-            if (promo && promo.precioLista) {
-                precio = this.costo * (1 - (promo.descuento / 100));
-            } else {
-                const factor = Factores.findOne({_id: this.factorId});
-                precio = (this.costo * factor.factor7) * (1 - (promo.descuento / 100));
+            if (promo) {
+                if (promo.precioLista) {
+                    const factor = Factores.findOne({_id: this.factorId});
+                    if(factor){
+                        precio = (this.costo * factor.factor1) * (1 - (promo.descuento / 100));
+                    }
+                } else {
+                    precio = this.costo * (1 - (promo.descuento / 100));
+                }
             }
         }
         return precio;

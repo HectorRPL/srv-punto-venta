@@ -44,7 +44,7 @@ export default angular
         // FullScroll
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/caja/cobrar/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: ListadoOrdenesVenta
     })

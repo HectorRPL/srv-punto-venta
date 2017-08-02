@@ -1,0 +1,20 @@
+<form role="form" class="p-lg" id="altaDireccionFrmId" name="altaDireccionFrm" novalidate>
+    <div class="row">
+        <forma-direccion direccion="altaDireccion.direccion"></forma-direccion>
+    </div>
+    <!--ALERTA Y BOTÓN-->
+    <div class="row">
+        <div class="col-md-8">
+            <alertas tipo="altaDireccion.tipoMsj" mensaje="altaDireccion.msj"></alertas>
+        </div>
+        <div class="col-md-3">
+            <!--BOTON GUARDAR DATOS GENERALES-->
+            <button type="button"
+                    class="btn btn-primary pull-right"
+                    ng-disabled="altaDireccionFrm.$invalid"
+                    ng-click="altaDireccion.insertar()">
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

@@ -35,6 +35,7 @@
                         <label>RFC *
                             <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
                             <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
                         </label>
                         <!--PERSONA FISICA-->
                         <input class="form-control"
@@ -74,14 +75,30 @@
                         <label>Nombre *
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;"
-                                  ng-message="pattern">caracter no válido</span>
+                            <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
                         </label>
                         <input id="nombreId" class="form-control"
                                name="nombre" type="text" aria-describedby="sizing-addon1"
                                minlength="2" maxlength="51" ng-minlength="2" ng-maxlength="50"
                                ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
                                ng-model="formaDatosFiscales.datos.nombre">
+                    </div>
+                </div>
+            </div>
+            <!--SEGUNDO NOMBRE-->
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : datosFiscalesForm.segundoNombre.$invalid && !datosFiscalesForm.segundoNombre.$pristine}">
+                    <div ng-messages="datosFiscalesForm.segundoNombre.$dirty && datosFiscalesForm.segundoNombre.$error" role="alert">
+                        <label>Segundo Nombre
+                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
+                            <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
+                        </label>
+                        <input id="segundoNombreId" class="form-control"
+                               name="segundoNombre" type="text" aria-describedby="sizing-addon1"
+                               minlength="2" maxlength="51" ng-minlength="2" ng-maxlength="50"
+                               ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                               ng-model="formaDatosFiscales.datos.segundoNombre">
                     </div>
                 </div>
             </div>
@@ -94,8 +111,7 @@
                         <label>A. Paterno *
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;"
-                                  ng-message="pattern">caracter no válido</span>
+                            <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
                         </label>
                         <input id="apellidoPaternoId" class="form-control"
                                name="apellidoPaterno" type="text" aria-describedby="sizing-addon1"
@@ -137,8 +153,7 @@
                         <label>RFC *
                             <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
                             <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
-                            <span style="color:red;" class="animated fadeIn"
-                                  ng-message="existerfc">RFC registradó</span>
+                            <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
                         </label>
                         <!--PERSONA MORAL -->
                         <input class="form-control"
@@ -179,8 +194,7 @@
                         <label>Razón Social *
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;"
-                                  ng-message="pattern">caracter no válido</span>
+                            <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
                         </label>
                         <input id="razonSocialId" class="form-control"
                                name="razonSocial" type="text" aria-describedby="sizing-addon1"
@@ -199,7 +213,7 @@
                         <label>&nbsp;
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                         </label>
-                        <elegir-tipo-sociedad tiposociedad="formaDatosFiscales.abreviacion"></elegir-tipo-sociedad>
+                        <elegir-tipo-sociedad tiposociedad="formaDatosFiscales.datos.tipoSociedad"></elegir-tipo-sociedad>
                     </div>
                 </div>
             </div>

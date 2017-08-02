@@ -1,5 +1,21 @@
-<div class="animated fadeIn" uib-alert ng-show="alertas.tipo" ng-class="'alert-'+ alertas.tipo">
-    <span ng-class="{'fa fa-check': alertas.tipo =='success', 'fa fa-exclamation-triangle': alertas.tipo=='danger',  'fa fa-exclamation-circle': alertas.tipo=='warning'}">
+<div class="animated fadeIn" uib-alert ng-if="alertas.tipo === 'success'" ng-class="'alert-'+ alertas.tipo">
+    <span class="fa fa-check">
+    </span>
+    <strong ng-if="alertas.mensaje"> {{alertas.mensaje}}</strong>
+    <strong ng-if="!alertas.mensaje"> {{alertas.successMsj}}</strong>
+</div>
+
+<div class="animated fadeIn" uib-alert ng-if="alertas.tipo === 'danger'" ng-class="'alert-'+ alertas.tipo">
+    <span class="fa fa-exclamation-circle">
+    </span>
+    <strong ng-if="alertas.mensaje"> {{alertas.mensaje}}</strong>
+    <strong ng-if="!alertas.mensaje"> {{alertas.dangerMsj}}</strong>
+</div>
+
+<div class="animated fadeIn" uib-alert ng-if="alertas.tipo === 'warning'" ng-class="'alert-'+ alertas.tipo">
+    <span class="fa fa-exclamation-circle">
     </span>
     <strong> {{alertas.mensaje}} </strong>
 </div>
+
+

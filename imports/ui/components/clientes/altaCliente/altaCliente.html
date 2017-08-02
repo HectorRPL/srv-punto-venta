@@ -1,0 +1,16 @@
+<ng-form name="agregarClienteFrm">
+    <forma-datos-personales datos="altaCliente.cliente"></forma-datos-personales>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-7">
+            <alertas tipo="altaCliente.tipoMsj" mensaje="altaCliente.msj"></alertas>
+        </div>
+        <div class="col-xs-3">
+            <!--BOTON GUARDAR-->
+            <button type="button" class="btn btn-primary pull-right"
+                    ng-disabled="agregarClienteFrm.$invalid"
+                    ng-click="altaCliente.agregarCliente()">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</ng-form>

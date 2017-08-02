@@ -1,7 +1,6 @@
 /**
  * Created by Héctor on 29/03/2017.
  */
-import angular from "angular";
 import {name as CodigosPostales} from "../../inputs/codigosPostales/codigosPostales";
 import template from "./formaDireccion.html";
 
@@ -20,7 +19,7 @@ export default angular
         CodigosPostales
     ])
     .component(name, {
-        template,
+        template ,
         controllerAs: name,
         controller: FormaDireccion,
         bindings: {

@@ -18,7 +18,7 @@ export default angular
         Cobrar
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: Caja
     })

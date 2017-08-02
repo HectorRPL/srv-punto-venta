@@ -36,3 +36,4 @@ didericis:callpromise-mixin@0.0.1
 u2622:persistent-session
 less
 urigo:static-templates
+didericis:permissions-mixin

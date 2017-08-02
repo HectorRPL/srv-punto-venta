@@ -1,0 +1,16 @@
+<ng-form name="cambiosClienteFrm">
+    <forma-datos-personales datos="cambiosCliente.cliente"></forma-datos-personales>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-7">
+            <alertas tipo="cambiosCliente.tipoMsj" mensaje="cambiosCliente.msj"></alertas>
+        </div>
+        <div class="col-xs-3">
+            <!--BOTON GUARDAR-->
+            <button type="button" class="btn btn-primary pull-right"
+                    ng-disabled="cambiosClienteFrm.$invalid"
+                    ng-click="cambiosCliente.actualizarCliente()">
+                Siguiente
+            </button>
+        </div>
+    </div>
+</ng-form>

@@ -3,6 +3,8 @@
  */
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
+import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {_} from "meteor/underscore";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {Direcciones} from "./collection.js";
@@ -11,25 +13,46 @@ const ID = ['_id'];
 
 const CAMPOS_DIRECCION = ['propietarioId', 'calle', 'delMpio', 'estado', 'estadoId', 'colonia', 'codigoPostal', 'numExt', 'numInt', 'codigoPais'];
 
+// CREAR DIRECCIÓN
 export const altaDireccion = new ValidatedMethod({
     name: 'direcciones.altaDireccion',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['crea_dire'],
+            group: 'cruddirecciones'
+        }
+    ],
+    permissionsError: {
+        name: 'direcciones.altaDireccion',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: Direcciones.simpleSchema().pick(CAMPOS_DIRECCION).validator({
         clean: true,
         filter: false
     }),
-    run({propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais}) {
-        if (Meteor.isServer) {
-            const direccion = {propietarioId, calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais};
-            return Direcciones.insert(direccion, (err) => {
-                throw new Meteor.Error(500, 'Error al realizar la operación.', 'direccion-no-creada');
-            });
-        }
+    run({
+        propietarioId, calle, delMpio, estado, estadoId, colonia,
+        codigoPostal, numExt, numInt, codigoPais
+    }) {
+        const direccion = {
+            propietarioId, calle, delMpio, estado, estadoId,
+            colonia, codigoPostal, numExt, numInt, codigoPais
+        };
+        return Direcciones.insert(direccion,(err) => {
+            if (err) {
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'error-al-crear');
+            }
+        });
     }
 });
 
+// ACTUALIZAR DIRECCIÓN
 export const cambiosDireccion = new ValidatedMethod({
     name: 'direcciones.cambiosDireccion',
-    mixins: [LoggedInMixin],
+    mixins: [LoggedInMixin, CallPromiseMixin],
     checkLoggedInError: {
         error: 'noLogeado',
         message: 'Para modificar estos campos necesita registrarse.',
@@ -55,9 +78,9 @@ export const cambiosDireccion = new ValidatedMethod({
                 numExt: numExt,
                 numInt: numInt
             }
-        }, (err) => {
+        }, (err)=> {
             if (err) {
-                throw new Meteor.Error(500, 'Error al realizar la operación.', 'direccion-no-actualizada');
+                throw new Meteor.Error(500, 'Error al realizar la operación.', 'error-al-crear');
             }
         });
     }

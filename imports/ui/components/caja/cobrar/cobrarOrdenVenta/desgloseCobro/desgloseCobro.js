@@ -35,7 +35,7 @@ const name = 'desgloseCobro';
 export default angular
     .module(name, [])
     .component(name, {
-        templateUrl: `imports/ui/components/caja/cobrar/cobrarOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: DesgloseCobro,
         bindings: {

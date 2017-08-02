@@ -3,17 +3,18 @@
  */
 import template from "./formaDatosFiscales.html";
 import {buscarRfc} from "../../../../../api/datosFiscales/busquedas";
-import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegirTipoSociedad"
+import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegirTipoSociedad";
 
 class FormaDatosFiscales {
     constructor($scope) {
         'ngInject';
-        this.abreviacion = '';
+        // this.datos.abreviacion = '';
     }
 
     esPersonaMoral() {
         delete this.datos.email;
         delete this.datos.nombre;
+        delete this.datos.segundoNombre;
         delete this.datos.apellidoPaterno;
         delete this.datos.apellidoMaterno;
         delete this.datos._id;
@@ -22,6 +23,7 @@ class FormaDatosFiscales {
     esPersonaFisica() {
         delete this.datos.email;
         delete this.datos.razonSocial;
+        delete this.datos.tipoSociedad;
         delete this.datos._id;
         this.datos.tipoPersona = 'PF';
 

@@ -3,7 +3,7 @@
  */
 import template from "./ordenVenta.html";
 import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
-import {altaOrdenVenta} from "../../../../../api/ordenesVentas/methods";
+import {altaVenta} from "../../../../../api/ventas/methods";
 import {name as Alertas} from "../../../comun/alertas/alertas";
 
 class OrdenVenta {
@@ -15,7 +15,8 @@ class OrdenVenta {
             pedido: [],
             total: 0,
             importeIva: 0,
-            subTotal: 0
+            subTotal: 0,
+            numMeses: []
         };
         this.otraFormaPago = {
             pedido: [],
@@ -24,69 +25,77 @@ class OrdenVenta {
             total: 0
         };
         this.state = $state;
+        this.numPedidosMeses = new Map();
     }
 
     quitarArticulo(index) {
-        let totalOtro = 0;
+        let subTotalOtro = 0;
+        let subTotalMeses = 0;
         let pedidoOtro = [];
-        let totalMeses = 0;
         let pedidoMeses = [];
-        this.pedidogrl.splice(index, 1);
+        let numMeses = new Map();
+        this.pedidoGrl.splice(index, 1);
 
-        this.pedidogrl.forEach((item)=> {
-            if(item.mesesSinInteres){
+        this.pedidoGrl.forEach((item)=> {
+            if (item.mesesSinInteres) {
+                numMeses.set(item.mesesSinInteres, item.mesesSinInteres);
                 pedidoMeses.push(item);
-                totalMeses += (item.precioFinal * item.total);
+                subTotalMeses += (item.precioFinal * item.total);
             } else {
                 pedidoOtro.push(item);
-                totalOtro += (item.precioFinal * item.total);
+                subTotalOtro += (item.precioFinal * item.total);
             }
 
         });
+
+        this.numPedidosMeses = numMeses;
         this.mesesIntereses.pedido = pedidoMeses;
-        this.mesesIntereses.subTotal = totalMeses;
-        this.mesesIntereses.importeIva = totalMeses * (this.iva / 100);
-        this.mesesIntereses.total = totalMeses * (1 + (this.iva / 100));
+        this.mesesIntereses.subTotal = subTotalMeses;
+        this.mesesIntereses.importeIva = subTotalMeses * (this.iva / 100);
+        this.mesesIntereses.total = subTotalMeses * (1 + (this.iva / 100));
 
         this.otraFormaPago.pedido = pedidoOtro;
-        this.otraFormaPago.subTotal = totalOtro;
-        this.otraFormaPago.importeIva = totalOtro * (this.iva / 100);
-        this.otraFormaPago.total = totalOtro * (1 + (this.iva / 100));
+        this.otraFormaPago.subTotal = subTotalOtro;
+        this.otraFormaPago.importeIva = subTotalOtro * (this.iva / 100);
+        this.otraFormaPago.total = subTotalOtro * (1 + (this.iva / 100));
     }
 
-    generarSubTotal(producto) {
+    generarSubTotal(orden) {
 
-        if (producto.mesesSinInteres) {
-            this.mesesIntereses.pedido.push(producto);
-            this.mesesIntereses.subTotal += (producto.precioFinal * producto.total);
-            this.mesesIntereses.importeIva += (producto.precioFinal * producto.total) * (this.iva / 100);
-            this.mesesIntereses.total += (producto.precioFinal * producto.total) * (1 + (this.iva / 100));
+        if (orden.mesesSinInteres) {
+            this.numPedidosMeses.set(orden.mesesSinInteres, orden.mesesSinInteres);
+            this.mesesIntereses.pedido.push(orden);
+            this.mesesIntereses.subTotal += (orden.precioFinal * orden.total);
+            this.mesesIntereses.importeIva += (orden.precioFinal * orden.total) * (this.iva / 100);
+            this.mesesIntereses.total += (orden.precioFinal * orden.total) * (1 + (this.iva / 100));
         } else {
-            this.otraFormaPago.pedido.push(producto);
-            this.otraFormaPago.subTotal += (producto.precioFinal * producto.total);
-            this.otraFormaPago.importeIva += (producto.precioFinal * producto.total) * (this.iva / 100);
-            this.otraFormaPago.total += (producto.precioFinal * producto.total) * (1 + (this.iva / 100));
+            this.otraFormaPago.pedido.push(orden);
+            this.otraFormaPago.subTotal += (orden.precioFinal * orden.total);
+            this.otraFormaPago.importeIva += (orden.precioFinal * orden.total) * (this.iva / 100);
+            this.otraFormaPago.total += (orden.precioFinal * orden.total) * (1 + (this.iva / 100));
         }
 
 
     }
 
     generar() {
+        this.mesesIntereses.numMeses = Array.from(this.numPedidosMeses.keys());
         const ordenCompra = {
             otraFormaPago: this.otraFormaPago,
             mesesIntereses: this.mesesIntereses,
-            tiendaId: this.tiendaid
+            tiendaId: this.tiendaId
         };
-        altaOrdenVenta.call(ordenCompra, this.$bindToContext((err, result)=>{
-            if(err){
+
+        console.log(ordenCompra);
+
+        altaVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
+            if (err) {
+                console.log(err);
                 this.tipoMsj = 'danger';
                 this.msj = err.message;
             } else {
-                if(result.ordenMesesId && result.ordenOtraFormaId){
-                    this.state.go();
-                } else {
-                    this.state.go('app.venta.crearventa.cliente', {ordenId: result.ordenOtraFormaId});
-                }
+
+                this.state.go('app.venta.orden.cliente', {ventaId: result});
             }
         }));
     }
@@ -104,8 +113,8 @@ export default angular
         controllerAs: name,
         controller: OrdenVenta,
         bindings: {
-            pedidogrl: '=',
+            pedidoGrl: '=',
             iva: '<',
-            tiendaid: '<'
+            tiendaId: '<'
         }
     });

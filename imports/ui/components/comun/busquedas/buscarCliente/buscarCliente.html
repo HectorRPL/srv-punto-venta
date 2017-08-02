@@ -1,0 +1,6 @@
+<div class="input-group m-b">
+    <input type="text" class="form-control" ng-model="buscarCliente.cliente"
+           uib-typeahead="cliente as cliente.nombreCompleto for cliente in buscarCliente.buscar($viewValue)"
+           placeholder="Buscar Cliente">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+</div>

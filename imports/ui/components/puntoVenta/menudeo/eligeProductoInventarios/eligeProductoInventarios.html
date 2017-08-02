@@ -72,15 +72,15 @@
                             </li>
                             <li class="list-group-item">
                                 <span class="pull-right label label-success">
-                                    <h5>{{eligeProductoInventarios.miInventario.precioMeses() | currency}}</h5>
+                                    <h5>{{eligeProductoInventarios.precioMeses = (eligeProductoInventarios.miInventario.precioUno() * eligeProductoInventarios.mesInteres.factor) | currency}}</h5>
                                 </span>
                                 <div class="radio">
                                     <label>
                                         <input type="radio" name="precio" id="precioId"
-                                               ng-value="eligeProductoInventarios.miInventario.precioMeses()"
+                                               ng-value="eligeProductoInventarios.precioMeses"
                                                ng-model="eligeProductoInventarios.precioFinal"
-                                               ng-click="eligeProductoInventarios.asignarMeses()" required>
-                                        Meses sin Intereses
+                                               ng-click="eligeProductoInventarios.asignarMeses(eligeProductoInventarios.mesInteres._id)" required>
+                                        <elegir-meses-intereses mes="eligeProductoInventarios.mesInteres"></elegir-meses-intereses>
                                     </label>
                                 </div>
                             </li>

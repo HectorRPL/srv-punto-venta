@@ -1,0 +1,43 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <!--TITULO MODAL-->
+    <div class="col-sm-10">
+        <h2>
+            {{confirmarOperacion.titulo}}&nbsp;
+        </h2>
+    </div>
+    <!-- TACHE (CERRAR MODAL)-->
+    <div class="col-sm-2">
+        <div class="ibox-tools">
+            <br>
+            <a ng-click="confirmarOperacion.cerrar()"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- BODY MODAL -->
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <alertas mensaje="confirmarOperacion.resolve.contenido.msj"
+                             tipo="confirmarOperacion.resolve.contenido.tipoMsj">
+                    </alertas>
+                </div>
+            </div>
+        </div>
+    </div>    <!--FOOTER MODAL-->
+    <div class="inmodal">
+        <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
+        <div class="modal-footer">
+            <!--BOTON CERRAR -->
+            <button type="button"
+                    class="btn btn-default"
+                    ng-click="confirmarOperacion.cerrar()">
+                Cancelar
+            </button>
+            <button type="button"
+                    class="btn btn-primary"
+                    ng-click="confirmarOperacion.aceptar()">
+                Aceptar
+            </button>
+        </div>
+    </div>
+</div>

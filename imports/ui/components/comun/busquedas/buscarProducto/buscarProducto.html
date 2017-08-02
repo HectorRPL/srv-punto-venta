@@ -1,0 +1,6 @@
+<div class="input-group m-b">
+    <input type="text" class="form-control" ng-model="buscarProducto.producto"
+           uib-typeahead="producto as producto.campoBusqueda for producto in buscarProducto.buscar($viewValue)"
+           placeholder="Ingresa el Codigo de Producto">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+</div>

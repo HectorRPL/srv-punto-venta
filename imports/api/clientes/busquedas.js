@@ -12,13 +12,14 @@ export const buscarCliente = new ValidatedMethod({
     name: 'clientes.buscarCliente',
     mixins: [CallPromiseMixin],
     validate: new SimpleSchema({
-        nombre: {type: String},
-        apellidoPaterno: {type: String},
-        apellidoMaterno: {type: String}
+        nombre: {type: String}
     }).validator(),
-    run({nombre, apellidoPaterno, apellidoMaterno}) {
-        const selector = {apellidoPaterno: apellidoPaterno, apellidoMaterno: apellidoMaterno, nombre: nombre};
-        const resultado = Clientes.find(selector).fetch;
+    run({nombre}) {
+        const partialMatch = new RegExp(`^${nombre}`, 'i');
+        const selector = {nombreCompleto: {$regex: partialMatch}};
+        let options = {fields: {_id: 1, nombreCompleto: 1}, limit: 10};
+        const resultado = Clientes.find(selector, options).fetch();
+
         return resultado;
     }
 });

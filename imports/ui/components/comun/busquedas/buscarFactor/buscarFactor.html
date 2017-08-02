@@ -1,0 +1,6 @@
+<div class="input-group m-b">
+    <input type="text" class="form-control" ng-model="buscarFactor.factor"
+           uib-typeahead="factor as factor.nombre for factor in buscarFactor.buscarFactor($viewValue)"
+           placeholder="Ingresa el nombre del Factor">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+</div>

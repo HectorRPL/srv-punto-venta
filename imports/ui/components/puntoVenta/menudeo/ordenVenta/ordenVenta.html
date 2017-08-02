@@ -13,50 +13,49 @@
             </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="producto in ordenVenta.pedidogrl"
-                    ng-init="ordenVenta.generarSubTotal(producto)">
+                <tr ng-repeat="orden in ordenVenta.pedidoGrl"
+                    ng-init="ordenVenta.generarSubTotal(orden)">
                     <!--CANTIDAD-->
                     <td>
                         <button type="button"
                                 class="pull-left close"
-                                uib-popover="Quitar producto"
+                                uib-popover="Quitar orden"
                                 popover-trigger="'mouseenter'"
-                                data-dismiss="modal"
                                 aria-label="Close"
                                 ng-click="ordenVenta.quitarArticulo($index)">
-                            <span aria-hidden="true">&times;</span>
+                            <span aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
                         </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {{producto.total}}
+                        {{orden.total}}
                     </td>
                     <!--UNIDAD-->
                     <td class="text-center">
-                        {{producto.unidad}}
+                        {{orden.unidad}}
                     </td>
                     <!--DESCRIPCIÓN DE PRODUCTO-->
                     <td>
                         <div class="text-center">
-                            &nbsp;&nbsp; {{producto.marcaDesc}} {{producto.descripcion}}
+                            &nbsp;&nbsp; {{orden.marcaDesc}} {{orden.descripcion}}
                         </div>
                     </td>
                     <!--PRECIO-->
                     <td class="text-center">
-                        ${{producto.precioBase | number : 2}}
+                        ${{orden.precioBase | number : 2}}
                     </td>
                     <!--DESCUENTO EN PORCENTAJE Y CANTIDAD-->
                     <td class="text-center">
                         <a>
                             <span class="text-navy pull-right">
-                                (- {{producto.descuento  | number : 0}}
-                                %)&nbsp;&nbsp;${{producto.precioBase * (producto.descuento/100) | number : 2}}
+                                (- {{orden.descuento  | number : 0}}
+                                %)&nbsp;&nbsp;${{orden.precioBase * (orden.descuento/100) | number : 2}}
                             </span>
                         </a>
                     </td>
                     <!--PRECIO FINAL DESCUENTO-->
                     <td class="text-right">
-                        ${{producto.precioFinal  | number : 2}}
+                        ${{orden.precioFinal  | number : 2}}
                     </td>
                     <!--IMPORTE-->
-                    <td>${{(producto.precioFinal * producto.total) | number : 2}}</td>
+                    <td>${{(orden.precioFinal * orden.total) | number : 2}}</td>
                 </tr>
             </tbody>
         </table>
@@ -78,7 +77,7 @@
         </tbody>
     </table>
     <table class="table invoice-total">
-        <h3>Totales meses sin intereses</h3>
+        <h3 class="text-muted pull-right">Totales meses sin intereses</h3>
         <tbody>
             <tr>
                 <td><strong>Sub Total :</strong></td>

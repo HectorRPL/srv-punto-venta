@@ -1,23 +1,24 @@
 /**
  * Created by jvltmtz on 14/06/17.
  */
-import {OrdenesVentas} from '../../../../../../api/ordenesVentas/collection'
-import {PartidasOrdenesVentas} from '../../../../../../api/ordenesVentas/partidasOrdenesVentas/collection'
+import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection'
+import {Ventas} from '../../../../../../api/ventas/collection'
 import template from './resumenOrdenVenta.html';
 
 class ResumenOrdenVenta {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.subscribe('ordenesVentas.id', ()=> [{_id: this.getReactively('otraformaid')}]);
-        this.subscribe('partidasOrdenesVentas.ordenId', ()=> [{ordenVentaId: this.getReactively('otraformaid')}]);
+        this.subscribe('ventas.id', ()=> [{_id: this.getReactively('ventaId')}]);
+        this.subscribe('ventasOrdenes.id', ()=> [{ventaId: this.getReactively('ventaId')}]);
+        //this.subscribe('ventasPartidasOrdenes.ordenId', ()=> [{ordenVentaId: this.getReactively('otraformaid')}]);
 
         this.helpers({
-            ordenVenta(){
-                return OrdenesVentas.findOne({_id: this.getReactively('otraformaid')});
+            venta(){
+              return Ventas.findOne({_id: this.getReactively('ventaId')});
             },
-            partidasOrden(){
-                return PartidasOrdenesVentas.find();
+            ordenesVenta(){
+                return VentasOrdenes.find({ventaId: this.getReactively('ventaId')});
             }
         });
     }
@@ -34,7 +35,6 @@ export default angular
         controllerAs: name,
         controller: ResumenOrdenVenta,
         bindings: {
-            otraformaid: '<',
-            mesesinteresid: '<'
+            ventaId: '<',
         }
     });

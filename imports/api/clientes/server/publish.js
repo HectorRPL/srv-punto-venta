@@ -5,7 +5,13 @@ import {Meteor} from "meteor/meteor";
 import {Clientes} from "../collection";
 
 if (Meteor.isServer) {
-    Meteor.publish('clientes.todo', function () {
-        return Clientes.find();
+    Meteor.publish('clientes.todos', function (selector, options) {
+        if (Object.keys(selector).length === 0 && selector.constructor === Object){
+            this.ready();
+        } else {
+            console.log('clientes.todos', selector);
+            return Clientes.find(selector, options);
+        }
+
     });
 }

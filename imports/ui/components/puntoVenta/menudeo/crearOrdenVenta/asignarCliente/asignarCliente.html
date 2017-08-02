@@ -35,121 +35,19 @@
                 </div>
                 <div class="row" ng-if="!asignarCliente.nuevo">
                     <!--NOMBRE-->
-                    <div class="col-sm-12" >
-                        <div class="input-group" ng-class="{ 'has-error' : asignarClienteFrm.nombreCompleto.$invalid && !asignarClienteFrm.nombreCompleto.$pristine}">
-                            <div ng-messages="asignarClienteFrm.nombreCompleto.$dirty && asignarClienteFrm.nombreCompleto.$error" role="alert">
-                                <label>Nombre Completo*
-                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                                    <span class="animated fadeIn" style="color:red;"
-                                          ng-message="pattern">caracter no válido</span>
-                                </label>
-                                <input id="nombreCompletoId" class="form-control"
-                                       placeholder="Apellido Paterno Apellido Materno Nombre" name="nombreCompleto"
-                                       type="text" aria-describedby="sizing-addon1" minlength="2" maxlength="80"
-                                       ng-minlength="2" ng-maxlength="80" ng-pattern="/^[a-zA-ZñÑ\s]+$/"
-                                       required ng-model="asignarCliente.datos.nombre">
-                            </div>
-                            <label>&nbsp;</label>
-                            <span class="input-group-btn">
-                               <button type="button" class="btn btn btn-primary" class="btn btn-primary" ng-if="!asignarCliente.nuevo"
-                                       ng-click="asignarCliente.buscar()">
-                                   <i class="fa fa-search"></i> Buscar
-                               </button>
-                            </span>
-                        </div>
+                    <div class="col-md-12">
+                        <label>Nombre Completo *</label>
+                        <buscar-cliente cliente="asignarCliente.clienteSelec"></buscar-cliente>
+                    </div>
+                    <div class="col-md-12" ng-show="asignarCliente.cliente._id">
+                        <cambios-cliente respuesta-id="asignarCliente.asignar(asignarCliente.cliente._id)"
+                                         cliente="asignarCliente.cliente">
+                        </cambios-cliente>
+                        <br/>
                     </div>
                 </div>
                 <div class="row" ng-if="asignarCliente.nuevo">
-                    <!--NOMBRE-->
-                    <div class="col-sm-6" >
-                        <div class="form-group"
-                             ng-class="{ 'has-error' : asignarClienteFrm.nombre.$invalid && !asignarClienteFrm.nombre.$pristine}">
-                            <div ng-messages="asignarClienteFrm.nombre.$dirty && asignarClienteFrm.nombre.$error" role="alert">
-                                <label>Nombre *
-                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
-                                </label>
-                                <input id="nombreId" class="form-control"
-                                       name="nombre" type="text" aria-describedby="sizing-addon1"
-                                       minlength="2" maxlength="30" ng-minlength="2" ng-maxlength="30"
-                                       ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                                       ng-model="asignarCliente.datos.nombre">
-                            </div>
-                        </div>
-                    </div>
-                    <!--SEGUNDO NOMBRE-->
-                    <div class="col-sm-6" >
-                        <div class="form-group"
-                             ng-class="{ 'has-error' : asignarClienteFrm.segundoNombre.$invalid && !asignarClienteFrm.segundoNombre.$pristine}">
-                            <div ng-messages="asignarClienteFrm.segundoNombre.$dirty && asignarClienteFrm.segundoNombre.$error" role="alert">
-                                <label>Segundo Nombre
-                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
-                                </label>
-                                <input id="segundoNombreId" class="form-control"
-                                       name="segundoNombre" type="text" aria-describedby="sizing-addon1"
-                                       minlength="2" maxlength="30" ng-minlength="2" ng-maxlength="30"
-                                       ng-pattern="/^[a-zA-ZñÑ\s]+$/"
-                                       ng-model="asignarCliente.datos.segundoNombre">
-                            </div>
-                        </div>
-                    </div>
-                    <!--APELLIDO PATERNO-->
-                    <div class="col-sm-6">
-                        <div class="form-group"
-                             ng-class="{ 'has-error' : asignarClienteFrm.apellidoPaterno.$invalid && !asignarClienteFrm.apellidoPaterno.$pristine}">
-                            <div ng-messages="asignarClienteFrm.apellidoPaterno.$dirty && asignarClienteFrm.apellidoPaterno.$error"
-                                 role="alert">
-                                <label>A. Paterno *
-                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                                    <span class="animated fadeIn" style="color:red;"
-                                          ng-message="pattern">caracter no válido</span>
-                                </label>
-                                <input id="apellidoPaternoId" class="form-control"
-                                       name="apellidoPaterno" type="text" aria-describedby="sizing-addon1"
-                                       minlength="2" maxlength="45" ng-minlength="2" ng-maxlength="45"
-                                       ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                                       ng-model="asignarCliente.datos.apellidoPaterno">
-                            </div>
-                        </div>
-                    </div>
-                    <!--APELLIDO MATERNO-->
-                    <div class="col-sm-6">
-                        <div class="form-group"
-                             ng-class="{ 'has-error' : asignarClienteFrm.apellidoMaterno.$invalid && !asignarClienteFrm.apellidoMaterno.$pristine}">
-                            <div ng-messages="asignarClienteFrm.apellidoMaterno.$dirty && asignarClienteFrm.apellidoMaterno.$error"
-                                 role="alert">
-                                <label>A. Materno
-                                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                    <span class="animated fadeIn" style="color:red;"
-                                          ng-message="pattern">caracter no válido</span>
-                                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                                </label>
-                                <input id="apellidoMaternoId" class="form-control"
-                                       name="apellidoMaterno" type="text" aria-describedby="sizing-addon1"
-                                       minlength="2" maxlength="45" ng-minlength="2" ng-maxlength="45"
-                                       ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                                       ng-model="asignarCliente.datos.apellidoMaterno">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-2 col-md-7">
-                        <alertas tipo="asignarCliente.tipoMsj" mensaje="asignarCliente.msj"></alertas>
-                    </div>
-                    <div class="col-xs-3">
-                        <!--BOTON GUARDAR-->
-                        <button type="button" class="btn btn-primary pull-right" ng-if="asignarCliente.nuevo"
-                                ng-disabled="asignarClienteFrm.$invalid"
-                                ng-click="asignarCliente.insertarCliente()">
-                            Siguiente
-                        </button>
-                    </div>
+                    <alta-cliente respuesta-id="asignarCliente.asignar(clienteId)"></alta-cliente>
                 </div>
             </fieldset>
         </form>

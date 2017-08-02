@@ -2,7 +2,7 @@
  * Created by Héctor on 09/05/2017.
  */
 import {name as AsignarCliente} from './asignarCliente/asignarCliente';
-import {name as AsignarDireccionEntrega} from './asignarDireccionEntrega/asignarDireccionEntrega';
+import {name as AsignarEntrega} from './asignarEntrega/asignarEntrega';
 import {name as AsignarDatosFiscales} from './asignarDatosFiscales/asignarDatosFiscales';
 import {name as ResumenOrdenVenta} from './resumenOrdenVenta/resumenOrdenVenta';
 import template from './crearOrdenVenta.html';
@@ -13,7 +13,7 @@ class CrearOrdenVenta {
         $reactive(this).attach($scope);
         // this.direccion = {};
         this.datosFiscales = {};
-        this.otraOrdenId = $stateParams.ordenId;
+        this.ventaId = $stateParams.ventaId;
     }
 
 }
@@ -23,7 +23,7 @@ const name = 'crearOrdenVenta';
 export default angular
     .module(name, [
         AsignarCliente,
-        AsignarDireccionEntrega,
+        AsignarEntrega,
         AsignarDatosFiscales,
         ResumenOrdenVenta
     ])
@@ -38,8 +38,8 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.crearventa', {
-            url: '/:ordenId/asignar',
+        .state('app.venta.orden', {
+            url: '/orden/:ventaId/asignar',
             template: '<crear-orden-venta></crear-orden-venta>',
             abstract: true
         });

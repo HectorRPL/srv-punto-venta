@@ -1,0 +1,82 @@
+<ng-form name="formaDatosPersonalesFrm">
+    <!--NOMBRE-->
+    <div class="col-sm-6">
+        <div class="form-group"
+             ng-class="{ 'has-error' : formaDatosPersonalesFrm.nombres.$invalid && !formaDatosPersonalesFrm.nombres.$pristine}">
+            <div ng-messages="formaDatosPersonalesFrm.nombres.$dirty && formaDatosPersonalesFrm.nombres.$error"
+                 role="alert">
+                <label>Nombre(s) *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 1, max 30 letras</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
+                </label>
+                <input id="nombresId" class="form-control" name="nombres" type="text" aria-describedby="sizing-addon1"
+                       placeholder="Nombre(s)" required minlength="2" maxlength="31" ng-minlength="2"
+                       ng-maxlength="30" ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                       ng-model="formaDatosPersonales.datos.nombres">
+            </div>
+        </div>
+    </div>
+    <!--APELLIDOS-->
+    <div class="col-sm-6">
+        <div class="form-group"
+             ng-class="{ 'has-error' : formaDatosPersonalesFrm.apellidos.$invalid && !formaDatosPersonalesFrm.apellidos.$pristine}">
+            <div ng-messages="formaDatosPersonalesFrm.apellidos.$dirty && formaDatosPersonalesFrm.apellidos.$error"
+                 role="alert">
+                <label>Apellido(s) *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 2, max 30 letras</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
+                </label>
+                <input id="apellidosId" class="form-control" name="apellidos" type="text" placeholder="Apellido(s)"
+                       aria-describedby="sizing-addon1" required minlength="2" maxlength="31"
+                       ng-minlength="2" ng-maxlength="30" ng-pattern="/^[a-zA-ZñÑ\s]+$/"
+                       ng-model="formaDatosPersonales.datos.apellidos">
+            </div>
+        </div>
+    </div>
+    <!--EMAIL-->
+    <div class="col-sm-6">
+        <div class="form-group"
+             ng-class="{ 'has-error' : formaDatosPersonalesFrm.email.$invalid && !formaDatosPersonalesFrm.email.$pristine}">
+            <div ng-messages="formaDatosPersonalesFrm.email.$dirty && formaDatosPersonalesFrm.email.$error"
+                 role="alert">
+                <label> Email *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="email">incorrecto</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                </label>
+                <input id="emailId" class="form-control" name="email" type="email"
+                       aria-describedby="sizing-addon1" minlength="5"
+                       maxlength="51" ng-minlength="5" ng-maxlength="50" required
+                       ng-model="formaDatosPersonales.datos.email">
+            </div>
+        </div>
+    </div>
+    <!--SEXO-->
+    <div class="col-sm-6">
+        <div class="form-group"
+             ng-class="{ 'has-error' : formaDatosPersonalesFrm.sexo.$invalid && !formaDatosPersonalesFrm.sexo.$pristine}">
+            <div ng-messages="formaDatosPersonalesFrm.sexo.$dirty && formaDatosPersonalesFrm.sexo.$error"
+                 role="alert">
+                <label>Sexo *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                </label>
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button id="sexoMId" class="btn btn-default" name="sexoM" type="button" required
+                                uib-btn-radio="'MUJER'" ng-model="formaDatosPersonales.datos.sexo">
+                            <i class="fa fa-venus" aria-hidden="true"></i> Mujer
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button id="sexoHId" class="btn btn-default" name="sexoH" type="button" required
+                                uib-btn-radio="'HOMBRE'" ng-model="formaDatosPersonales.datos.sexo">
+                            <i class="fa fa-mars" aria-hidden="true"></i> Hombre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-form>

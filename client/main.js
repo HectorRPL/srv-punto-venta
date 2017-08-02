@@ -27,6 +27,6 @@ export default angular
 function config($locationProvider, $urlRouterProvider, $stateProvider) {
     'ngInject';
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/app/venta/menudeo');
 }
 

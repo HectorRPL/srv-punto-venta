@@ -20,7 +20,7 @@ export default angular
         TarjetaBancaria
     ])
     .component(name, {
-        templateUrl: `imports/ui/components/caja/cobrar/cobrarOrdenVenta/${name}/${name}.html`,
+        template,
         controllerAs: name,
         controller: FormasPago,
         bindings: {

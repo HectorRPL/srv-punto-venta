@@ -1,0 +1,78 @@
+<ng-form name="datosGeneralesForm">
+    <!--BOTON AÑADIR TELÉFONO -->
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary pull-right btn-xs" ng-click="formaDatosGenerales.agregarTelefono()">
+            Añadir mas Teléfonos
+        </button>
+    </div>
+    <!--NOMBRE DE LA EMPRESA-->
+    <div class="col-sm-6">
+        <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm.nombre.$invalid && !datosGeneralesForm.nombre.$pristine}">
+            <div ng-messages="datosGeneralesForm.nombre.$dirty && datosGeneralesForm.nombre.$error" role="alert">
+                <label>Nombre corto*
+                    <span class="animated fadeIn" style="color:red;" ng-message="required"> requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 1, max 50 letras</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="pattern"> caracter inválido</span>
+                </label>
+                <input id="nombreId" class="form-control" name="nombre" type="text"
+                       placeholder="Ej: Ceragres Xochimilco" aria-describedby="sizing-addon1"
+                       minlength="2" maxlength="51" ng-minlength="2" ng-maxlength="50"
+                       ng-pattern="/^[ñÑ\s\w]+$/" required
+                       ng-model="formaDatosGenerales.datos.nombre">
+            </div>
+        </div>
+    </div>
+    <!-- EMAIL DE CONTACTO -->
+    <div class="col-sm-6">
+        <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm.email.$invalid && !datosGeneralesForm.email.$pristine}">
+            <div ng-messages="datosGeneralesForm.email.$dirty && datosGeneralesForm.email.$error" role="alert">
+                <label> Email *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="email">incorrecto</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="mixlength, maxlength"> min 2, max 50 letras</span>
+                </label>
+                <input id="emailId" class="form-control" name="email" type="email"
+                       aria-describedby="sizing-addon1" minlength="5"
+                       maxlength="51" ng-minlength="5" ng-maxlength="50" required
+                       ng-model="formaDatosGenerales.datos.email">
+            </div>
+        </div>
+    </div>
+    <!-- TELÉFONOS DE CONTACTO-->
+    <span class="animated fadeIn" ng-repeat="telefono in formaDatosGenerales.datos.telefonos track by $index">
+        <div class="col-sm-4">
+            <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm['telefono'+$index].$invalid && !datosGeneralesForm ['telefono'+$index].$pristine}">
+                <div ng-messages="datosGeneralesForm['telefono'+$index].$dirty && datosGeneralesForm['telefono'+$index].$error" role="alert">
+                    <label> Teléfono <span class="font-bold text-navy">{{$index + 1}}</span> *
+                        <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                        <span class="animated fadeIn" style="color:red;" ng-message="pattern">10 dígitos</span>
+                        <span class="animated fadeIn" style="color:red;" ng-message="pattern">inválido</span>
+                    </label>
+                    <input id="telefonosId" class="form-control" type="text" name="telefono{{$index}}"
+                           aria-describedby="sizing-addon1" maxlength="10"
+                           ng-pattern="/^[0-9]{10}$/" required
+                           ng-model="telefono['telefono']">
+                </div>
+            </div>
+        </div>
+        <!-- TELÉFONO EXTENSIÓN -->
+        <div class="col-sm-2">
+            <div class="form-group" ng-class="{ 'has-error' : datosGeneralesForm['extension'+$index].$invalid && !datosGeneralesForm['extension'+$index].$pristine}">
+                <div ng-messages="datosGeneralesForm['extension'+$index].$dirty && datosGeneralesForm['extension'+$index].$error" role="alert">
+                    <label>&nbsp;
+                        <span class="animated fadeIn" style="color:red;" ng-message="pattern">número</span>
+                    </label>
+                    <input id="extensionId"
+                           class="form-control"
+                           type="text"
+                           name="extension{{$index}}"
+                           placeholder="Ext"
+                           aria-describedby="sizing-addon1"
+                           maxlength="5"
+                           ng-pattern="/^([0-9])*$/"
+                           ng-model="telefono['extension']">
+                </div>
+            </div>
+        </div>
+    </span>
+</ng-form>

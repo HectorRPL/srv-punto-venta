@@ -20,36 +20,35 @@ const Schema = {};
 
 Schema.clientes = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-    nombre: {
+    nombres: {
         type: String, min: 2, max: 30, regEx: /^[a-zA-ZñÑ\s]+$/,
         autoValue: function () {
-            return this.value.toUpperCase()
+            return this.value.toUpperCase();
         }
     },
-    segundoNombre: {
-        type: String, min: 2, max: 30, regEx: /^[a-zA-ZñÑ\s]+$/,
-        autoValue: function () {
-            return this.value.toUpperCase()
-        }
-    },
-    apellidoPaterno: {
+    apellidos: {
         type: String, min: 2, max: 45, regEx: /^[a-zA-ZñÑ\s]+$/,
         autoValue: function () {
-            return this.value.toUpperCase()
+                return this.value.toUpperCase();
         }
     },
-    apellidoMaterno: {
-        type: String, optional: true, min: 2, max: 45, regEx: /^[a-zA-ZñÑ\s]+$/,
+    nombreCompleto: {
+        type: String,
         autoValue: function () {
-            if (this.value) {
-                return this.value.toUpperCase()
+            let nombreCompleto = '';
+            if (this.field('nombres').value && this.field('apellidos').value) {
+                nombreCompleto += this.field('nombres').value.toUpperCase();
+                nombreCompleto += ' ' + this.field('apellidos').value.toUpperCase();
+                return nombreCompleto;
             }
-
         }
     },
+    email: {
+        type: String, min: 2, max: 30, regEx: SimpleSchema.RegEx.Email
+    },
+    sexo: {type: String},
     telefono: {type: Number, optional: true},
     celular: {type: Number, optional: true}
-
 });
 
 Clientes.attachSchema(Schema.clientes);

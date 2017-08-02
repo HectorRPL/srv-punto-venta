@@ -1,55 +1,55 @@
 <div class="row m-b-lg">
-    <div class="col-sm-4">
-        <img alt="image" class="img-responsive center-block" src="images//logo-ccp-1000x1000.png" style="width: 75px">
+    <div class="col-lg-4 text-center">
+        <!-- h3>Ticket Venta</h3 -->
+        <div class="m-b-sm">
+            <img alt="image" class="img-circle" src="images//logo-ccp-1000x1000.png"
+                 style="width: 62px">
+        </div>
     </div>
-    <div class="col-sm-8 text-center">
-        <h2>Resumen de Venta</h2>
-    </div>
-</div>
-<div class="client-detail">
-    <div class="full-height-scroll" full-scroll>
-        <strong>Otra forma pago</strong>
+    <div class="col-lg-8">
+        <strong>Totales</strong>
         <ul class="list-group clear-list">
-            <li class="list-group-item fist-item" ng-repeat="partida in resumenOrdenVenta.partidasOrden">
-                <span class="pull-right"> ${{(partida.totalProductos * partida.precioFinal) | number : 2}} </span>
-                {{partida.totalProductos}}&nbsp;{{partida.producto().campoBusqueda}}
-            </li>
-            <li class="list-group-item text-navy">
-                <span class="pull-right"> ${{resumenOrdenVenta.ordenVenta.subTotal | number : 2}} </span>
+            <li class="list-group-item  fist-item text-navy">
+                <span class="pull-right"> ${{resumenOrdenVenta.venta.subTotal | number : 2}} </span>
                 SubTotal:
             </li>
             <li class="list-group-item text-navy">
-                <span class="pull-right"> ${{resumenOrdenVenta.ordenVenta.importeIva | number : 2}} </span>
+                <span class="pull-right"> ${{resumenOrdenVenta.venta.importeIva | number : 2}} </span>
                 Importe Iva:
             </li>
             <li class="list-group-item text-navy">
-                <span class="pull-right"> ${{resumenOrdenVenta.ordenVenta.total | number : 2}} </span>
+                <span class="pull-right"> ${{resumenOrdenVenta.venta.total | number : 2}} </span>
                 Total:
             </li>
         </ul>
-        <hr/>
-        <strong>Meses sin intereses</strong>
-        <ul class="list-group clear-list">
+    </div>
+</div>
+<hr/>
+{{resumenOrdenVenta.ordenesVenta}}
+<div class="client-detail">
+    <div class="full-height-scroll" full-scroll ng-repeat="orden in resumenOrdenVenta.ordenesVenta">
+        <strong ng-show="orden">{{orden.mesesSinInteres}}&nbsp;&nbsp;Meses sin  Intereses</strong>
+        <!-- ul class="list-group clear-list">
             <li class="list-group-item fist-item">
-                <span class="pull-right"> $123.34 </span>
+                <span class="pull-right">  </span>
                 2 E-39 MONOMANDO ERGO CROMO
             </li>
             <li class="list-group-item">
-                <span class="pull-right"> $123.34 </span>
+                <span class="pull-right"> </span>
                 2 E-39 MONOMANDO ERGO CROMO
             </li>
             <li class="list-group-item">
-                <span class="pull-right"> $123.34  </span>
+                <span class="pull-right">   </span>
                 2 E-39 MONOMANDO ERGO CROMO
             </li>
             <li class="list-group-item">
-                <span class="pull-right"> $123.34 </span>
+                <span class="pull-right">  </span>
                 2 E-39 MONOMANDO ERGO CROMO
             </li>
             <li class="list-group-item">
-                <span class="pull-right"> $123.34 </span>
+                <span class="pull-right">  </span>
                 2 E-39 MONOMANDO ERGO CROMO
             </li>
-        </ul>
+        </ul -->
     </div>
 </div>

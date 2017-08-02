@@ -1,5 +1,3 @@
-import angular from "angular";
-import angularMeteor from "angular-meteor";
 import {Anios} from "../../../../../../api/catalogos/fechaNacimiento/anios/collection";
 import template from "./elegirAnio.html";
 
@@ -22,9 +20,7 @@ const name = 'elegirAnio';
 // create a module
 
 export default angular
-    .module(name, [
-        angularMeteor
-    ])
+    .module(name, [ ])
     .component(name, {
         template,
         controllerAs: name,
