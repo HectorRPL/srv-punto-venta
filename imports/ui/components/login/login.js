@@ -24,7 +24,7 @@ function config($stateProvider) {
     'ngInject';
     $stateProvider
         .state('login', {
-            url: '/login',
-            template: '<login></login>'
+            url: '/loginLinea',
+            template: '<loginLinea></loginLinea>'
         });
 }

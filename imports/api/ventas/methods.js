@@ -10,62 +10,67 @@ import {_} from "meteor/underscore";
 const TIPO_VENTA = 'MENUDEO';
 
 var pedidoSchema = new SimpleSchema({
-    total: {type: Number, decimal: true},
-    subTotal: {type: Number, decimal: true},
-    importeIva: {type: Number, decimal: true},
     pedido: {type: [Object], blackbox: true},
     numMeses: {type: [String], blackbox: true, optional: true}
 });
 
 export const altaVenta = new ValidatedMethod({
     name: 'ventas.altaVenta',
-    mixins: [CallPromiseMixin],
+    mixins: [PermissionsMixin,CallPromiseMixin],
+    allow: [
+        {
+            roles: ['gene_orde_vent_menu'],
+            group: 'vendedores'
+        }
+    ],
+    permissionsError: {
+        name: 'ventas.altaVenta',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: new SimpleSchema({
         tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        total: {type: Number, decimal: true},
+        subTotal: {type: Number, decimal: true},
+        importeIva: {type: Number, decimal: true},
         otraFormaPago: {type: pedidoSchema, optional: true},
         mesesIntereses: {type: pedidoSchema, optional: true}
     }).validator(),
-    run({otraFormaPago, mesesIntereses, tiendaId}) {
-        const total = otraFormaPago.total + mesesIntereses.total;
-        const subTotal = otraFormaPago.subTotal + mesesIntereses.subTotal;
-        const importeIva = otraFormaPago.importeIva + mesesIntereses.importeIva;
+    run({otraFormaPago, mesesIntereses, tiendaId, total, subTotal, importeIva}) {
         let ventaId = '';
         let ordenesVentas = [];
 
         if (Meteor.isServer) {
-            if (total > 0) {
-                ventaId = VentasMenudeoOp.altaVenta(tiendaId, total, subTotal, importeIva);
+            ventaId = VentasMenudeoOp.altaVenta(tiendaId, total, subTotal, importeIva, Meteor.userId());
 
-                //Crea las partidas para meses sin intereses
-                if (mesesIntereses.total > 0) {
-                    mesesIntereses.numMeses.forEach((item)=> {
-                        let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, item);
-                        const ordenesMeses = {
-                            numMeses: item,
-                            ordenId: resultOrdenId
-                        };
-                        ordenesVentas.push(ordenesMeses);
+            //Crea las ordenes de venta para meses sin intereses
+            if (otraFormaPago.pedido.length  > 0) {
+                mesesIntereses.numMeses.forEach((item)=> {
+                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, item);
+                    const ordenesMeses = {
+                        numMeses: item,
+                        ordenId: resultOrdenId
+                    };
+                    ordenesVentas.push(ordenesMeses);
+                });
+                mesesIntereses.pedido.forEach((item)=> {
+                    const ordenIdTemp = ordenesVentas.find((orden)=> {
+                        return orden.numMeses === item.mesesSinInteres;
                     });
-                    mesesIntereses.pedido.forEach((item)=> {
-                        const ordenIdTemp = ordenesVentas.find((orden)=> {
-                            return orden.numMeses === item.mesesSinInteres;
-                        });
-                        VentasMenudeoOp.crearPartida(item, ordenIdTemp.ordenId, ventaId);
-                    });
-                }
+                    VentasMenudeoOp.crearPartida(item, ordenIdTemp.ordenId, ventaId);
+                });
+            }
 
-                //Crear las partidas para otra forma de pago
-                if (otraFormaPago.total > 0) {
-                    let resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0);
-                    otraFormaPago.pedido.forEach((item)=> {
-                        VentasMenudeoOp.crearPartida(item, resultId, ventaId);
-                    });
-                }
+            //Crear las ordenes de venta para otra forma de pago
+            if (otraFormaPago.pedido.length > 0) {
+                let resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0);
+                otraFormaPago.pedido.forEach((item)=> {
+                    VentasMenudeoOp.crearPartida(item, resultId, ventaId);
+                });
             }
             return ventaId;
         }
-
-
     }
 });
 

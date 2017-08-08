@@ -1,0 +1,6 @@
+<div class="input-group m-b">
+    <input type="text" class="form-control" ng-model="buscarDatosFiscales.datosFiscales"
+           uib-typeahead="datosFiscales as datosFiscales.razonSocial for datosFiscales in buscarDatosFiscales.buscar($viewValue)"
+           placeholder="Buscar R.F.C.">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+</div>

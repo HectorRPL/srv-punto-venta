@@ -23,13 +23,17 @@ Schema.clientes = new SimpleSchema({
     nombres: {
         type: String, min: 2, max: 30, regEx: /^[a-zA-ZñÑ\s]+$/,
         autoValue: function () {
-            return this.value.toUpperCase();
+            if (this.value) {
+                return this.value.toUpperCase();
+            }
         }
     },
     apellidos: {
         type: String, min: 2, max: 45, regEx: /^[a-zA-ZñÑ\s]+$/,
         autoValue: function () {
+            if (this.value) {
                 return this.value.toUpperCase();
+            }
         }
     },
     nombreCompleto: {
@@ -47,8 +51,20 @@ Schema.clientes = new SimpleSchema({
         type: String, min: 2, max: 30, regEx: SimpleSchema.RegEx.Email
     },
     sexo: {type: String},
-    telefono: {type: Number, optional: true},
-    celular: {type: Number, optional: true}
+    telefono: {
+        type: String,
+        regEx: /^[0-9]{10}$/,
+        min: 10,
+        max: 10,
+        optional: true
+    },
+    celular: {
+        type: String,
+        regEx: /^[0-9]{10}$/,
+        min: 10,
+        max: 10,
+        optional: true
+    }
 });
 
 Clientes.attachSchema(Schema.clientes);

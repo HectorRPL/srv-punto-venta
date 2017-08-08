@@ -8,11 +8,11 @@ import {VentasPartidasOrdenes} from "./ordenes/partidas/collection";
 import {VentasProductosPartidas} from "./ordenes/partidas/productos/collection";
 
 const MENSAJE_ERROR_ORDEN_VENTA = 'Error al crear la venta, reportar al administrador del sistema.';
-const TIPO_VENTA = 'MENUDEO';
+const TIPO_VENTA = 'menudeo';
 
 VentasMenudeoOp = {
 
-    altaVenta(tiendaId, subTotal, total, importeIva){
+    altaVenta(tiendaId, total, subTotal, importeIva, vendedorId){
         const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
         try {
             const venta = {
@@ -20,6 +20,7 @@ VentasMenudeoOp = {
                 subTotal: subTotal,
                 importeIva: importeIva,
                 total: total,
+                vendedorId: vendedorId,
                 tipo: TIPO_VENTA
             };
             const ventaId = crearVenta(venta);

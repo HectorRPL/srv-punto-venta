@@ -24,7 +24,10 @@ export const buscarCliente = new ValidatedMethod({
     }
 });
 
-const BUSQUEDAS_CLIENTES_METHODS = _.pluck([buscarCliente], 'name');
+const BUSQUEDAS_CLIENTES_METHODS = _.pluck(
+    [
+        buscarCliente
+    ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

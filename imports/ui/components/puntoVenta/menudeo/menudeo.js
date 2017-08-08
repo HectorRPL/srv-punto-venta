@@ -5,6 +5,7 @@ import template from "./menudeo.html";
 import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
 import {name as OrdenVenta} from "./ordenVenta/ordenVenta";
 import {name as CrearOrdenVenta} from "./crearOrdenVenta/crearOrdenVenta";
+import {name as LoginLinea} from "../loginLinea/loginLinea";
 import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas";
 import {Session} from "meteor/session";
 
@@ -19,10 +20,9 @@ class Menudeo {
         this.importeIva = 0;
         this.total = 0;
         this.iva = 16;
-        this.pedido = [];
         this.productoSelec = '';
         this.tiendaId = Session.get('estacionTrabajoId');
-
+        this.pedido = Session.get('ventaenCurso') || [] ;
     }
 
     abrirModal(prodBuscado) {
@@ -46,8 +46,7 @@ class Menudeo {
             } else {
                 this.pedido.splice(index, 1, result);
             }
-
-
+            Session.setPersistent('ventaenCurso', this.pedido);
         }, function (reason) {
 
         }));
@@ -72,7 +71,8 @@ export default angular
     .module(name, [
         EligeProductoInventarios,
         OrdenVenta,
-        CrearOrdenVenta
+        CrearOrdenVenta,
+        LoginLinea
     ])
     .component(name, {
         template,

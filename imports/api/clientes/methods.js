@@ -48,12 +48,13 @@ export const cambiosClienteCel = new ValidatedMethod({
     mixins: [CallPromiseMixin],
     validate: new SimpleSchema({
         _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-        celular: {type: Number},
-        telefono: {type: Number, optional: true}
+        celular: {type: String},
+        telefono: {type: String, optional: true}
     }).validator(),
     run({_id, celular, telefono}) {
         return Clientes.update({_id: _id}, {$set: {celular, telefono}}, (err) => {
             if (err) {
+                console.log(err);
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'no-actualizo-telefonos');
             }
         });

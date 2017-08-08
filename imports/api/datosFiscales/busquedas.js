@@ -15,8 +15,11 @@ export const buscarRfc = new ValidatedMethod({
         rfc: {type: String}
     }).validator(),
     run({rfc}) {
-        const resultado = DatosFiscales.findOne({_id: rfc});
-        return resultado ? true : false;
+        const selector = {rfc: rfc};
+        let options = {fields: {_id: 1, razonSocial: 1}, limit: 10};
+        const resultado = DatosFiscales.find(selector, options).fetch();
+
+        return resultado;
     }
 });
 

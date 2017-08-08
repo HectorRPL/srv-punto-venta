@@ -1,10 +1,13 @@
 /**
  * Created by jvltmtz on 19/05/17.
  */
+import {Meteor} from "meteor/meteor";
+import {Roles} from "meteor/alanning:roles";
 import template from "./ordenVenta.html";
 import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
 import {altaVenta} from "../../../../../api/ventas/methods";
 import {name as Alertas} from "../../../comun/alertas/alertas";
+import {Session} from "meteor/session";
 
 class OrdenVenta {
 
@@ -13,51 +16,48 @@ class OrdenVenta {
         $reactive(this).attach($scope);
         this.mesesIntereses = {
             pedido: [],
-            total: 0,
-            importeIva: 0,
-            subTotal: 0,
             numMeses: []
         };
         this.otraFormaPago = {
             pedido: [],
-            subTotal: 0,
-            importeIva: 0,
-            total: 0
         };
         this.state = $state;
+        this.subTotal = 0;
+        this.importeIva = 0;
+        this.total = 0;
         this.numPedidosMeses = new Map();
+
+        this.helpers({
+            esVendedor(){
+                return Roles.userIsInRole(Meteor.userId(), 'gene_orde_vent_menu', 'vendedores');
+            }
+        });
     }
 
     quitarArticulo(index) {
-        let subTotalOtro = 0;
-        let subTotalMeses = 0;
+        let subTotal = 0;
         let pedidoOtro = [];
         let pedidoMeses = [];
         let numMeses = new Map();
         this.pedidoGrl.splice(index, 1);
+        Session.setPersistent('ventaenCurso', this.pedidoGrl);
 
         this.pedidoGrl.forEach((item)=> {
             if (item.mesesSinInteres) {
                 numMeses.set(item.mesesSinInteres, item.mesesSinInteres);
                 pedidoMeses.push(item);
-                subTotalMeses += (item.precioFinal * item.total);
             } else {
                 pedidoOtro.push(item);
-                subTotalOtro += (item.precioFinal * item.total);
             }
 
+            subTotal += (item.precioFinal * item.total);
         });
 
         this.numPedidosMeses = numMeses;
         this.mesesIntereses.pedido = pedidoMeses;
-        this.mesesIntereses.subTotal = subTotalMeses;
-        this.mesesIntereses.importeIva = subTotalMeses * (this.iva / 100);
-        this.mesesIntereses.total = subTotalMeses * (1 + (this.iva / 100));
-
         this.otraFormaPago.pedido = pedidoOtro;
-        this.otraFormaPago.subTotal = subTotalOtro;
-        this.otraFormaPago.importeIva = subTotalOtro * (this.iva / 100);
-        this.otraFormaPago.total = subTotalOtro * (1 + (this.iva / 100));
+        this.subTotal = subTotal;
+        this.generarTotales();
     }
 
     generarSubTotal(orden) {
@@ -65,28 +65,23 @@ class OrdenVenta {
         if (orden.mesesSinInteres) {
             this.numPedidosMeses.set(orden.mesesSinInteres, orden.mesesSinInteres);
             this.mesesIntereses.pedido.push(orden);
-            this.mesesIntereses.subTotal += (orden.precioFinal * orden.total);
-            this.mesesIntereses.importeIva += (orden.precioFinal * orden.total) * (this.iva / 100);
-            this.mesesIntereses.total += (orden.precioFinal * orden.total) * (1 + (this.iva / 100));
         } else {
             this.otraFormaPago.pedido.push(orden);
-            this.otraFormaPago.subTotal += (orden.precioFinal * orden.total);
-            this.otraFormaPago.importeIva += (orden.precioFinal * orden.total) * (this.iva / 100);
-            this.otraFormaPago.total += (orden.precioFinal * orden.total) * (1 + (this.iva / 100));
         }
-
-
+        this.subTotal += (orden.precioFinal * orden.total);
+        this.generarTotales();
     }
 
     generar() {
         this.mesesIntereses.numMeses = Array.from(this.numPedidosMeses.keys());
         const ordenCompra = {
+            tiendaId: this.tiendaId,
+            total: this.total,
+            subTotal: this.subTotal,
+            importeIva: this.importeIva,
             otraFormaPago: this.otraFormaPago,
-            mesesIntereses: this.mesesIntereses,
-            tiendaId: this.tiendaId
+            mesesIntereses: this.mesesIntereses
         };
-
-        console.log(ordenCompra);
 
         altaVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {
@@ -94,11 +89,25 @@ class OrdenVenta {
                 this.tipoMsj = 'danger';
                 this.msj = err.message;
             } else {
-
+                this.limpiar();
                 this.state.go('app.venta.orden.cliente', {ventaId: result});
             }
         }));
     }
+
+    limpiar() {
+        this.subTotal = 0;
+        this.importeIva = 0;
+        this.total = 0;
+        this.pedidoGrl = [];
+        Session.setPersistent('ventaenCurso', []);
+    }
+
+    generarTotales(){
+        this.importeIva = this.subTotal * (this.iva / 100);
+        this.total = this.subTotal * (1 + (this.iva / 100));
+    }
+
 }
 
 const name = 'ordenVenta';

@@ -15,3 +15,4 @@ import "../../api/ventas/methods";
 import "../../api/ventas/server/publish";
 import "../../api/direcciones/methods";
 import "../../api/direcciones/server/publish";
+import "../../api/empleados/server/publish";

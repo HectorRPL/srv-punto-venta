@@ -57,6 +57,7 @@ class EligeProductoInventarios {
         if(this.mesesSinInteres){
             prod.mesesSinInteres = this.mesesSinInteres
         }
+
         this.modalInstance.close(prod);
     }
 

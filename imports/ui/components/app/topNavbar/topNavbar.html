@@ -13,9 +13,14 @@
             </form>
         </div>
         <ul class="nav navbar-top-links navbar-right">
+            <li ng-if="topNavbar.empleado">
+                <a href="">
+                    {{topNavbar.empleado.nombreCompleto}}
+                </a>
+            </li>
             <li>
                 <a href="">
-                    <i class="fa fa-sign-out"></i> Log out
+                    <i class="fa fa-sign-out"></i> Salir
                 </a>
             </li>
         </ul>

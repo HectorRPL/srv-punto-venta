@@ -48,7 +48,6 @@ class EntregaDomicilio {
                 console.log('Error altaDireccion ', err);
                 this.tipoMsj = 'danger';
             }))
-
             .catch(this.$bindToContext((err)=> {
                 console.log("Error al asignas DireccionId o actualizar Tel");
             }))
@@ -70,19 +69,24 @@ class EntregaDomicilio {
                 this.tipoMsj = 'danger';
             }))
             .then(this.$bindToContext((datos)=> {
-                console.log(datos);
+                console.log('asignarDireccionEntregaVnt');
                 return asignarDireccionEntregaVnt.callPromise(datos);
             }))
             .then(this.$bindToContext((result)=> {
                 this.datosContacto._id = this.clienteId;
+                console.log('cambiosClienteCel ', this.datosContacto);
                 return cambiosClienteCel.callPromise(this.datosContacto)
             }))
-            .catch(this.$bindToContext((err)=> {
-                console.log("Error al asignas DireccionId o actualizar Tel");
-            }))
             .then(this.$bindToContext((result)=> {
-                this.state.go('app-venta.orden.comprobante');
+                console.log('statego ');
+                this.state.go('app.venta.orden.comprobante.factura');
+            }))
+            .catch(this.$bindToContext((err)=> {
+                console.log(err);
+                this.tipoMsj = 'danger';
+                console.log("Error al asignas DireccionId o actualizar Tel");
             }));
+
     }
 
 

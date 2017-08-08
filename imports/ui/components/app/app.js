@@ -2,7 +2,7 @@
  * Created by Héctor on 09/02/2017.
  */
 import {name as Navigation} from "./navigation/navigation";
-import {name as Topnavbar} from "./topnavbar/topnavbar";
+import {name as TopNavbar} from "./topNavbar/topNavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import {name as Compras} from "../compras/compras";
 import {name as Caja} from "../caja/caja";
@@ -17,7 +17,6 @@ class App {
         this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
         Session.setPersistent('estacionTrabajoId', Meteor.settings.public.tiendaConf.tiendaId);
 
-
     }
 }
 
@@ -26,7 +25,7 @@ const name = 'app';
 export default angular
     .module(name, [
         Navigation,
-        Topnavbar,
+        TopNavbar,
         PuntoVenta,
         Compras,
         Caja

@@ -52,11 +52,18 @@ export const altaDireccion = new ValidatedMethod({
 // ACTUALIZAR DIRECCIÓN
 export const cambiosDireccion = new ValidatedMethod({
     name: 'direcciones.cambiosDireccion',
-    mixins: [LoggedInMixin, CallPromiseMixin],
-    checkLoggedInError: {
-        error: 'noLogeado',
-        message: 'Para modificar estos campos necesita registrarse.',
-        reason: 'Usuario no logeado'
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_dire'],
+            group: 'cruddirecciones'
+        }
+    ],
+    permissionsError: {
+        name: 'direcciones.cambiosDireccion',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
     },
     validate: Direcciones.simpleSchema().pick(ID, CAMPOS_DIRECCION).validator({
         clean: true,
