@@ -1,7 +1,7 @@
 ﻿APP CCP OPERATIVO
 
-    UsUaRIoMaStEr
-    U$u4r1OM4$73R
+    user: UsUaRIoMaStEr
+    pass: U$u4r1OM4$73R
 
 BASE DE DATOS MONGO
     Intrucciones para respladar la base y restaurar
