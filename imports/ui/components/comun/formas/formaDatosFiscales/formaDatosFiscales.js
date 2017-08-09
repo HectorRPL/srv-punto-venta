@@ -12,19 +12,15 @@ class FormaDatosFiscales {
     }
 
     esPersonaMoral() {
-        delete this.datos.email;
-        delete this.datos.nombre;
-        delete this.datos.segundoNombre;
-        delete this.datos.apellidoPaterno;
-        delete this.datos.apellidoMaterno;
-        delete this.datos._id;
+        delete this.datos.nombres;
+        delete this.datos.apellidos;
+        delete this.datos.rfc;
         this.datos.tipoPersona = 'PM';
     }
     esPersonaFisica() {
-        delete this.datos.email;
         delete this.datos.razonSocial;
         delete this.datos.tipoSociedad;
-        delete this.datos._id;
+        delete this.datos.rfc;
         this.datos.tipoPersona = 'PF';
 
     }

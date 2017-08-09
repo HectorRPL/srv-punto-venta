@@ -45,7 +45,7 @@
                                ng-pattern="/^([A-ZÑ&]{4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
                                required
                                buscar-rfc
-                               ng-model="formaDatosFiscales.datos._id">
+                               ng-model="formaDatosFiscales.datos.rfc">
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                      ng-class="{ 'has-error' : datosFiscalesForm.emailFiscal.$invalid && !datosFiscalesForm.emailFiscal.$pristine}">
                     <div ng-messages="datosFiscalesForm.emailFiscal.$dirty && datosFiscalesForm.emailFiscal.$error"
                          role="alert">
-                        <label>Email Fiscal *
+                        <label>Email*
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="email">correo incorrecto</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 5, max 50 letras</span>
@@ -63,7 +63,7 @@
                         <input id="emailFiscalId" class="form-control" name="emailFiscal" type="email"
                                aria-describedby="sizing-addon1" minlength="5"
                                maxlength="51" ng-minlength="5" ng-maxlength="50" required
-                               ng-model="formaDatosFiscales.datos.email">
+                               ng-model="formaDatosFiscales.email">
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                                ng-pattern="/^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
                                required
                                buscar-rfc
-                               ng-model="formaDatosFiscales.datos._id">
+                               ng-model="formaDatosFiscales.datos.rfc">
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                  ng-class="{ 'has-error' : datosFiscalesForm.emailFiscal.$invalid && !datosFiscalesForm.emailFiscal.$pristine}">
                 <div ng-messages="datosFiscalesForm.emailFiscal.$dirty && datosFiscalesForm.emailFiscal.$error"
                      role="alert">
-                    <label>Email Fiscal *
+                    <label>Email*
                         <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                         <span class="animated fadeIn" style="color:red;" ng-message="email">correo incorrecto</span>
                         <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 5, max 50 letras</span>
@@ -144,7 +144,7 @@
                     <input id="emailFiscalId" class="form-control" name="emailFiscal" type="email"
                            aria-describedby="sizing-addon1" minlength="5"
                            maxlength="51" ng-minlength="5" ng-maxlength="50" required
-                           ng-model="formaDatosFiscales.datos.email">
+                           ng-model="formaDatosFiscales.email">
                 </div>
             </div>
         </div>
