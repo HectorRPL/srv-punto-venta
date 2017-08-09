@@ -16,3 +16,4 @@ import "../../api/ventas/server/publish";
 import "../../api/direcciones/methods";
 import "../../api/direcciones/server/publish";
 import "../../api/empleados/server/publish";
+import "../../api/datosFiscales/server/publish";
