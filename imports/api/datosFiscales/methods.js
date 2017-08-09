@@ -3,77 +3,44 @@
  */
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
+import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
 import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {DatosFiscales} from "./collection";
 
-const CAMPOS_DATOS_FISCALES = [
-    '_id',
-    'propietarioId',
-    'nombre',
-    'apellidoPaterno',
-    'apellidoMaterno',
-    'razonSocial',
-    'email',
-    'calle',
-    'delMpio',
-    'estado',
-    'estadoId',
-    'colonia',
-    'codigoPostal',
-    'numExt',
-    'numInt',
-    'tipoPersona',
-    'curp'
-    // 'codigoPais', // se deja pendiente, pero deberá estar
-];
+const CAMPOS_DATOS_FISCALES = ['_id', 'rfc', 'propietarioId', 'nombres', 'apellidos', 'razonSocial', 'tipoPersona', 'tipoSociedad'];
 
 export const altaDatosFiscales = new ValidatedMethod({
     name: 'datosFiscales.altaDatosFiscales',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['crea_fisc'],
+            group: 'crudfiscales'
+        }
+    ],
+    permissionsError: {
+        name: 'datosFiscales.altaDatosFiscales',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: DatosFiscales.simpleSchema().pick(CAMPOS_DATOS_FISCALES).validator({
         clean: true,
         filter: false
     }),
-    run(
-        {
-            _id,
-            propietarioId,
-            nombre,
-            apellidoPaterno,
-            apellidoMaterno,
-            razonSocial,
-            email,
-            calle,
-            delMpio,
-            estado,
-            estadoId,
-            colonia,
-            codigoPostal,
-            numExt,
-            numInt,
-            tipoPersona,
-            curp
-    }
-    ) {
+    run({_id, propietarioId, rfc, nombres, apellidos, razonSocial, tipoPersona, tipoSociedad}) {
         return DatosFiscales.insert({
             _id,
+            rfc,
             propietarioId,
-            nombre,
-            apellidoPaterno,
+            nombres,
+            apellidos,
             apellidoMaterno,
             razonSocial,
-            email,
-            calle,
-            delMpio,
-            estado,
-            estadoId,
-            colonia,
-            codigoPostal,
-            numExt,
-            numInt,
             tipoPersona,
-            curp
+            tipoSociedad
         }, (err) => {
             if (err) {
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'datos-fiscales-no-creados');

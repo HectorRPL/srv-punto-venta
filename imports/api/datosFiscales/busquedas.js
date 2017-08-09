@@ -15,8 +15,9 @@ export const buscarRfc = new ValidatedMethod({
         rfc: {type: String}
     }).validator(),
     run({rfc}) {
-        const selector = {rfc: rfc};
-        let options = {fields: {_id: 1, razonSocial: 1}, limit: 10};
+        const partialMatch = new RegExp(`^${rfc}`, 'i');
+        const selector = {rfc: {$regex: partialMatch}};
+        let options = {fields: {_id: 1, rfc: 1}, limit: 10};
         const resultado = DatosFiscales.find(selector, options).fetch();
 
         return resultado;

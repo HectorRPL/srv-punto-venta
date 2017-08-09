@@ -43,7 +43,9 @@ Schema.datosFiscales = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id
     },
     nombres: {
-        type: String, min: 2, max: 30, regEx: /^[a-zA-ZñÑ\s]+$/, optional: true,
+        type: String, min: 2, max: 30,
+        regEx: /^[a-zA-ZñÑ\s]+$/,
+        optional: true,
         custom: function () {
             let shouldBeRequired = this.field('tipoPersona').value == 'PF';
             if (shouldBeRequired) {
@@ -96,6 +98,18 @@ Schema.datosFiscales = new SimpleSchema({
     },
     tipoPersona: {
         type: String
+    },
+    tipoSociedad: {
+        type: String,
+        optional: true,
+        custom: function () {
+            let shouldBeRequired = this.field('tipoPersona').value == 'PM';
+            if (shouldBeRequired) {
+                if (!this.operator) {
+                    if (!this.isSet || this.value === null || this.value === '') return "required";
+                }
+            }
+        },
     }
 });
 
