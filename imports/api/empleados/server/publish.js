@@ -7,7 +7,6 @@ import {Empleados} from "../collection";
 if (Meteor.isServer) {
     Meteor.publish('empleados.logeado', function () {
         if (this.userId) {
-            console.log('empleados.logeado', this.userId);
             const options = {fields: {nombreCompleto: 1, departamentoId: 1}};
             return Empleados.find({propietarioId: this.userId}, options);
         } else {
