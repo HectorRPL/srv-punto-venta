@@ -17,7 +17,11 @@ const partidasOrdenesCounts = {
                 }
             }
         ];
+
+        console.log(JSON.stringify(selectorTiendas));
         const totales = VentasPartidasOrdenes.aggregate(selectorTiendas);
+        console.log(totales);
+
         const subTotal = totales[0].subTotal;
         const importeIva = subTotal * (IVA / 100);
         const total =  subTotal * (1 + (IVA / 100));

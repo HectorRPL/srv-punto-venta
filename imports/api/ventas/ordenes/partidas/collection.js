@@ -8,7 +8,6 @@ import  partidasOrdenesCounts from './partidasOrdenesCount';
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
         const result = super.insert(doc, callback);
-        partidasOrdenesCounts.afterInsertPartida(doc);
         return result;
     }
 }
@@ -39,6 +38,7 @@ Schema.ventasPartidasOrdenes = new SimpleSchema({
     totalProductos: {type: Number},
     descuento: {type: Number},
     entregado: {type: Boolean, defaultValue: false},
+    cancelada:{type: Boolean, optional: true},
     productosEntregados: {type: Number, defaultValue:0}
 
 });

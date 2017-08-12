@@ -12,7 +12,7 @@ const TIPO_VENTA = 'menudeo';
 
 VentasMenudeoOp = {
 
-    altaVenta(tiendaId, total, subTotal, importeIva, vendedorId){
+    altaVenta(tiendaId, total, subTotal, importeIva, empleadoId){
         const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
         try {
             const venta = {
@@ -20,7 +20,7 @@ VentasMenudeoOp = {
                 subTotal: subTotal,
                 importeIva: importeIva,
                 total: total,
-                vendedorId: vendedorId,
+                empleadoId: empleadoId,
                 tipo: TIPO_VENTA
             };
             const ventaId = crearVenta(venta);
@@ -41,13 +41,14 @@ VentasMenudeoOp = {
                 ventaId: ventaId,
                 tiendaId: tiendaId
             };
-            if(numMeses > 0){
+            if (numMeses > 0) {
                 orden.mesesSinInteres = numMeses;
             }
             const ordenId = crearOrden(orden);
 
-           return ordenId;
+            return ordenId;
         } catch (err) {
+            console.log(err);
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
         }
 
@@ -68,17 +69,16 @@ VentasMenudeoOp = {
         try {
             const crearPartida = Meteor.wrapAsync(VentasPartidasOrdenes.insert, VentasPartidasOrdenes);
             const partidaId = crearPartida(partidaFinal);
-            console.log(partida);
+            //console.log(partida);
 
             partida.tiendas.forEach((item)=> {
                 this.crearProdcutosPartidas(item[0], item[1], partidaId);
             });
 
         } catch (err) {
-            console.log('Erroe al crear la partida ', partida._id, err);
+            console.log('Erroe al crear la partida ', partida._id, ordenId, err);
             //throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'partida-no-valida');
         }
-
 
 
     },
@@ -96,6 +96,28 @@ VentasMenudeoOp = {
             console.log(e);
         }
 
+    },
+
+    actualiazarNoVenta(ventaId, tiendaId){
+        const ordenes = VentasOrdenes.find({ventaId: ventaId});
+        let count = 0;
+        ordenes.forEach((orden)=> {
+            var findOneAndUpdate = Meteor.wrapAsync(CountersVentas.rawCollection().findOneAndUpdate, CountersVentas.rawCollection());
+            try {
+                let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
+                const noVenta = result.value.seq;
+                VentasOrdenes.update({_id: orden._id}, {$set: {noVenta: noVenta, estado: '1'}});
+                count ++;
+            } catch (e) {
+                throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');
+            }
+        });
+        const result = VentasOrdenes.find({ventaId: ventaId, estado: '1'}).count();
+
+        if (count === result) {
+            Ventas.update({_id: ventaId}, {$set: {estado: '1'}});
+        }
     }
+
 
 };
