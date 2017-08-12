@@ -22,11 +22,10 @@ Schema.ventasOrdenes = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
     ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    subTotal: {type: Number, decimal: true, defaultValue: 0.0},
-    importeIva: {type: Number, decimal: true, defaultValue: 0.0},
-    total: {type: Number, decimal: true, defaultValue: 0.0},
     mesesSinInteres: {type: Number, optional: true},
-    estado: {type: Number, defaultValue: 0}
+    estado: {type: String, defaultValue: '0'},
+    noOrden: {type: String, defaultValue: '0'},
+    cancelada:{type: Boolean, optional: true},
 
 });
 
