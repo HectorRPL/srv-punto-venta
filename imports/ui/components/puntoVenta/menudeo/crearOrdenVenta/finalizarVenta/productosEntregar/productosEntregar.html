@@ -1,0 +1,59 @@
+<!-- ul class="list-group clear-list m-t">
+    <li class="list-group-item" ng-repeat="partida in productosEntregar.partidas"
+        ng-class="{'fist-item': $index === 0}">
+             <span class="pull-right">
+                  ${{(partida.precioFinal * partida.totalProductos) | number : 2}}
+             </span>
+        <span class="label label-default">  {{partida.totalProductos}}</span>
+
+        <span class="text-center">Productos a entregar:</span>
+    </li>
+</ul -->
+<form name="productosEntregarFrm" id="productosEntregarFrmId" novalidate>
+    <table class="table table-hover margin bottom">
+        <thead>
+        <tr>
+            <th style="width: 1%" class="text-center">Cantidad.</th>
+            <th>Producto</th>
+            <th class="text-right">Cantidad a entregar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="partida in productosEntregar.partidas">
+            <td class="text-center">{{partida.totalProductos}} {{partida.producto().unidad}} </td>
+            <td>{{partida.producto().campoBusqueda}}</td>
+            <td class="text-right small">
+                <div class="form-group" ng-class="{ 'has-error' : productosEntregarFrm['noProdcutos'+$index].$invalid
+                    && !productosEntregarFrm['noProdcutos'+$index].$pristine}">
+                    <div class="input-group m-b pull-right">
+                        <input type="number" id="noProdcutos{{$index}}Id"  name="noProdcutos{{$index}}"
+                               class="input-xs form-control"
+                               placeholder="Cantidad Productos"
+                               min="1"
+                               ng-change=""
+                               required
+                               ng-model="productosEntregar.noProductos['producto._id'+$index]">
+                        <div ng-messages="productosEntregarFrm['noProdcutos'+$index].$dirty && productosEntregarFrm['noProdcutos'+$index].$error" role="alert">
+                            <label> <span class="font-bold text-navy"></span>
+                                <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                                <span class="animated fadeIn" style="color:red;" ng-message="min">Cantidad minima 1</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-center"> </td>
+            <td> </td>
+            <td class="text-right small">
+                <button class="btn btn-sm btn-primary pull-right"
+                        ng-disabled="productosEntregarFrm"
+                        ng-click="productosEntregar.guardar()">
+                    Guardar
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
