@@ -3,6 +3,7 @@
  */
 import {Meteor} from "meteor/meteor";
 import {VentasOrdenes} from "../collection";
+import {VentasPartidasOrdenes} from "../partidas/collection";
 
 if (Meteor.isServer) {
 
@@ -11,11 +12,8 @@ if (Meteor.isServer) {
             this.ready();
         } else {
             const selector = filter;
-            const options = {fields: {subTotal:1, importeIva:1, total:1, tiendaId: 1, ventaId:1, mesesSinInteres:1}};
-            console.log('ventasOrdenes.id ', VentasOrdenes.find(selector).count());
-
+            const options = {fields: {fechaCreacion: 0}};
             return VentasOrdenes.find(selector, options);
-
         }
     });
 }

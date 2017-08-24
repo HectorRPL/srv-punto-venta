@@ -7,26 +7,29 @@ import {VentasPartidasOrdenes} from './collection.js';
 const IVA = '16';
 
 const partidasOrdenesCounts = {
-    _updateTotalesOrden(ordenVentaId) {
-        const selectorTiendas = [
-            {$match: {ordenVentaId: ordenVentaId}},
+    _updateTotalesOrden(ventaOrdenId) {
+        console.log('__updateTotalesOrden ', ventaOrdenId);
+
+        /*const selectorTiendas = [
+            {$match: {ventaOrdenId: ventaOrdenId}},
             {
                 $group: {
-                    _id: '$ordenVentaId',
+                    _id: '$ventaOrdenId',
                     subTotal: {$sum: {$multiply: ['$totalProductos', '$precioFinal']}}
                 }
             }
-        ];
+        ];*/
 
-        console.log(JSON.stringify(selectorTiendas));
-        const totales = VentasPartidasOrdenes.aggregate(selectorTiendas);
-        console.log(totales);
-
-        const subTotal = totales[0].subTotal;
+        const totales = VentasPartidasOrdenes.find({ventaOrdenId: ventaOrdenId}).fetch();
+        let subTotal = 0;
+        totales.forEach((item)=>{
+            subTotal +=  (item.precioFinal * item.totalProductos);
+        });
+        
         const importeIva = subTotal * (IVA / 100);
         const total =  subTotal * (1 + (IVA / 100));
 
-        VentasOrdenes.update({_id: ordenVentaId},
+        VentasOrdenes.update({_id: ventaOrdenId},
             {
                 $set: {
                     subTotal: subTotal,
@@ -36,7 +39,7 @@ const partidasOrdenesCounts = {
             });
     },
     afterInsertPartida(partida) {
-        this._updateTotalesOrden(partida.ordenVentaId);
+        this._updateTotalesOrden(partida.ventaOrdenId);
     }
 };
 

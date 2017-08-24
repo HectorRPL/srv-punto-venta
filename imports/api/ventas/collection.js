@@ -25,14 +25,10 @@ Schema.ventas = new SimpleSchema({
     direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     empleadoId: {type: String},
     fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
-    subTotal: {type: Number, decimal: true},
-    importeIva: {type: Number, decimal: true},
-    total: {type: Number, decimal: true},
     datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     estado: {type: String, defaultValue: '0'},
     cancelada:{type: Boolean, optional: true},
     tipo: {type: String}
-
 });
 
 Ventas.attachSchema(Schema.ventas);

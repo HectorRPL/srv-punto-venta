@@ -80,8 +80,11 @@ class OrdenVenta {
             subTotal: this.subTotal,
             importeIva: this.importeIva,
             otraFormaPago: this.otraFormaPago,
-            mesesIntereses: this.mesesIntereses
+            mesesIntereses: this.mesesIntereses,
+            iva: this.iva
         };
+
+        console.log(ordenCompra);
 
         altaVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {

@@ -25,9 +25,8 @@
             <div ng-message="required" style="color:red">Campo requerido</div>
         </div>
     </div>
-    <button class="btn btn-primary"  ng-click="loginLinea.login()" ng-disabled="loginForm.$invalid">Ingresar</button>
+    <button class="btn btn-primary btn-sm"  ng-click="loginLinea.login()" ng-disabled="loginForm.$invalid">Ingresar</button>
 </form>
-<br>
 <div class="row">
     <div class="col-xs-offset-1 col-xs-7">
         <alertas tipo="loginLinea.tipoMsj" mensaje="loginLinea.msj"></alertas>

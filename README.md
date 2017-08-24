@@ -17,6 +17,7 @@ BASE DE DATOS MONGO
             Colocar la siguiente linea en la consola.
             Linux:
                 export MONGO_URL=mongodb://localhost:27017/ccp-dev1
+                export MONGO_URL=mongodb://dev01:0000@ds053196.mlab.com:53196/srv-dev
             Windows:
                 SET MONGO_URL=mongodb://127.0.0.1:27017/ccp-dev1
     Importar / Exportar Collections

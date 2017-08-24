@@ -1,16 +1,16 @@
 <div class="steps clearfix">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-user"></i> <strong>Cliente</strong>
             </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-map-marker"></i> <strong>Dirección Entrega</strong>
             </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-primary">
                 <i class="fa fa-address-card-o"></i> <strong>Nota ó Factura</strong>
             </button>
@@ -23,17 +23,17 @@
             <fieldset>
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Entrega</h2>
+                        <h2>Comprobante</h2>
                     </div>
                     <div class="col-md-6">
                         <!--BOTON NOTA O FACTURA -->
                         <div class="btn-group pull-right">
                             <button type="button" class="btn btn-default" ng-class="{'active': asignarComprobante.entrega === '0'}"
-                                    ng-click="asignarComprobante.entregarEn('0')">
+                                    ng-click="asignarComprobante.comprobante('0')">
                                 <i class="fa fa-sticky-note"></i>&nbsp;Factura
                             </button>
                             <button type="button" class="btn btn-default" ng-class="{'active': asignarComprobante.entrega === '1'}"
-                                    ng-click="asignarComprobante.entregarEn('1')">
+                                    ng-click="asignarComprobante.comprobante('1')">
                                 <i class="fa fa-sticky-note-o"></i>&nbsp;Nota
                             </button>
                         </div>

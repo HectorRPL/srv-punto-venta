@@ -18,7 +18,12 @@ class AsignarEntrega {
     entregarEn(valor){
         //Actualizar entrega en.
         this.entrega = valor;
-        this.state.go('.domicilio');
+        if(valor ===  '0'){
+            this.state.go('.domicilio');
+        } else {
+            this.state.go('app.venta.orden.comprobante.factura', {clienteId: this.clienteId});
+        }
+
     }
 
 }

@@ -8,7 +8,7 @@ import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {Clientes} from "./collection";
 
-const CAMPOS_CLIENTES = ['nombres', 'apellidos', 'email', 'sexo'];
+const CAMPOS_CLIENTES = ['nombres', 'apellidos', 'email', 'sexo', 'telefono', 'celular'];
 const CLIENTE_ID = ['_id'];
 
 export const altaCliente = new ValidatedMethod({
@@ -34,8 +34,8 @@ export const cambiosCliente = new ValidatedMethod({
         clean: true,
         filter: false
     }),
-    run({_id, nombres, apellidos, email, sexo}) {
-        return Clientes.update({_id: _id}, {$set: {nombres, apellidos, email, sexo}}, (err) => {
+    run({_id, nombres, apellidos, email, sexo, telefono, celular}) {
+        return Clientes.update({_id: _id}, {$set: {nombres, apellidos, email, sexo, telefono, celular}}, (err) => {
             if (err) {
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
             }

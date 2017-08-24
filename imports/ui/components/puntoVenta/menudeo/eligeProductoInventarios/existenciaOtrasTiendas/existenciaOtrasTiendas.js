@@ -31,7 +31,11 @@ class ExistenciaOtrasTiendas {
         let total = 0;
         this.otrosInventarios.forEach((item)=> {
             if (item.numProds && item.numProds > 0) {
-                this.productostienda.set(item._id, item.numProds);
+                const prod = {
+                  tiendaProveedorId: item.tiendaId,
+                  noProductos: item.numProds
+                };
+                this.productostienda.set(item._id, prod);
                 total += item.numProds;
             }
         });

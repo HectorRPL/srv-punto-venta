@@ -2,6 +2,7 @@
  * Created by jvltmtz on 25/07/17.
  */
 import {Ventas} from "../collection";
+import {VentasOrdenes} from "../ordenes/collection";
 
 if (Meteor.isServer) {
 
@@ -9,11 +10,18 @@ if (Meteor.isServer) {
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
             this.ready();
         } else {
-            const selector = filter;
-            const options = {fields: {subTotal:1, importeIva:1, total:1, tiendaId: 1}};
-
-            return Ventas.find(selector, options);
-
+            Counts.publish(this, 'venta.total',
+                VentasOrdenes.find({ventaId: filter._id}, {fields: {_id: 1, total: 1}}),
+                {
+                    noReady: true, countFromField: 'total'
+                });
+            Counts.publish(this, 'venta.subTotal',
+                VentasOrdenes.find({ventaId: filter._id}, {fields: {_id: 1, subTotal: 1}}),
+                {
+                    noReady: true, countFromField: 'subTotal'
+                });
+            return Ventas.find(filter, options);
         }
     });
+
 }

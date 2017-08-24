@@ -5,14 +5,14 @@ import {name as AsignarCliente} from './asignarCliente/asignarCliente';
 import {name as AsignarEntrega} from './asignarEntrega/asignarEntrega';
 import {name as AsignarComprobante} from './asignarComprobante/asignarComprobante';
 import {name as ResumenOrdenVenta} from './resumenOrdenVenta/resumenOrdenVenta';
+import {name as FinalizarVenta} from './finalizarVenta/finalizarVenta';
 import template from './crearOrdenVenta.html';
 
 class CrearOrdenVenta {
     constructor($scope, $reactive, $stateParams) {
         'ngInject';
         $reactive(this).attach($scope);
-        // this.direccion = {};
-        this.datosFiscales = {};
+
         this.ventaId = $stateParams.ventaId;
     }
 
@@ -25,7 +25,8 @@ export default angular
         AsignarCliente,
         AsignarEntrega,
         AsignarComprobante,
-        ResumenOrdenVenta
+        ResumenOrdenVenta,
+        FinalizarVenta
     ])
     .component(name, {
         template,
@@ -39,7 +40,7 @@ function config($stateProvider) {
 
     $stateProvider
         .state('app.venta.orden', {
-            url: '/orden/:ventaId/asignar',
+            url: '/orden/:ventaId',
             template: '<crear-orden-venta></crear-orden-venta>',
             abstract: true
         });
