@@ -6,6 +6,7 @@ import {name as TopNavbar} from "./topNavbar/topNavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import {name as Compras} from "../compras/compras";
 import {name as Caja} from "../caja/caja";
+import {name as Alertas} from "../comun/alertas/alertas";
 import "metismenu/dist/metisMenu.js";
 import template from "./app.html";
 import {Session} from "meteor/session";
@@ -28,7 +29,8 @@ export default angular
         TopNavbar,
         PuntoVenta,
         Compras,
-        Caja
+        Caja,
+        Alertas
     ]).component(name, {
         template,
         controllerAs: name,

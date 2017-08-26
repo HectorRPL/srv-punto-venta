@@ -18,3 +18,4 @@ import "../../api/direcciones/server/publish";
 import "../../api/empleados/server/publish";
 import "../../api/datosFiscales/server/publish";
 import "../../api/datosFiscales/methods";
+import "../../api/ventas/entregas/methods";

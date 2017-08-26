@@ -1,21 +1,4 @@
 <div class="row">
-    <!--div class="col-sm-3">
-        <div class="col-sm-12" ng-repeat="orden in finalizarVenta.ordenesVenta">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <span class="label label-success pull-right">${{orden.subTotal | number : 2}} </span>
-                    <h5 ng-show="orden.mesesSinInteres">{{orden.mesesSinInteres}} Meses sin Intereses</h5>
-                    <h5 ng-hide="orden.mesesSinInteres">Efectivo</h5>
-                </div>
-                <div class="ibox-content">
-                    <h1 class="no-margins">{{orden.noOrden}}</h1>
-
-                    <div class="stat-percent font-bold text-info">16% <i class="fa fa-level-up"></i></div>
-                    <small>No. Ticket</small>
-                </div>
-            </div>
-        </div>
-    </div -->
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -30,18 +13,10 @@
                     <div class="col-sm-3">
                         <h3>Total: ${{finalizarVenta.ventaTotal | number : 2}}</h3>
                     </div>
-                    <div class="col-sm-1">
+                    <div class="col-sm-3">
                         <button class="btn btn-primary pull-right"
-                                ng-disabled="entregaDomicilioFrm.$invalid"
-                                ng-click="entregaDomicilio.guardar()">
-                            Entrega Parcial
-                        </button>
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-primary pull-right"
-                                ng-disabled="entregaDomicilioFrm.$invalid"
-                                ng-click="entregaDomicilio.guardar()">
-                            Entrega en domilcio
+                                ng-click="finalizarVenta.imprimir()">
+                            Imprimir Tickets
                         </button>
                     </div>
                 </div>
@@ -66,11 +41,14 @@
                             </span>
                             <span class="label label-success pull-right">${{orden.total | number : 2}} </span>
                         </uib-accordion-heading>
-                        <productos-entregar partidas="finalizarVenta.partidasOrdenes"></productos-entregar>
+                        <productos-entregar partidas="finalizarVenta.partidasOrdenes"
+                                            venta-orden-id="finalizarVenta.ventaOrdenId">
+                        </productos-entregar>
                     </div>
                 </uib-accordion>
-                <div ui-view=""></div>
+                <!--div ui-view=""></div -->
             </div>
         </div>
     </div>
 </div>
+

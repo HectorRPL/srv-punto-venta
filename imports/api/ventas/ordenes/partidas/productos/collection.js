@@ -21,7 +21,7 @@ const Schema = {};
 Schema.ventasProductosPartidas = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
     partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    ordenVentaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaProveedorId: {type: String, regEx: SimpleSchema.RegEx.Id},
     numProductos: {type: Number},
     pedidoRealizado: {type: Boolean, defaultValue: false},

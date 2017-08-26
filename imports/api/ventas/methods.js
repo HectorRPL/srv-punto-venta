@@ -99,7 +99,7 @@ export const altaVenta = new ValidatedMethod({
                     VentasMenudeoOp.crearPartida(pedido, ventaId);
                 }
                 const total = otraPagoSubtotal * (1 + (iva / 100));
-                VentasOrdenes.update({_id: resultId}, {$set: {total: total, subTotal: otraPagoSubtotal}});
+                VentasOrdenes.update({_id: resultId}, {$set: {total: total, saldoCobrar: total, subTotal: otraPagoSubtotal}});
             }
 
             return ventaId;

@@ -87,7 +87,7 @@ VentasMenudeoOp = {
         const crearProductos = Meteor.wrapAsync(VentasProductosPartidas.insert, VentasProductosPartidas);
         const producto = {
             partidaId: partidaId,
-            ordenVentaId: ventaOrdenId,
+            ventaOrdenId: ventaOrdenId,
             tiendaProveedorId: item[1].tiendaProveedorId,
             productoInventarioId: item[0],
             numProductos: item[1].noProductos
