@@ -47,13 +47,13 @@ export const altaVenta = new ValidatedMethod({
 
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
-            ventaId = VentasMenudeoOp.altaVenta(tiendaId, empleado._id);
+            ventaId = VentasMenudeoOp.altaVenta(tiendaId);
 
             //Crea las ordenes de venta para meses sin intereses
             if (mesesIntereses.pedido.length > 0) {
                 for (let i = 0; i < mesesIntereses.numMeses.length; i++) {
                     const noMes = mesesIntereses.numMeses[i];
-                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, iva);
+                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, iva, empleado._id);
                     const ordenFinal = {
                         ventaOrdenId: resultOrdenId,
                         subTotal: 0
@@ -68,7 +68,7 @@ export const altaVenta = new ValidatedMethod({
                     ordenesMeses.set(pedido.mesesSinInteres, ordenResult);
                     pedido.ventaOrdenId = ordenResult.ventaOrdenId;
 
-                    VentasMenudeoOp.crearPartida(pedido, ventaId);
+                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId);
                 }
             }
 
@@ -90,16 +90,22 @@ export const altaVenta = new ValidatedMethod({
             //Crear las ordenes de venta para otra forma de pago
             if (otraFormaPago.pedido.length > 0) {
                 console.log('Otr forma de pago ');
-                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, iva);
+                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, iva, empleado._id);
 
                 for (let k = 0; k < otraFormaPago.pedido.length; k++) {
                     let pedido = otraFormaPago.pedido[k];
                     otraPagoSubtotal += (pedido.total * pedido.precioFinal);
                     pedido.ventaOrdenId = resultId;
-                    VentasMenudeoOp.crearPartida(pedido, ventaId);
+                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId);
                 }
                 const total = otraPagoSubtotal * (1 + (iva / 100));
-                VentasOrdenes.update({_id: resultId}, {$set: {total: total, saldoCobrar: total, subTotal: otraPagoSubtotal}});
+                VentasOrdenes.update({_id: resultId}, {
+                    $set: {
+                        total: total,
+                        saldoCobrar: total,
+                        subTotal: otraPagoSubtotal
+                    }
+                });
             }
 
             return ventaId;
@@ -107,125 +113,10 @@ export const altaVenta = new ValidatedMethod({
     }
 });
 
-export const asignarClienteVnt = new ValidatedMethod({
-    name: 'ventas.asignarClienteVnt',
-    mixins: [PermissionsMixin, CallPromiseMixin],
-    allow: [
-        {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
-        }
-    ],
-    permissionsError: {
-        name: 'ventas.asignarClienteVnt',
-        message: ()=> {
-            return 'Este usuario no cuenta con los permisos necesarios.';
-        }
-    },
-    validate: new SimpleSchema({
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        clienteId: {type: String, regEx: SimpleSchema.RegEx.Id}
-    }).validator(),
-    run({ventaId, clienteId}) {
-        return Ventas.update({_id: ventaId}, {$set: {clienteId: clienteId}});
-    }
-
-});
-
-export const asignarDireccionEntregaVnt = new ValidatedMethod({
-    name: 'ventas.asignarDireccionEntregaVnt',
-    mixins: [PermissionsMixin, CallPromiseMixin],
-    allow: [
-        {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
-        }
-    ],
-    permissionsError: {
-        name: 'ventas.asignarDireccionEntregaVnt',
-        message: ()=> {
-            return 'Este usuario no cuenta con los permisos necesarios.';
-        }
-    },
-    validate: new SimpleSchema({
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        direccionId: {type: String, regEx: SimpleSchema.RegEx.Id}
-    }).validator(),
-    run({ventaId, direccionId}) {
-
-        return Ventas.update({_id: ventaId}, {$set: {direccionEntregaId: direccionId}}, (err) => {
-            if (err) {
-                throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
-            }
-        });
-    }
-});
-
-export const asignarDatosFiscalesVnt = new ValidatedMethod({
-    name: 'ventas.asignarDatosFiscalesVnt',
-    mixins: [PermissionsMixin, CallPromiseMixin],
-    allow: [
-        {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
-        }
-    ],
-    permissionsError: {
-        name: 'ventas.asignarDatosFiscalesVnt',
-        message: ()=> {
-            return 'Este usuario no cuenta con los permisos necesarios.';
-        }
-    },
-    validate: new SimpleSchema({
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id}
-    }).validator(),
-    run({ventaId, datosFiscalesId}) {
-
-        return Ventas.update({_id: ventaId}, {$set: {datosFiscalesId: datosFiscalesId}}, (err) => {
-            if (err) {
-                throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
-            }
-        });
-    }
-});
-
-export const asignarNoVentas = new ValidatedMethod({
-    name: 'ventas.asignarNoVentas',
-    mixins: [PermissionsMixin, CallPromiseMixin],
-    allow: [
-        {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
-        }
-    ],
-    permissionsError: {
-        name: 'ventas.asignarNoVentas',
-        message: ()=> {
-            return 'Este usuario no cuenta con los permisos necesarios.';
-        }
-    },
-    validate: new SimpleSchema({
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id}
-    }).validator(),
-    run({ventaId, tiendaId}) {
-
-        if (Meteor.isServer) {
-            VentasMenudeoOp.actualiazarNoVenta(ventaId, tiendaId);
-        }
-    }
-
-});
-
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
-        altaVenta,
-        asignarClienteVnt,
-        asignarDireccionEntregaVnt,
-        asignarDatosFiscalesVnt,
-        asignarNoVentas
+        altaVenta
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

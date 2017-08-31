@@ -3,7 +3,7 @@
  */
 import {Direcciones} from '../../../../../../../api/direcciones/collection';
 import {cambiosDireccion, altaDireccion} from '../../../../../../../api/direcciones/methods';
-import {asignarDireccionEntregaVnt} from '../../../../../../../api/ventas/methods';
+import {asignarDireccionEntregaVnt} from '../../../../../../../api/ventas/ordenes/methods';
 import {cambiosClienteCel} from '../../../../../../../api/clientes/methods';
 import template from './entregaDomicilio.html';
 

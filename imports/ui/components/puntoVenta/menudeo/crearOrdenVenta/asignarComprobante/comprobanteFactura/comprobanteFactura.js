@@ -4,7 +4,7 @@
 import template from './comprobanteFactura.html';
 import {DatosFiscales} from '../../../../../../../api/datosFiscales/collection';
 import {altaDatosFiscales, cambiosDatosFiscales} from '../../../../../../../api/datosFiscales/methods';
-import {asignarDatosFiscalesVnt, asignarNoVentas} from '../../../../../../../api/ventas/methods';
+import {asignarDatosFiscalesVnt, asignarNoVentas} from '../../../../../../../api/ventas/ordenes/methods';
 import {name as BuscarDatosFiscales} from '../../../../../comun/busquedas/buscarDatosFiscales/buscarDatosFiscales';
 import {Session} from "meteor/session";
 

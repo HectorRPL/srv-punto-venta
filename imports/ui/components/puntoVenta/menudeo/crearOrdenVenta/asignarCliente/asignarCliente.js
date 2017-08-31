@@ -1,7 +1,7 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {asignarClienteVnt} from '../../../../../../api/ventas/methods';
+import {asignarClienteVnt} from '../../../../../../api/ventas/ordenes/methods';
 import {name as Alertas} from '../../../../comun/alertas/alertas';
 import {name as BuscarCliente} from '../../../../comun/busquedas/buscarCliente/buscarCliente';
 import {name as AltaCliente} from '../../../../clientes/altaCliente/altaCliente';

@@ -13,13 +13,11 @@ const TIPO_VENTA = 'menudeo';
 
 VentasMenudeoOp = {
 
-    altaVenta(tiendaId, empleadoId){
+    altaVenta(tiendaId){
         const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
         try {
             const venta = {
-                tiendaId: tiendaId,
-                empleadoId: empleadoId,
-                tipo: TIPO_VENTA
+                tiendaId: tiendaId
             };
             const ventaId = crearVenta(venta);
 
@@ -31,14 +29,17 @@ VentasMenudeoOp = {
 
     },
 
-    altaOrdenVenta(ventaId, tiendaId, numMeses, iva){
+    altaOrdenVenta(ventaId, tiendaId, numMeses, iva, empleadoId){
 
         try {
             const crearOrden = Meteor.wrapAsync(VentasOrdenes.insert, VentasOrdenes);
             const orden = {
                 ventaId: ventaId,
                 tiendaId: tiendaId,
-                iva: iva
+                iva: iva,
+                tipo: TIPO_VENTA,
+                empleadoId: empleadoId
+
             };
             if (numMeses > 0) {
                 orden.mesesSinInteres = numMeses;
@@ -53,7 +54,7 @@ VentasMenudeoOp = {
 
     },
 
-    crearPartida(partida, ventaId){
+    crearPartida(partida, ventaId, tiendaOrigenId){
         const partidaFinal = {
             ventaId: ventaId,
             ventaOrdenId: partida.ventaOrdenId,
@@ -71,7 +72,7 @@ VentasMenudeoOp = {
 
             for (let j = 0; j < partida.tiendas.length; j++) {
                 let item = partida.tiendas[j];
-                this.crearProdcutosPartidas(item, partida.ventaOrdenId, partidaId);
+                this.crearProdcutosPartidas(item, partida.ventaOrdenId, partidaId, tiendaOrigenId);
             }
 
         } catch (err) {
@@ -82,12 +83,13 @@ VentasMenudeoOp = {
 
     },
 
-    crearProdcutosPartidas(item, ventaOrdenId, partidaId){
+    crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId){
 
         const crearProductos = Meteor.wrapAsync(VentasProductosPartidas.insert, VentasProductosPartidas);
         const producto = {
             partidaId: partidaId,
             ventaOrdenId: ventaOrdenId,
+            tiendaOrigenId: tiendaOrigenId,
             tiendaProveedorId: item[1].tiendaProveedorId,
             productoInventarioId: item[0],
             numProductos: item[1].noProductos
@@ -116,11 +118,6 @@ VentasMenudeoOp = {
                 throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');
             }
         });
-        const result = VentasOrdenes.find({ventaId: ventaId, estado: '1'}).count();
-
-        if (count === result) {
-            Ventas.update({_id: ventaId}, {$set: {estado: '1'}});
-        }
     },
 
 
