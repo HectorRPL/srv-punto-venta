@@ -7,33 +7,129 @@ import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {VentasOrdenes} from "./collection";
 import {_} from "meteor/underscore";
 
-export const altaOrdenVenta = new ValidatedMethod({
-    name: 'ordenesVentas.altaOrdenVenta',
-    mixins: [CallPromiseMixin],
-    validate: new SimpleSchema({
-        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        numMeses: {type: Number}
-    }).validator(),
-    run({tiendaId, ventaId, numMeses}) {
-        const orden = {
-            ventaId: ventaId,
-            tiendaId: tiendaId
-        };
-        if(numMeses > 0){
-            orden.mesesSinInteres = numMeses;
+
+export const asignarClienteVnt = new ValidatedMethod({
+    name: 'ordenesVentas.asignarClienteVnt',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['gene_orde_vent_menu'],
+            group: 'vendedores'
         }
-        return VentasOrdenes.insert(orden, (err)=>{
-            if(err){
-                console.log("Error al crear la orden de venta ", ventaId, tiendaId);
-            }
-        });
+    ],
+    permissionsError: {
+        name: 'ordenesVentas.asignarClienteVnt',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        clienteId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId, clienteId}) {
+        if (Meteor.isServer) {
+            return VentasOrdenes.update({ventaId: ventaId}, {$set: {clienteId: clienteId}}, {multi: true});
+        }
     }
+
+});
+
+export const asignarDireccionEntregaVnt = new ValidatedMethod({
+    name: 'ordenesVentas.asignarDireccionEntregaVnt',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['gene_orde_vent_menu'],
+            group: 'vendedores'
+        }
+    ],
+    permissionsError: {
+        name: 'ordenesVentas.asignarDireccionEntregaVnt',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        direccionId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId, direccionId}) {
+        if (Meteor.isServer) {
+            return VentasOrdenes.update({ventaId: ventaId}, {$set: {direccionEntregaId: direccionId}}, {multi: true}, (err) => {
+                if (err) {
+                    throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+                }
+            });
+        }
+    }
+});
+
+export const asignarDatosFiscalesVnt = new ValidatedMethod({
+    name: 'ordenesVentas.asignarDatosFiscalesVnt',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['gene_orde_vent_menu'],
+            group: 'vendedores'
+        }
+    ],
+    permissionsError: {
+        name: 'ordenesVentas.asignarDatosFiscalesVnt',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId, datosFiscalesId}) {
+        if (Meteor.isServer) {
+            return VentasOrdenes.update({ventaId: ventaId}, {$set: {datosFiscalesId: datosFiscalesId}}, {multi: true}, (err) => {
+                    if (err) {
+                        throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+                    }
+                });
+        }
+    }
+});
+
+export const asignarNoVentas = new ValidatedMethod({
+    name: 'ordenesVentas.asignarNoVentas',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['gene_orde_vent_menu'],
+            group: 'vendedores'
+        }
+    ],
+    permissionsError: {
+        name: 'ordenesVentas.asignarNoVentas',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId, tiendaId}) {
+
+        if (Meteor.isServer) {
+            VentasMenudeoOp.actualiazarNoVenta(ventaId, tiendaId);
+        }
+    }
+
 });
 
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
+        asignarClienteVnt,
+        asignarDireccionEntregaVnt,
+        asignarDatosFiscalesVnt,
+        asignarNoVentas
 
     ], 'name');
 if (Meteor.isServer) {

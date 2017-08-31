@@ -7,3 +7,4 @@ import "../../api/catalogos/marcas/busquedas";
 import "../../api/catalogos/productos/busquedas";
 import "../../api/clientes/busquedas";
 import "../../api/datosFiscales/busquedas";
+import "../../api/ventas/ordenes/partidas/productos/busquedas";

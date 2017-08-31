@@ -21,18 +21,7 @@ const Schema = {};
 Schema.ventas = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    clienteId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    empleadoId: {type: String},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
-    subTotal: {type: Number, decimal: true},
-    importeIva: {type: Number, decimal: true},
-    total: {type: Number, decimal: true},
-    datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    estado: {type: String, defaultValue: '0'},
-    cancelada:{type: Boolean, optional: true},
-    tipo: {type: String}
-
+    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true}
 });
 
 Ventas.attachSchema(Schema.ventas);

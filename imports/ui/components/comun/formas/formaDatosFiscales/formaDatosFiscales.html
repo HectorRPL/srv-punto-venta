@@ -1,6 +1,6 @@
 <ng-form name="datosFiscalesForm">
     <!-- BOTONES = PERSONA FISICA / PERSONA MORAL -->
-    <div class="col-sm-4">
+    <div class="col-sm-6">
         <label class="control-label">Persona *</label>
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
             <div class="btn-group" role="group">
@@ -27,7 +27,7 @@
         <!-- PERSONA FISICA -->
         <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PF'">
             <!--RFC PERSONA FÍSCA-->
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group"
                      ng-class="{ 'has-error' : datosFiscalesForm.rfcPersonaFisica.$invalid && !datosFiscalesForm.rfcPersonaFisica.$pristine}">
                     <div ng-messages="datosFiscalesForm.rfcPersonaFisica.$dirty && datosFiscalesForm.rfcPersonaFisica.$error"
@@ -46,24 +46,6 @@
                                required
                                buscar-rfc
                                ng-model="formaDatosFiscales.datos.rfc">
-                    </div>
-                </div>
-            </div>
-            <!-- EMAIL FISCAL -->
-            <div class="col-sm-4">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.emailFiscal.$invalid && !datosFiscalesForm.emailFiscal.$pristine}">
-                    <div ng-messages="datosFiscalesForm.emailFiscal.$dirty && datosFiscalesForm.emailFiscal.$error"
-                         role="alert">
-                        <label>Email*
-                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="email">correo incorrecto</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 5, max 50 letras</span>
-                        </label>
-                        <input id="emailFiscalId" class="form-control" name="emailFiscal" type="email"
-                               aria-describedby="sizing-addon1" minlength="5"
-                               maxlength="51" ng-minlength="5" ng-maxlength="50" required
-                               ng-model="formaDatosFiscales.email">
                     </div>
                 </div>
             </div>
@@ -91,7 +73,7 @@
                      ng-class="{ 'has-error' : datosFiscalesForm.apellidos.$invalid && !datosFiscalesForm.apellidos.$pristine}">
                     <div ng-messages="datosFiscalesForm.apellidos.$dirty && datosFiscalesForm.apellidos.$error"
                          role="alert">
-                        <label>A. Paterno *
+                        <label>Apellidos *
                             <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
                             <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
                             <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
@@ -108,7 +90,7 @@
         <!-- PERSONA MORAL -->
         <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PM'">
             <!--RFC PERSONA MORAL-->
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div class="form-group"
                      ng-class="{ 'has-error' : datosFiscalesForm.rfcPersonaMoral.$invalid && !datosFiscalesForm.rfcPersonaMoral.$pristine}">
                     <div ng-messages="datosFiscalesForm.rfcPersonaMoral.$dirty && datosFiscalesForm.rfcPersonaMoral.$error"
@@ -130,24 +112,6 @@
                     </div>
                 </div>
             </div>
-            <!-- EMAIL FISCAL -->
-        <div class="col-sm-4">
-            <div class="form-group"
-                 ng-class="{ 'has-error' : datosFiscalesForm.emailFiscal.$invalid && !datosFiscalesForm.emailFiscal.$pristine}">
-                <div ng-messages="datosFiscalesForm.emailFiscal.$dirty && datosFiscalesForm.emailFiscal.$error"
-                     role="alert">
-                    <label>Email*
-                        <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                        <span class="animated fadeIn" style="color:red;" ng-message="email">correo incorrecto</span>
-                        <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength"> min 5, max 50 letras</span>
-                    </label>
-                    <input id="emailFiscalId" class="form-control" name="emailFiscal" type="email"
-                           aria-describedby="sizing-addon1" minlength="5"
-                           maxlength="51" ng-minlength="5" ng-maxlength="50" required
-                           ng-model="formaDatosFiscales.email">
-                </div>
-            </div>
-        </div>
             <!--RAZÓN SOCIAL-->
             <div class="col-sm-8">
                 <div class="form-group"

@@ -1,8 +1,16 @@
 <div class="row">
     <div class="col-sm-8">
-        <div ui-view=""></div>
+        <div class="ibox">
+            <div class="ibox-content">
+                <div ui-view=""></div>
+            </div>
+        </div>
     </div>
     <div class="col-sm-4">
-        <resumen-orden-venta venta-id="crearOrdenVenta.ventaId"></resumen-orden-venta>
+        <div class="ibox">
+            <div class="ibox-content">
+                <resumen-orden-venta></resumen-orden-venta>
+            </div>
+        </div>
     </div>
 </div>

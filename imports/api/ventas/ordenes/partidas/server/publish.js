@@ -12,9 +12,7 @@ if (Meteor.isServer) {
             this.ready();
         } else {
             const selector = filter;
-
             const options = {fields: {totalProductos:1, precioFinal:1, productoId:1}};
-
             return {
                 find: function () {
                     return VentasPartidasOrdenes.find(selector, options);
@@ -22,7 +20,7 @@ if (Meteor.isServer) {
                 children: [
                     {
                         find: function (partida) {
-                            return Productos.find({_id: partida.productoId}, {fields:{campoBusqueda:1}})
+                            return Productos.find({_id: partida.productoId}, {fields:{campoBusqueda:1, unidad:1}})
                         }
                     }
                 ]

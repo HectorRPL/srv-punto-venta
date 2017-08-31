@@ -25,8 +25,18 @@ Schema.ventasOrdenes = new SimpleSchema({
     mesesSinInteres: {type: Number, optional: true},
     estado: {type: String, defaultValue: '0'},
     noOrden: {type: String, defaultValue: '0'},
-    cancelada:{type: Boolean, optional: true},
-
+    cancelada: {type: Boolean, optional: true},
+    iva: {type: Number},
+    total: {type: Number, decimal: true, defaultValue: 0.0},
+    subTotal: {type: Number, decimal: true, defaultValue: 0.0},
+    saldoCobrar: {type: Number, decimal: true, defaultValue:0.0},
+    totalPagos: {type: Number, decimal: true, defaultValue:0.0},
+    fechaCreacion: {type: Date, defaultValue: new Date},
+    tipo: {type:String},
+    empleadoId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    clienteId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true}
 });
 
 VentasOrdenes.attachSchema(Schema.ventasOrdenes);

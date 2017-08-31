@@ -21,7 +21,7 @@ DatosFiscales.deny({
 const Schema = {};
 
 Schema.datosFiscales = new SimpleSchema({
-    _id:{
+    _id: {
         type: String,
         regEx: SimpleSchema.RegEx.Id
     },
@@ -81,15 +81,22 @@ Schema.datosFiscales = new SimpleSchema({
     razonSocial: {
         type: String,
         regEx: /^[a-zA-Z-Ññ.,-\s\d]+$/,
+        optional: true,
+        custom: function () {
+            let shouldBeRequired = this.field('tipoPersona').value == 'PM';
+            if (shouldBeRequired) {
+                if (!this.operator) {
+                    if (!this.isSet || this.value === null || this.value === '') return "required";
+                }
+            }
+        },
         autoValue: function () {
-            if (this.value) {
-                let razonSocial = '';
-                if (this.field('tipoPersona').value == 'PF') {
-                    if (this.field('nombres').value && this.field('apellidos').value) {
-                        razonSocial += this.field('nombres').value.toUpperCase();
-                        razonSocial += ' ' + this.field('apellidos').value.toUpperCase();
-                        return razonSocial;
-                    }
+            let razonSocial = '';
+            if (this.field('tipoPersona').value == 'PF') {
+                if (this.field('nombres').value && this.field('apellidos').value) {
+                    razonSocial += this.field('nombres').value.toUpperCase();
+                    razonSocial += ' ' + this.field('apellidos').value.toUpperCase();
+                    return razonSocial;
                 } else {
                     return this.value.toUpperCase();
                 }
@@ -110,6 +117,83 @@ Schema.datosFiscales = new SimpleSchema({
                 }
             }
         },
+    },
+    /* DIRECCION FISCAL */
+
+    calle: {
+        type: String,
+        max: 40,
+        min: 1,
+        regEx: /^[a-zA-Z./&Ññ-\s\d]+$/,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
+    delMpio: {
+        type: String,
+        max: 100,
+        min: 1,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
+    estado: {
+        type: String,
+        max: 20,
+        min: 1,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
+    estadoId: {
+        type: String,
+        max: 3,
+        min: 1,
+        regEx: /^[a-zA-Z]+$/,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
+    colonia: {
+        type: String,
+        max: 100,
+        min: 1,
+        autoValue: function () {
+            return this.value.toUpperCase()
+        }
+    },
+    codigoPostal: {
+        type: String,
+        max: 5,
+        min: 5,
+        regEx: /^[0-9]{5}$/
+    },
+    numExt: {
+        type: String,
+        max: 20,
+        min: 1,
+        regEx: /^[a-zA-Z./&Ññ-\s\d]+$/,
+        autoValue: function () {
+            if (this.value) {
+                return this.value.toUpperCase()
+            }
+        }
+    },
+    numInt: {
+        type: String,
+        max: 20,
+        min: 1,
+        regEx: /^[a-zA-Z./&Ññ-\s\d]+$/,
+        optional: true,
+        autoValue: function () {
+            if (this.value) {
+                return this.value.toUpperCase()
+            }
+        }
+    },
+    codigoPais: {
+        type: String,
+        defaultValue: 'MX'
     }
 });
 

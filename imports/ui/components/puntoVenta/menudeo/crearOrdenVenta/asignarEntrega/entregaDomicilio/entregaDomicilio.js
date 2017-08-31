@@ -3,7 +3,7 @@
  */
 import {Direcciones} from '../../../../../../../api/direcciones/collection';
 import {cambiosDireccion, altaDireccion} from '../../../../../../../api/direcciones/methods';
-import {asignarDireccionEntregaVnt} from '../../../../../../../api/ventas/methods';
+import {asignarDireccionEntregaVnt} from '../../../../../../../api/ventas/ordenes/methods';
 import {cambiosClienteCel} from '../../../../../../../api/clientes/methods';
 import template from './entregaDomicilio.html';
 
@@ -30,61 +30,48 @@ class EntregaDomicilio {
 
     guardar() {
         this.crearDireccion();
+
         altaDireccion.callPromise(this.direccion)
             .then(this.$bindToContext((result)=> {
-                const datosTemp = {ventaId: this.ventaId, direccionId: result};
-                return datosTemp;
+                return result;
             }))
-            .then(this.$bindToContext((datos)=> {
-                console.log('asignarDireccionEntregaVnt ', datos);
-                return asignarDireccionEntregaVnt.callPromise(datos);
+            .then(this.$bindToContext((direccionId)=> {
+                return asignarDireccionEntregaVnt.callPromise({
+                    ventaId: this.ventaId, direccionId: direccionId
+                });
             }))
             .then(this.$bindToContext((result)=> {
                 this.datosContacto._id = this.clienteId;
-                console.log(this.datosContacto);
                 return cambiosClienteCel.callPromise(this.datosContacto)
             }))
-            .catch(this.$bindToContext((err)=> {
-                console.log('Error altaDireccion ', err);
-                this.tipoMsj = 'danger';
-            }))
-            .catch(this.$bindToContext((err)=> {
-                console.log("Error al asignas DireccionId o actualizar Tel");
-            }))
             .then(this.$bindToContext((result)=> {
-                this.state.go('app-venta.orden.comprobante');
+                this.state.go('app.venta.orden.comprobante.factura', {clienteId: this.clienteId});
+            }))
+            .catch(this.$bindToContext((err)=> {
+                this.tipoMsj = 'danger';
             }));
+
     }
 
     actualizar() {
         this.crearDireccion();
 
+        console.log(this.direccion);
         cambiosDireccion.callPromise(this.direccion)
             .then(this.$bindToContext((result)=> {
-                const datosTemp = {ventaId: this.ventaId, direccionId: this.direccion._id};
-                return datosTemp;
-            }))
-            .catch(this.$bindToContext((err)=> {
-                console.log('Error altaDireccion ', err);
-                this.tipoMsj = 'danger';
-            }))
-            .then(this.$bindToContext((datos)=> {
-                console.log('asignarDireccionEntregaVnt');
-                return asignarDireccionEntregaVnt.callPromise(datos);
+                let datosTemp = {ventaId: this.ventaId, direccionId: this.direccion._id};
+                return asignarDireccionEntregaVnt.callPromise(datosTemp);
             }))
             .then(this.$bindToContext((result)=> {
                 this.datosContacto._id = this.clienteId;
-                console.log('cambiosClienteCel ', this.datosContacto);
                 return cambiosClienteCel.callPromise(this.datosContacto)
             }))
             .then(this.$bindToContext((result)=> {
-                console.log('statego ');
-                this.state.go('app.venta.orden.comprobante.factura');
+                this.state.go('app.venta.orden.comprobante.factura', {clienteId: this.clienteId});
             }))
             .catch(this.$bindToContext((err)=> {
                 console.log(err);
                 this.tipoMsj = 'danger';
-                console.log("Error al asignas DireccionId o actualizar Tel");
             }));
 
     }

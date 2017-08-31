@@ -41,7 +41,8 @@ class EligeProductoInventarios {
 
 
     aceptar() {
-        this.productosTiendas.set(this.resolve.producto.tiendaId, this.cantidadSolicitada);
+        const miProd = {tiendaProveedorId: this.resolve.producto.tiendaId, noProductos: this.cantidadSolicitada};
+        this.productosTiendas.set(this.miInventario._id, miProd);
         const prod = {
             _id: this.producto._id,
             marcaDesc: this.marca.nombre,

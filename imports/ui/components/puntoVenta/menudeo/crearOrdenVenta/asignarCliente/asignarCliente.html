@@ -1,16 +1,16 @@
 <div class="steps clearfix">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-primary">
                 <i class="fa fa-user"></i> <strong>Cliente</strong>
             </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-map-marker"></i> <strong>Dirección Entrega</strong>
             </button>
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <button type="button" class="btn btn-block btn-default" ng-disabled="true">
                 <i class="fa fa-address-card-o"></i> <strong>Nota ó Factura</strong>
             </button>
@@ -27,27 +27,40 @@
                     </div>
                     <div class="col-md-6">
                         <!--BOTON NOTA O FACTURA -->
-                        <div class="btn-group pull-right">
-                            <label class="btn btn-default" ng-model="asignarCliente.nuevo" uib-btn-radio="false" required><i class="fa fa-search"></i>&nbsp;Cliente</label>
-                            <label class="btn btn-default" ng-model="asignarCliente.nuevo" uib-btn-radio="true" required><i class="fa fa-plus"></i>&nbsp;Cliente</label>
-                        </div>
                     </div>
                 </div>
-                <div class="row" ng-if="!asignarCliente.nuevo">
-                    <!--NOMBRE-->
-                    <div class="col-md-12">
+                <div class="row">
+                    <div class="col-sm-12">
                         <label>Nombre Completo *</label>
                         <buscar-cliente cliente="asignarCliente.clienteSelec"></buscar-cliente>
                     </div>
-                    <div class="col-md-12" ng-show="asignarCliente.cliente._id">
-                        <cambios-cliente respuesta-id="asignarCliente.asignar(asignarCliente.cliente._id)"
-                                         cliente="asignarCliente.cliente">
-                        </cambios-cliente>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <forma-datos-personales datos="asignarCliente.cliente"></forma-datos-personales>
                         <br/>
                     </div>
                 </div>
-                <div class="row" ng-if="asignarCliente.nuevo">
-                    <alta-cliente respuesta-id="asignarCliente.asignar(clienteId)"></alta-cliente>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <alertas tipo="asignarCliente.tipoMsj" mensaje="asignarCliente.msj"></alertas>
+                    </div>
+                    <div class="col-sm-4">
+                        <!--BOTON GUARDAR-->
+                        <button type="button" class="btn btn-primary pull-right"
+                                ng-hide="asignarCliente.cliente._id"
+                                ng-disabled="asignarClienteFrm.$invalid"
+                                ng-click="asignarCliente.agregarCliente()">
+                            Siguiente
+                        </button>
+                        <!--BOTON GUARDAR-->
+                        <button type="button" class="btn btn-primary pull-right"
+                                ng-show="asignarCliente.cliente._id"
+                                ng-disabled="asignarClienteFrm.$invalid"
+                                ng-click="asignarCliente.actualizarCliente()">
+                            Siguiente
+                        </button>
+                    </div>
                 </div>
             </fieldset>
         </form>

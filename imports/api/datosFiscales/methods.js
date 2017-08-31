@@ -9,7 +9,9 @@ import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {DatosFiscales} from "./collection";
 
-const CAMPOS_DATOS_FISCALES = ['_id', 'rfc', 'propietarioId', 'nombres', 'apellidos', 'razonSocial', 'tipoPersona', 'tipoSociedad'];
+const CAMPO_ID = ['_id'];
+const CAMPOS_DATOS_FISCALES = ['propietarioId', 'rfc', 'tipoPersona', 'nombres', 'apellidos', 'razonSocial', 'tipoSociedad'];
+const CAMPOS_DIRECCION_FISCAL = ['calle', 'delMpio', 'estado', 'estadoId', 'colonia', 'codigoPostal', 'numExt', 'numInt', 'codigoPais'];
 
 export const altaDatosFiscales = new ValidatedMethod({
     name: 'datosFiscales.altaDatosFiscales',
@@ -26,21 +28,17 @@ export const altaDatosFiscales = new ValidatedMethod({
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: DatosFiscales.simpleSchema().pick(CAMPOS_DATOS_FISCALES).validator({
+    validate: DatosFiscales.simpleSchema().pick(CAMPOS_DATOS_FISCALES, CAMPOS_DIRECCION_FISCAL).validator({
         clean: true,
         filter: false
     }),
-    run({_id, propietarioId, rfc, nombres, apellidos, razonSocial, tipoPersona, tipoSociedad}) {
+    run({
+        propietarioId, rfc, tipoPersona, nombres, apellidos, razonSocial, tipoSociedad,
+        calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais
+    }) {
         return DatosFiscales.insert({
-            _id,
-            rfc,
-            propietarioId,
-            nombres,
-            apellidos,
-            apellidoMaterno,
-            razonSocial,
-            tipoPersona,
-            tipoSociedad
+            propietarioId, rfc, tipoPersona, nombres, apellidos, razonSocial, tipoSociedad,
+            calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais
         }, (err) => {
             if (err) {
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'datos-fiscales-no-creados');
@@ -49,7 +47,63 @@ export const altaDatosFiscales = new ValidatedMethod({
     }
 });
 
-const DATOS_FISCALES_PROVEEDORES_METHODS = _.pluck([altaDatosFiscales], 'name');
+export const cambiosDatosFiscales = new ValidatedMethod({
+    name: 'datosFiscales.cambiosDatosFiscales',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_fisc'],
+            group: 'crudfiscales'
+        }
+    ],
+    permissionsError: {
+        name: 'datosFiscales.cambiosDatosFiscales',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: DatosFiscales.simpleSchema().pick(CAMPO_ID, CAMPOS_DATOS_FISCALES, CAMPOS_DIRECCION_FISCAL).validator({
+        clean: true,
+        filter: false
+    }),
+    run({
+        _id, propietarioId, rfc, tipoPersona, nombres, apellidos, razonSocial, tipoSociedad,
+        calle, delMpio, estado, estadoId, colonia, codigoPostal, numExt, numInt, codigoPais
+    }) {
+
+        if (tipoPersona === 'PM') {
+            return DatosFiscales.update({_id: _id}, {
+                $set: {
+                    propietarioId: propietarioId, rfc: rfc, tipoPersona: tipoPersona, razonSocial: razonSocial,
+                    tipoSociedad: tipoSociedad, calle: calle, delMpio: delMpio, estadoId: estadoId, estado: estado,
+                    colonia: colonia, codigoPostal: codigoPostal, numExt: numExt, numInt: numInt
+                },
+                $unset: {
+                    nombres: "", apellidos: ""
+                }
+            });
+        } else {
+            return DatosFiscales.update({_id: _id}, {
+                $set: {
+                    propietarioId: propietarioId, rfc: rfc, tipoPersona: tipoPersona, nombres: nombres,
+                    apellidos: apellidos, calle: calle, delMpio: delMpio, estadoId: estadoId, estado: estado,
+                    colonia: colonia, codigoPostal: codigoPostal, numExt: numExt, numInt: numInt
+                },
+                $unset: {
+                    tipoSociedad: ""
+                }
+            });
+        }
+
+    }
+});
+
+const DATOS_FISCALES_PROVEEDORES_METHODS = _.pluck(
+    [
+        altaDatosFiscales,
+        cambiosDatosFiscales
+
+    ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {
