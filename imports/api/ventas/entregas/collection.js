@@ -41,7 +41,6 @@ Schema.ventasEntregas = new SimpleSchema({
     usuarioSolicitaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     observaciones: {type: String, optional: true},
     numProductosRechazados: {type: Number, optional: true},
-    entregada: {type: Boolean, defaultValue: false},
     tipo: {type: String, defaultValue: 'domicilio', optional: true}
 });
 
