@@ -24,7 +24,7 @@ Schema.ventasOrdenes = new SimpleSchema({
     tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     mesesSinInteres: {type: Number, optional: true},
     estado: {type: String, defaultValue: '0'},
-    noOrden: {type: String, defaultValue: '0'},
+    numVentaOrden: {type: String, defaultValue: '0'},
     cancelada: {type: Boolean, optional: true},
     iva: {type: Number},
     total: {type: Number, decimal: true, defaultValue: 0.0},

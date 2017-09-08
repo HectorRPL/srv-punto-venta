@@ -18,6 +18,7 @@ class EligeProductoInventarios {
         this.productosTiendas = new Map();
         this.precioFinal = '';
         this.descuentoFinal = 0;
+
         this.subscribe('productos.id', ()=> [{_id: this.getReactively('resolve.producto._id')}]);
         this.subscribe('marcas.id', ()=> [{_id: this.getReactively('resolve.producto.marcaId')}]);
         this.subscribe('productosInventarios.miInventario', ()=> [
@@ -41,8 +42,24 @@ class EligeProductoInventarios {
 
 
     aceptar() {
-        const miProd = {tiendaProveedorId: this.resolve.producto.tiendaId, noProductos: this.cantidadSolicitada};
-        this.productosTiendas.set(this.miInventario._id, miProd);
+        if(this.cantidadSolicitada > this.miInventario.cantidad){
+            const prodFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
+            const miProd = {
+                noProductos: prodFaltante,
+                tiendaGrupo:false,
+            };
+
+            this.productosTiendas.set(this.miInventario._id, miProd);
+
+            const miProd2 = {
+                proveedorId: this.resolve.producto.tiendaId,
+                noProductos: (this.cantidadSolicitada - prodFaltante),
+                deMiInventario: true
+            };
+
+            this.productosTiendas.set(this.miInventario._id, miProd2);
+        }
+
         const prod = {
             _id: this.producto._id,
             marcaDesc: this.marca.nombre,

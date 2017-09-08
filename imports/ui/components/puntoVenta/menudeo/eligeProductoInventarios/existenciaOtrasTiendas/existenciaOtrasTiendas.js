@@ -8,7 +8,7 @@ class ExistenciaOtrasTiendas {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.subscribe('productosInventarios.todasTiendas', ()=> [
+        this.subscribe('productosInventarios.todasTiendas', () => [
             {
                 productoId: this.getReactively('productoid'),
                 tiendaId: this.getReactively('tiendaid')
@@ -29,11 +29,13 @@ class ExistenciaOtrasTiendas {
 
     totalProductosTiendas() {
         let total = 0;
-        this.otrosInventarios.forEach((item)=> {
+        this.otrosInventarios.forEach((item) => {
             if (item.numProds && item.numProds > 0) {
                 const prod = {
-                  tiendaProveedorId: item.tiendaId,
-                  noProductos: item.numProds
+                    proveedorId: item.tiendaId,
+                    noProductos: item.numProds,
+                    deMiInventario: false,
+                    tiendaGrupo: true
                 };
                 this.productostienda.set(item._id, prod);
                 total += item.numProds;
