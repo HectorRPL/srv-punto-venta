@@ -85,14 +85,18 @@ VentasMenudeoOp = {
 
     crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId){
 
+        console.log(item);
+
         const crearProductos = Meteor.wrapAsync(VentasProductosPartidas.insert, VentasProductosPartidas);
         const producto = {
             partidaId: partidaId,
             ventaOrdenId: ventaOrdenId,
             tiendaOrigenId: tiendaOrigenId,
-            tiendaProveedorId: item[1].tiendaProveedorId,
+            proveedorId: item[1].tiendaProveedorId,
             productoInventarioId: item[0],
-            numProductos: item[1].noProductos
+            numProductos: item[1].noProductos,
+            deMiInventario: item[1].deMiInventario,
+            tiendaGrupo: item[1].tiendaGrupo,
         };
         try {
             crearProductos(producto);
@@ -110,9 +114,8 @@ VentasMenudeoOp = {
             var findOneAndUpdate = Meteor.wrapAsync(CountersVentas.rawCollection().findOneAndUpdate, CountersVentas.rawCollection());
             try {
                 let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
-                console.log(result);
                 const noOrden = result.value.seq;
-                VentasOrdenes.update({_id: orden._id}, {$set: {noOrden: noOrden, estado: '1'}});
+                VentasOrdenes.update({_id: orden._id}, {$set: {numVentaOrden: noOrden, estado: '1'}});
                 count++;
             } catch (e) {
                 throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');
