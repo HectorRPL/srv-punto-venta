@@ -100,7 +100,7 @@ export default angular
         ElegirMesesIntereses
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: EligeProductoInventarios,
         bindings: {

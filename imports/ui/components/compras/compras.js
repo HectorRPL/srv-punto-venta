@@ -24,7 +24,7 @@ export default angular
         ElegirTipoOrden
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: Compras
     })

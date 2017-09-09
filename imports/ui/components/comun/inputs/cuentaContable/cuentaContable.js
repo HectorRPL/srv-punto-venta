@@ -19,7 +19,7 @@ export default angular
         uiMask
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         bindings: {
             dato: '='

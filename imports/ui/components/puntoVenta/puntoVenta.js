@@ -19,7 +19,7 @@ export default angular
         Menudeo,
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: PuntoVenta
     })

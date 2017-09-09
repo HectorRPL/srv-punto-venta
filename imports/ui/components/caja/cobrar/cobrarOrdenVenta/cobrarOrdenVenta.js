@@ -36,7 +36,7 @@ export default angular
         DesgloseCobro
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: CobrarOrdenVenta
     })

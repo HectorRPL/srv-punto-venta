@@ -44,7 +44,7 @@ export default angular
         // FullScroll
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: ListadoOrdenesVenta
     })
