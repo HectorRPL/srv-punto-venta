@@ -20,7 +20,7 @@ export default angular
         TarjetaBancaria
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: FormasPago,
         bindings: {

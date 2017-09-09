@@ -26,7 +26,7 @@ export default angular
         angularMeteor
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         bindings: {
             diaid: '='

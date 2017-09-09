@@ -22,7 +22,7 @@ export default angular
         BuscarProductoProveedores
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: ElegirTipoOrden
     })

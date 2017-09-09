@@ -18,7 +18,7 @@ export default angular
         Cobrar
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: Caja
     })

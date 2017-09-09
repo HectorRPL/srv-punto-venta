@@ -49,7 +49,7 @@ export default angular
         FormaEditarDatosFiscales
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: AsignarComprobante
     })

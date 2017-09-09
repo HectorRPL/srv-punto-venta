@@ -55,7 +55,7 @@ export default angular
         OrdenCompraTienda
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: BuscarProductoTiendas
     })

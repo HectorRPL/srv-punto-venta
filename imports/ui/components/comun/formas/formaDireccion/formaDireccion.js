@@ -19,7 +19,7 @@ export default angular
         CodigosPostales
     ])
     .component(name, {
-        template ,
+        template: template.default,
         controllerAs: name,
         controller: FormaDireccion,
         bindings: {

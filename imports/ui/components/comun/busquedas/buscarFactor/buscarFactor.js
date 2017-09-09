@@ -26,7 +26,7 @@ const name = 'buscarFactor';
 export default angular
     .module(name, [])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: BuscarFactor,
         bindings: {

@@ -29,7 +29,7 @@ export default angular
         FinalizarVenta
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: CrearOrdenVenta
     })

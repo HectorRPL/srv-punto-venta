@@ -37,7 +37,7 @@ export default angular
         EntregaDomicilio
     ])
     .component(name, {
-        template,
+        template: template.default,
         controllerAs: name,
         controller: AsignarEntrega
     })
