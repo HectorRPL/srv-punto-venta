@@ -33,11 +33,11 @@
                          ng-click="finalizarVenta.mostrarPartidas(orden._id)">
                         <uib-accordion-heading>
                             <span ng-show="orden.mesesSinInteres">
-                                No. Ticket: {{orden.noOrden}}
+                                No. Ticket: {{orden.numVentaOrden}}
                                 - <small>{{orden.mesesSinInteres}} Meses sin Intereses</small>
                             </span>
                             <span ng-hide="orden.mesesSinInteres">
-                                No. Ticket: {{orden.noOrden}} - <small>Efectivo</small>
+                                No. Ticket: {{orden.numVentaOrden}} - <small>Efectivo</small>
                             </span>
                             <span class="label label-success pull-right">${{orden.total | number : 2}} </span>
                         </uib-accordion-heading>

@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="partida in productosEntregar.partidas">
-            <td class="text-center">{{partida.totalProductos}} {{partida.producto().unidad}} </td>
+            <td class="text-center">{{partida.numTotalProductos}} {{partida.producto().unidad}} </td>
             <td>{{partida.producto().campoBusqueda}}</td>
             <td class="text-right small">
                 <div class="form-group" ng-class="{ 'has-error' : productosEntregarFrm['noProdcutos'+$index].$invalid

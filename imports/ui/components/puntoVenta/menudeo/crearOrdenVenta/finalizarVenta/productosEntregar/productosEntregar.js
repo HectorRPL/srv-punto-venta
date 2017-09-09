@@ -48,10 +48,10 @@ export default angular
                 ngModel.$asyncValidators.cantidadInvalida = function (modelValue, viewValue) {
                     let cantidad = modelValue || viewValue;
                     const partidaId = element[0].id;
-                    const tiendaProveedorId = scope.productosEntregar.tiendaId;
+                    const proveedorId = scope.productosEntregar.tiendaId;
                     return buscarCantidaAlmacen.callPromise({
                         partidaId: partidaId,
-                        tiendaProveedorId: tiendaProveedorId
+                        proveedorId: proveedorId
                     }).then(function (result) {
                         if (cantidad > result) {
                             return $q.reject('Cantidad a entregar no valida');

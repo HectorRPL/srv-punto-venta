@@ -12,7 +12,7 @@ if (Meteor.isServer) {
             this.ready();
         } else {
             const selector = filter;
-            const options = {fields: {totalProductos:1, precioFinal:1, productoId:1}};
+            const options = {fields: {numTotalProductos:1, precioFinal:1, productoId:1}};
             return {
                 find: function () {
                     return VentasPartidasOrdenes.find(selector, options);

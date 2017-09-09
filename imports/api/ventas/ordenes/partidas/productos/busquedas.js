@@ -13,11 +13,11 @@ export const buscarCantidaAlmacen = new ValidatedMethod({
     mixins: [CallPromiseMixin],
     validate: new SimpleSchema({
         partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        tiendaProveedorId: {type: String, regEx: SimpleSchema.RegEx.Id}
+        proveedorId: {type: String, regEx: SimpleSchema.RegEx.Id}
     }).validator(),
-    run({partidaId, tiendaProveedorId}) {
+    run({partidaId, proveedorId}) {
         if (Meteor.isServer) {
-            const selector = {partidaId: partidaId, tiendaProveedorId: tiendaProveedorId};
+            const selector = {partidaId: partidaId, proveedorId: proveedorId};
             const producto = VentasProductosPartidas.findOne(selector);
             return producto ? producto.numProductos : 0;
         }

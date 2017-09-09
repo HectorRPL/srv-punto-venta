@@ -40,12 +40,13 @@ Schema.ventasPartidasOrdenes = new SimpleSchema({
     factorId: {type: String, regEx: SimpleSchema.RegEx.Id},
     precioBase: {type: Number, decimal: true},
     precioFinal: {type: Number, decimal: true},
-    numProductos: {type: Number},
-    descuento: {type: Number},
+    numTotalProductos: {type: Number},
+    descuento: {type: Number, optional:true},
     entregado: {type: Boolean, defaultValue: false},
     comision: {type: Number, decimal: true, optional: true},
     cancelada: {type: Boolean, optional: true},
-    numEntregados: {type: Number, defaultValue: 0},
+    numTotalEntregados: {type: Number, defaultValue: 0},
+    numTotalDevoluciones: {type: Number, optional: true},
     fechaCreacion: {type: Date, defaultValue: new Date, denyUpdate: true}
 
 });
