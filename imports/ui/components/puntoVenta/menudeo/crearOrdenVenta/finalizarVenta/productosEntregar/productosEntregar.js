@@ -53,6 +53,7 @@ export default angular
                         partidaId: partidaId,
                         proveedorId: proveedorId
                     }).then(function (result) {
+                        console.log(result);
                         if (cantidad > result) {
                             return $q.reject('Cantidad a entregar no valida');
                         }

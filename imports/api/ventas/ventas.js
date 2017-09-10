@@ -105,7 +105,7 @@ VentasMenudeoOp = {
             console.log(e);
         }
 
-        if (item[1].prodFaltante) {
+        if (item[1].prodFaltante && item[1].productoFaltante > 0) {
             const producto2 = {
                 partidaId: partidaId,
                 ventaOrdenId: ventaOrdenId,
