@@ -129,10 +129,9 @@ export const ventaEntregarMostrador = new ValidatedMethod({
                     usuarioSolicitaId: empleado._id,
                     tipo: 'mostrador'
                 };
-                console.log(entrega);
-                VentasEntregas.insert(entrega, (err)=>{
+                return VentasEntregas.insert(entrega, (err)=>{
                     if(err){
-                        console.log(err);
+                        throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
                     }
                 });
             })

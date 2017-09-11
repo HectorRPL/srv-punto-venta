@@ -16,7 +16,6 @@ class ProductosEntregar {
 
     guardar() {
         const entregaFinal = {ventaOrdenId: this.ventaOrdenId, entregas: this.noProductos};
-        console.log(entregaFinal);
         ventaEntregarMostrador.callPromise(entregaFinal)
             .then(this.$bindToContext((result)=> {
                 this.tipoMsj = 'success';

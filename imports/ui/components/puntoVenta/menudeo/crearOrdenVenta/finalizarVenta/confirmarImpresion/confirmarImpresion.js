@@ -14,8 +14,9 @@ class ConfirmarImpresion {
         };
         this.msjDireccion = {
             tipo:'warning',
-            contenido: 'El pedido se entrega en domicilio. Si desea entregar productos en mostrador, ingreselos en al pantalla anteriror.'
+            contenido: 'Si desea entregar productos en mostrador, ingreselos en al pantalla anteriror.'
         };
+
     }
 
     aceptar() {

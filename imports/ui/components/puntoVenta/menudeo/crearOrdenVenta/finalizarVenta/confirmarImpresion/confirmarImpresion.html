@@ -17,12 +17,7 @@
         <div class="ibox-content">
             <div class="row">
                 <div class="col-sm-12">
-                    <alertas ng-if="!confirmarImpresion.resolve.direccionId"
-                             mensaje="confirmarImpresion.msj.contenido"
-                             tipo="confirmarImpresion.msj.tipo">
-                    </alertas>
-                    <alertas ng-if="confirmarImpresion.resolve.direccionId"
-                             mensaje="confirmarImpresion.msjDireccion.contenido"
+                    <alertas mensaje="confirmarImpresion.msjDireccion.contenido"
                              tipo="confirmarImpresion.msjDireccion.tipo">
                     </alertas>
                 </div>
@@ -39,7 +34,6 @@
                 Cancelar
             </button>
             <button type="button"
-                    ng-if="confirmarImpresion.resolve.direccionId"
                     class="btn btn-primary"
                     ng-click="confirmarImpresion.aceptar()">
                 Aceptar

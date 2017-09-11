@@ -23,7 +23,6 @@ VentasMenudeoOp = {
 
             return ventaId;
         } catch (err) {
-            console.log(err);
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'venta-no-valida');
         }
 
@@ -48,7 +47,6 @@ VentasMenudeoOp = {
 
             return ordenId;
         } catch (err) {
-            console.log(err);
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
         }
 
@@ -85,7 +83,6 @@ VentasMenudeoOp = {
 
     crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId) {
 
-        console.log(item);
 
         const crearProductos = Meteor.wrapAsync(VentasProductosPartidas.insert, VentasProductosPartidas);
         const producto = {

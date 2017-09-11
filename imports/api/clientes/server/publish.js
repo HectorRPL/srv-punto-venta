@@ -9,7 +9,6 @@ if (Meteor.isServer) {
         if (Object.keys(selector).length === 0 && selector.constructor === Object){
             this.ready();
         } else {
-            console.log('clientes.todos', selector);
             return Clientes.find(selector, options);
         }
 
