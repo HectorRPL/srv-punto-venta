@@ -4,12 +4,19 @@
 import {Meteor} from "meteor/meteor";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {VentasOrdenes} from "./collection";
 import {_} from "meteor/underscore";
 
 
 export const asignarClienteVnt = new ValidatedMethod({
     name: 'ordenesVentas.asignarClienteVnt',
+    /*
+
+
+    TODO: Algunos archivos no tienen implementado o no está importado el PermissionsMixin,
+
+    */
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {

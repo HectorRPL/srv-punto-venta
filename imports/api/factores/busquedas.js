@@ -4,6 +4,7 @@
 import {Meteor} from "meteor/meteor";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {_} from "meteor/underscore";
 import {Factores} from "./collection";
 
