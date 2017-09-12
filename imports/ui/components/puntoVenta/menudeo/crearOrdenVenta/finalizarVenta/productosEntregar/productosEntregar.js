@@ -2,7 +2,7 @@
  * Created by jvltmtz on 23/08/17.
  */
 import {buscarCantidaAlmacen} from '../../../../../../../api/ventas/ordenes/partidas/productos/busquedas';
-import {ventaEntregarMostrador} from '../../../../../../../api/ventas/entregas/methods';
+import {altaEntrega} from '../../../../../../../api/ventas/entregas/methods';
 import template from './productosEntregar.html';
 import {Session} from "meteor/session";
 
@@ -15,8 +15,13 @@ class ProductosEntregar {
     }
 
     guardar() {
-        const entregaFinal = {ventaOrdenId: this.ventaOrdenId, entregas: this.noProductos};
-        ventaEntregarMostrador.callPromise(entregaFinal)
+        const entregaFinal = {
+            ventaOrdenId: this.ventaOrdenId,
+            tiendaId: this.tiendaId,
+            tipo: 'mostrador',
+            entregas: this.noProductos
+        };
+        altaEntrega.callPromise(entregaFinal)
             .then(this.$bindToContext((result)=> {
                 this.tipoMsj = 'success';
             }))
