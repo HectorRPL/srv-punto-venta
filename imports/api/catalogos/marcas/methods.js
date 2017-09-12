@@ -14,6 +14,11 @@ const CAMPOS_FACTORES = ['nombre'];
 
 export const altaMarca = new ValidatedMethod({
     name: 'marcas.altaMarca',
+    /*
+
+    TODO: CallPromiseMixin no está importado aquí. De momento lo voy a dejar así hasta que Juan me diga. Ya que no sé que repercución tenga si le muevo.
+
+    */
     validate: Marcas.simpleSchema().pick(CAMPOS_FACTORES).validator({
         clean: true,
         filter: false
