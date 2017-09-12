@@ -5,8 +5,6 @@ import {_} from 'meteor/underscore';
 import {VentasEntregas} from './collection';
 import {VentasPartidasOrdenes} from '../ordenes/partidas/collection';
 
-const IVA = '16';
-
 const entregasCounts = {
     _updatePartidasEntrega(partidaId) {
         const selecEntregas = [
