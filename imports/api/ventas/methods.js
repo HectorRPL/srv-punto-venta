@@ -89,7 +89,6 @@ export const altaVenta = new ValidatedMethod({
             let resultId = '';
             //Crear las ordenes de venta para otra forma de pago
             if (otraFormaPago.pedido.length > 0) {
-                console.log('Otr forma de pago ');
                 resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, iva, empleado._id);
 
                 for (let k = 0; k < otraFormaPago.pedido.length; k++) {

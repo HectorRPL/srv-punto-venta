@@ -21,11 +21,9 @@ if (Meteor.isServer) {
     });
 
     Meteor.publish('marcas.id', function (selector) {
-        console.log(selector);
         if (Object.keys(selector).length === 0 && selector.constructor === Object) {
             this.ready();
         } else {
-            console.log(selector);
             return Marcas.find(selector);
         }
     });

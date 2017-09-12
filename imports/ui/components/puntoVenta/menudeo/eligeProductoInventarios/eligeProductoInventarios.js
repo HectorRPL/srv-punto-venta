@@ -42,23 +42,19 @@ class EligeProductoInventarios {
 
 
     aceptar() {
+        let prodFaltante = 0;
         if(this.cantidadSolicitada > this.miInventario.cantidad){
-            const prodFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
-            const miProd = {
-                noProductos: prodFaltante,
-                tiendaGrupo:false,
-            };
-
-            this.productosTiendas.set(this.miInventario._id, miProd);
-
-            const miProd2 = {
-                proveedorId: this.resolve.producto.tiendaId,
-                noProductos: (this.cantidadSolicitada - prodFaltante),
-                deMiInventario: true
-            };
-
-            this.productosTiendas.set(this.miInventario._id, miProd2);
+            prodFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
         }
+
+        const miProd = {
+            proveedorId: this.resolve.producto.tiendaId,
+            noProductos: (this.cantidadSolicitada - prodFaltante),
+            prodFaltante: prodFaltante,
+            deMiInventario: true,
+        };
+
+        this.productosTiendas.set(this.miInventario._id, miProd);
 
         const prod = {
             _id: this.producto._id,

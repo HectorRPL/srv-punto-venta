@@ -54,7 +54,6 @@ export const cambiosClienteCel = new ValidatedMethod({
     run({_id, celular, telefono}) {
         return Clientes.update({_id: _id}, {$set: {celular, telefono}}, (err) => {
             if (err) {
-                console.log(err);
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'no-actualizo-telefonos');
             }
         });
