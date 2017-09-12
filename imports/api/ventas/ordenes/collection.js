@@ -37,7 +37,8 @@ Schema.ventasOrdenes = new SimpleSchema({
     clienteId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    entregada: {type: Boolean, defaultValue: false}
+    entregada: {type: Boolean, defaultValue: false},
+    impresa: {type: Boolean, optional: true, defaultValue: false}
 });
 
 VentasOrdenes.attachSchema(Schema.ventasOrdenes);
