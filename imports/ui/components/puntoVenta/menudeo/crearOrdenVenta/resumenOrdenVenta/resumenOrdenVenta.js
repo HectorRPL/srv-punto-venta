@@ -4,6 +4,7 @@
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
 import {VentasPartidasOrdenes} from '../../../../../../api/ventas/ordenes/partidas/collection';
 import {name as PartidasOrdenesVentas} from  "./partidasOrdenesVentas/partidasOrdenesVentas";
+import {name as PrecioVentaOrden} from "../../../../comun/alertas/precioVentaOrden/precioVentaOrden";
 import template from './resumenOrdenVenta.html';
 
 class ResumenOrdenVenta {
@@ -41,7 +42,8 @@ const name = 'resumenOrdenVenta';
 
 export default angular
     .module(name, [
-        PartidasOrdenesVentas
+        PartidasOrdenesVentas,
+        PrecioVentaOrden
     ])
     .component(name, {
         template: template.default,

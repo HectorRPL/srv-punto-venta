@@ -84,8 +84,6 @@ class OrdenVenta {
             iva: this.iva
         };
 
-        console.log(ordenCompra);
-
         altaVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {
                 console.log(err);
