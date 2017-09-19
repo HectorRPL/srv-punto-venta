@@ -6,10 +6,12 @@ import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
-import {Empleados} from '../../api/empleados/collection';
-import {Ventas} from './collection'
-import {VentasOrdenes} from './ordenes/collection'
+import {Empleados} from "../../api/empleados/collection";
+import {Ventas} from "./collection";
+import {VentasOrdenes} from "./ordenes/collection";
+import {VentasSaldos} from "./saldos/collection";
 import {_} from "meteor/underscore";
+
 const TIPO_VENTA = 'MENUDEO';
 
 var pedidoSchema = new SimpleSchema({
@@ -28,7 +30,7 @@ export const altaVenta = new ValidatedMethod({
     ],
     permissionsError: {
         name: 'ventas.altaVenta',
-        message: ()=> {
+        message: () => {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
@@ -53,7 +55,7 @@ export const altaVenta = new ValidatedMethod({
             if (mesesIntereses.pedido.length > 0) {
                 for (let i = 0; i < mesesIntereses.numMeses.length; i++) {
                     const noMes = mesesIntereses.numMeses[i];
-                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, iva, empleado._id);
+                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, empleado._id);
                     const ordenFinal = {
                         ventaOrdenId: resultOrdenId,
                         subTotal: 0
@@ -72,24 +74,22 @@ export const altaVenta = new ValidatedMethod({
                 }
             }
 
-            ordenesMeses.forEach((value, key, map)=> {
+            ordenesMeses.forEach((value, key, map) => {
                 const total = value.subTotal * (1 + (iva / 100));
-                VentasOrdenes.update({_id: value.ventaOrdenId},
-                    {
-                        $set: {
-                            total: total,
-                            saldoCobrar: total,
-                            subTotal: value.subTotal
-                        }
-                    }
-                );
+                VentasSaldos.insert({
+                    ventaOrdenId: value.ventaOrdenId,
+                    tiendaId: tiendaId,
+                    total: total,
+                    saldoCobrar: total,
+                    subTotal: value.subTotal
+                });
             });
 
             let otraPagoSubtotal = 0;
             let resultId = '';
             //Crear las ordenes de venta para otra forma de pago
             if (otraFormaPago.pedido.length > 0) {
-                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, iva, empleado._id);
+                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, empleado._id);
 
                 for (let k = 0; k < otraFormaPago.pedido.length; k++) {
                     let pedido = otraFormaPago.pedido[k];
@@ -98,12 +98,13 @@ export const altaVenta = new ValidatedMethod({
                     VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId);
                 }
                 const total = otraPagoSubtotal * (1 + (iva / 100));
-                VentasOrdenes.update({_id: resultId}, {
-                    $set: {
-                        total: total,
-                        saldoCobrar: total,
-                        subTotal: otraPagoSubtotal
-                    }
+
+                VentasSaldos.insert({
+                    ventaOrdenId: resultId,
+                    tiendaId: tiendaId,
+                    total: total,
+                    saldoCobrar: total,
+                    subTotal: otraPagoSubtotal
                 });
             }
 

@@ -103,7 +103,6 @@ export const altaEntrega = new ValidatedMethod({
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
         altaEntrega,
-        asignarEntrega
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
