@@ -2,8 +2,8 @@
     <li class="list-group-item" ng-repeat="partida in partidasOrdenesVentas.partidas"
         ng-class="{'fist-item': $index === 0}">
                                 <span class="pull-right">
-                                    ${{(partida.precioFinal * partida.totalProductos) | number : 2}}
+                                    ${{(partida.precioFinal * partida.numTotalProductos) | number : 2}}
                                 </span>
-        <span class="label label-default">{{partida.totalProductos}}</span> {{partida.producto().unidad}} {{partida.producto().campoBusqueda}}
+        <span class="label label-default">{{partida.numTotalProductos}}</span> {{partida.producto().unidad}} {{partida.producto().campoBusqueda}}
     </li>
 </ul>

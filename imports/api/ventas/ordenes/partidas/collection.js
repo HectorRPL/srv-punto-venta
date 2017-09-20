@@ -2,8 +2,9 @@
  * Created by jvltmtz on 8/06/17.
  */
 import {Mongo} from "meteor/mongo";
+import {_} from 'meteor/underscore';
 import {Productos} from "../../../catalogos/productos/collection"
-import partidasOrdenesCount from './partidasOrdenesCount';
+import partidasEntregasCount from './partidasEntregasCount';
 
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -13,6 +14,10 @@ class VentasPartidasOrdenesCollection extends Mongo.Collection {
 
     update(selector, modifier, options, callback) {
         const result = super.update(selector, modifier, options, callback);
+        if(_.has(modifier.$set, 'entregada')){
+            partidasEntregasCount._afterUpdateEntregadaOrden(selector);
+        }
+
         return result;
     }
 }

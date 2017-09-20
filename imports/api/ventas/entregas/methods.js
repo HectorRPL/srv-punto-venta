@@ -11,48 +11,9 @@ import {VentasEntregas} from './collection';
 import {_} from "meteor/underscore";
 
 const CAMPO_ID = ['_id'];
-const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'numProdcutos', 'usuarioSolicitaId', 'tipo'];
+const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'numProdcutos', 'usuarioSolicitaId', 'tipo'];
 
-export const altaEntrega = new ValidatedMethod({
-    name: 'ventasEntregas.altaEntrega',
-    mixins: [PermissionsMixin, CallPromiseMixin],
-    allow: [
-        {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
-        }
-    ],
-    permissionsError: {
-        name: 'ventasEntregas.altaEntrega',
-        message: ()=> {
-            return 'Este usuario no cuenta con los permisos necesarios.';
-        }
-    },
-    validate: VentasEntregas.simpleSchema().pick(CAMPOS_VENTAS_ENTREGAS).validator({
-        clean: true,
-        filter: false
-    }),
-    run({partidaId, numProdcutos, tipo}) {
-        if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
-            return VentasEntregas.insert(
-                {
-                    partidaId, numProdcutos,
-                    usuarioSolicitaId: empleado._id,
-                    tipo
-                },
-                (err)=> {
-                    if (err) {
-                        throw new Meteor.Error(500, 'Error al realizar la operación.', 'ventas-entregas-no-creada');
-                    }
-                }
-            );
-        }
-
-    }
-});
-
-export const asignarEntrega = new ValidatedMethod({
+export const cambioEntrega = new ValidatedMethod({
     name: 'ventasEntregas.asignarEntrega',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
@@ -67,24 +28,20 @@ export const asignarEntrega = new ValidatedMethod({
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['partidaId', 'fechaEntrega',
-        'numProductosRechazados', 'tipo', 'observaciones']).validator({
+    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['numProductosRechzds', 'observaciones']).validator({
         clean: true,
         filter: false
     }),
-    run({_id, partidaId, fechaEntrega, numProductosRechazados, tipo, observaciones}) {
+    run({_id, numProductosRechzds, observaciones}) {
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
             return VentasEntregas.update({_id: _id},
                 {
                     $set: {
-                        partidaId: partidaId,
                         usuarioEntregaId: empleado._id,
-                        fechaEntrega: fechaEntrega,
-                        numProductosRechazados: numProductosRechazados,
-                        tipo: tipo,
-                        observaciones: observaciones,
-                        entregada: true
+                        fechaEntrega: new Date(),
+                        numProductosRechzds: numProductosRechzds,
+                        observaciones: observaciones
                     }
                 },
                 (err)=> {
@@ -98,8 +55,8 @@ export const asignarEntrega = new ValidatedMethod({
     }
 });
 
-export const ventaEntregarMostrador = new ValidatedMethod({
-    name: 'ventasEntregas.ventaEntregarMostrador',
+export const altaEntrega = new ValidatedMethod({
+    name: 'ventasEntregas.altaEntrega',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -115,19 +72,22 @@ export const ventaEntregarMostrador = new ValidatedMethod({
     },
     validate: new SimpleSchema({
         ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        tipo: {type: String},
         entregas: {type: Object, blackbox: true},
     }).validator(),
-    run({ventaOrdenId, entregas}) {
+    run({ventaOrdenId, tiendaId, tipo, entregas}) {
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
             const props = Object.entries(entregas);
             props.forEach((item)=> {
                 const entrega = {
                     partidaId: item[0],
+                    tiendaId: tiendaId,
                     ventaOrdenId: ventaOrdenId,
                     numProductos: item[1],
-                    usuarioSolicitaId: empleado._id,
-                    tipo: 'mostrador'
+                    empleadoSolicitaId: empleado._id,
+                    tipo: tipo
                 };
                 return VentasEntregas.insert(entrega, (err)=>{
                     if(err){
@@ -143,8 +103,6 @@ export const ventaEntregarMostrador = new ValidatedMethod({
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
         altaEntrega,
-        asignarEntrega,
-        ventaEntregarMostrador
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

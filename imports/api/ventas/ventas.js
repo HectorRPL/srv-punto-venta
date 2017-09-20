@@ -28,14 +28,13 @@ VentasMenudeoOp = {
 
     },
 
-    altaOrdenVenta(ventaId, tiendaId, numMeses, iva, empleadoId) {
+    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId) {
 
         try {
             const crearOrden = Meteor.wrapAsync(VentasOrdenes.insert, VentasOrdenes);
             const orden = {
                 ventaId: ventaId,
                 tiendaId: tiendaId,
-                iva: iva,
                 tipo: TIPO_VENTA,
                 empleadoId: empleadoId
 
@@ -102,7 +101,9 @@ VentasMenudeoOp = {
             console.log(e);
         }
 
-        if (item[1].prodFaltante && item[1].productoFaltante > 0) {
+        console.log(item[1], item[1].prodFaltante);
+
+        if (item[1].prodFaltante && item[1].prodFaltante > 0) {
             const producto2 = {
                 partidaId: partidaId,
                 ventaOrdenId: ventaOrdenId,
