@@ -4,6 +4,7 @@
 import {Meteor} from "meteor/meteor";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
+import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {Clientes} from "./collection";
@@ -11,9 +12,21 @@ import {Clientes} from "./collection";
 const CAMPOS_CLIENTES = ['nombres', 'apellidos', 'email', 'sexo', 'telefono', 'celular'];
 const CLIENTE_ID = ['_id'];
 
-export const altaCliente = new ValidatedMethod({
-    name: 'clientes.altaCliente',
-    mixins: [CallPromiseMixin],
+export const crearCliente = new ValidatedMethod({
+    name: 'clientes.crearCliente',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['crea_clientes'],
+            group: 'clientes'
+        }
+    ],
+    permissionsError: {
+        name: 'clientes.crearCliente',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: Clientes.simpleSchema().pick(CAMPOS_CLIENTES).validator({
         clean: true,
         filter: false
@@ -27,9 +40,21 @@ export const altaCliente = new ValidatedMethod({
     }
 });
 
-export const cambiosCliente = new ValidatedMethod({
-    name: 'clientes.cambiosCliente',
-    mixins: [CallPromiseMixin],
+export const actualizarCliente = new ValidatedMethod({
+    name: 'clientes.actualizarCliente',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_clientes'],
+            group: 'clientes'
+        }
+    ],
+    permissionsError: {
+        name: 'clientes.actualizarCliente',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: Clientes.simpleSchema().pick(CLIENTE_ID, CAMPOS_CLIENTES).validator({
         clean: true,
         filter: false
@@ -43,9 +68,21 @@ export const cambiosCliente = new ValidatedMethod({
     }
 });
 
-export const cambiosClienteCel = new ValidatedMethod({
-    name: 'clientes.cambiosClienteCel',
-    mixins: [CallPromiseMixin],
+export const actualizarClienteCel = new ValidatedMethod({
+    name: 'clientes.actualizarClienteCel',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_clientes'],
+            group: 'clientes'
+        }
+    ],
+    permissionsError: {
+        name: 'clientes.actualizarClienteCel',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: new SimpleSchema({
         _id: {type: String, regEx: SimpleSchema.RegEx.Id},
         celular: {type: String},
@@ -60,7 +97,12 @@ export const cambiosClienteCel = new ValidatedMethod({
     }
 });
 
-const CLIENTES_METHODS = _.pluck([altaCliente, cambiosCliente, cambiosClienteCel], 'name');
+const CLIENTES_METHODS = _.pluck(
+    [
+        crearCliente,
+        actualizarCliente,
+        actualizarClienteCel
+    ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

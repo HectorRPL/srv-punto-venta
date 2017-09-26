@@ -1,18 +1,18 @@
 <form role="form" class="p-lg" id="cambiosDireccionFrmId" name="cambiosDireccionFrm" novalidate>
     <div class="row">
-        <forma-direccion direccion="cambiosDireccion.direccion"></forma-direccion>
+        <forma-direccion direccion="actualizarDireccion.direccion"></forma-direccion>
     </div>
     <!--ALERTA Y BOTÓN-->
     <div class="row">
         <div class="col-md-8">
-            <alertas tipo="cambiosDireccion.tipoMsj" mensaje="cambiosDireccion.msj"></alertas>
+            <alertas tipo="actualizarDireccion.tipoMsj" mensaje="actualizarDireccion.msj"></alertas>
         </div>
         <div class="col-md-3">
             <!--BOTON GUARDAR DATOS GENERALES-->
             <button type="button"
                     class="btn btn-primary pull-right"
                     ng-disabled="cambiosDireccionFrm.$invalid"
-                    ng-click="cambiosDireccion.actualizar(cambiosDireccionFrm)">
+                    ng-click="actualizarDireccion.actualizar(cambiosDireccionFrm)">
                 Actualizar
             </button>
         </div>

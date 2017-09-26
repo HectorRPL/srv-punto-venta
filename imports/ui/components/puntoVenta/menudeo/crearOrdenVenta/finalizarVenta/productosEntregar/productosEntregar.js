@@ -2,7 +2,7 @@
  * Created by jvltmtz on 23/08/17.
  */
 import {buscarCantidaAlmacen} from '../../../../../../../api/ventas/ordenes/partidas/productos/busquedas';
-import {altaEntrega} from '../../../../../../../api/ventas/entregas/methods';
+import {crearVentaEntrega} from '../../../../../../../api/ventas/entregas/methods';
 import template from './productosEntregar.html';
 import {Session} from "meteor/session";
 
@@ -21,11 +21,12 @@ class ProductosEntregar {
             tipo: 'mostrador',
             entregas: this.noProductos
         };
-        altaEntrega.callPromise(entregaFinal)
+        crearVentaEntrega.callPromise(entregaFinal)
             .then(this.$bindToContext((result)=> {
                 this.tipoMsj = 'success';
             }))
             .catch(this.$bindToContext((err)=> {
+                console.log(err);
                 this.tipoMsj = 'danger';
             }));
     }

@@ -1,12 +1,12 @@
 /**
  * Created by jvltmtz on 13/06/17.
  */
-import {asignarClienteVnt} from '../../../../../../api/ventas/ordenes/methods';
+import {actualizarVentaCliente} from '../../../../../../api/ventas/ordenes/methods';
 import {name as Alertas} from '../../../../comun/alertas/alertas';
 import {name as BuscarCliente} from '../../../../comun/busquedas/buscarCliente/buscarCliente';
 import {name as AltaCliente} from '../../../../clientes/altaCliente/altaCliente';
 import {name as CambiosCliente} from '../../../../clientes/cambiosCliente/cambiosCliente';
-import {altaCliente, cambiosCliente} from '../../../../../../api/clientes/methods';
+import {crearCliente, actualizarCliente} from '../../../../../../api/clientes/methods';
 import {Clientes} from "../../../../../../api/clientes/collection";
 import template from './asignarCliente.html';
 
@@ -28,13 +28,13 @@ class AsignarCliente {
     }
 
     agregarCliente() {
-        altaCliente.callPromise(this.cliente)
+        crearCliente.callPromise(this.cliente)
             .then(this.$bindToContext((result)=> {
                 return result;
             }))
             .then(this.$bindToContext((clienteId)=> {
                 this.clienteId = clienteId;
-                return asignarClienteVnt.callPromise({ventaId: this.ventaId, clienteId: clienteId});
+                return actualizarVentaCliente.callPromise({ventaId: this.ventaId, clienteId: clienteId});
             }))
             .then(this.$bindToContext((result)=> {
                 this.state.go('app.venta.orden.entrega.domicilio', {clienteId: this.clienteId});
@@ -48,13 +48,12 @@ class AsignarCliente {
 
     actualizarCliente() {
         delete this.cliente.nombreCompleto;
-        console.log(this.cliente);
-        cambiosCliente.callPromise(this.cliente)
+        actualizarCliente.callPromise(this.cliente)
             .then(this.$bindToContext((result)=> {
                  return this.cliente._id;
             }))
             .then(this.$bindToContext((clienteId)=> {
-                return asignarClienteVnt.callPromise({ventaId: this.ventaId, clienteId: clienteId});
+                return actualizarVentaCliente.callPromise({ventaId: this.ventaId, clienteId: clienteId});
             }))
             .then(this.$bindToContext((result)=> {
                 this.state.go('app.venta.orden.entrega.domicilio', {clienteId: this.cliente._id});

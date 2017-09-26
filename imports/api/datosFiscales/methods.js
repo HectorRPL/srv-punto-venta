@@ -13,17 +13,17 @@ const CAMPO_ID = ['_id'];
 const CAMPOS_DATOS_FISCALES = ['propietarioId', 'rfc', 'tipoPersona', 'nombres', 'apellidos', 'razonSocial', 'tipoSociedad'];
 const CAMPOS_DIRECCION_FISCAL = ['calle', 'delMpio', 'estado', 'estadoId', 'colonia', 'codigoPostal', 'numExt', 'numInt', 'codigoPais'];
 
-export const altaDatosFiscales = new ValidatedMethod({
-    name: 'datosFiscales.altaDatosFiscales',
+export const crearDatoFiscal = new ValidatedMethod({
+    name: 'datosFiscales.crearDatoFiscal',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['crea_fisc'],
-            group: 'crudfiscales'
+            roles: ['crea_datos_fiscales'],
+            group: 'datos_fiscales'
         }
     ],
     permissionsError: {
-        name: 'datosFiscales.altaDatosFiscales',
+        name: 'datosFiscales.crearDatoFiscal',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -47,17 +47,17 @@ export const altaDatosFiscales = new ValidatedMethod({
     }
 });
 
-export const cambiosDatosFiscales = new ValidatedMethod({
-    name: 'datosFiscales.cambiosDatosFiscales',
+export const actualizarDatoFiscal = new ValidatedMethod({
+    name: 'datosFiscales.actualizarDatoFiscal',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['actu_fisc'],
-            group: 'crudfiscales'
+            roles: ['actu_datos_fiscales'],
+            group: 'datos_fiscales'
         }
     ],
     permissionsError: {
-        name: 'datosFiscales.cambiosDatosFiscales',
+        name: 'datosFiscales.actualizarDatoFiscal',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -100,8 +100,8 @@ export const cambiosDatosFiscales = new ValidatedMethod({
 
 const DATOS_FISCALES_PROVEEDORES_METHODS = _.pluck(
     [
-        altaDatosFiscales,
-        cambiosDatosFiscales
+        crearDatoFiscal,
+        actualizarDatoFiscal
 
     ], 'name');
 if (Meteor.isServer) {

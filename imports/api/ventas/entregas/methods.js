@@ -13,17 +13,17 @@ import {_} from "meteor/underscore";
 const CAMPO_ID = ['_id'];
 const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'numProdcutos', 'usuarioSolicitaId', 'tipo'];
 
-export const cambioEntrega = new ValidatedMethod({
-    name: 'ventasEntregas.asignarEntrega',
+export const actualizarVentaEntrega = new ValidatedMethod({
+    name: 'ventasEntregas.actualizarVentaEntrega',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['actu_ventas_entregas'],
+            group: 'ventas_entregas'
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.asignarEntrega',
+        name: 'ventasEntregas.actualizarVentaEntrega',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -55,17 +55,17 @@ export const cambioEntrega = new ValidatedMethod({
     }
 });
 
-export const altaEntrega = new ValidatedMethod({
-    name: 'ventasEntregas.altaEntrega',
+export const crearVentaEntrega = new ValidatedMethod({
+    name: 'ventasEntregas.crearVentaEntrega',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['crea_ventas_entregas'],
+            group: 'ventas_entregas'
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.ventaEntregarMostrador',
+        name: 'ventasEntregas.crearVentaEntrega',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -102,7 +102,7 @@ export const altaEntrega = new ValidatedMethod({
 
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
-        altaEntrega,
+        crearVentaEntrega,
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
