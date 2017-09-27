@@ -1,7 +1,7 @@
 <div class="row wrapper border-bottom white-bg page-heading">
     <!--TITULO MODAL-->
     <div class="col-sm-10">
-        <h2>Asignar Datos Fiscales</h2>
+        <h2>Asignar Cliente</h2>
     </div>
     <!-- TACHE (CERRAR MODAL)-->
     <div class="col-sm-2">
@@ -22,19 +22,19 @@
                                     <ng-form name="asiganrFacturaFrm">
                                         <div class="row">
                                             <div class="col-sm 12">
-                                                <buscar-datos-fiscales datos-fiscales="asignarComprobante.dtsFiscalesSelec"></buscar-datos-fiscales>
+                                                <buscar-datos-fiscales datos-fiscales="comprobanteFactura.dtsFiscalesSelec"></buscar-datos-fiscales>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12" ng-if="!comprobanteFactura.dtsFiscales._id">
-                                                <forma-datos-fiscales datos="asignarComprobante.dtsFiscales"></forma-datos-fiscales>
+                                                <forma-datos-fiscales datos="comprobanteFactura.dtsFiscales"></forma-datos-fiscales>
 
                                             </div>
                                             <div class="col-sm-12" ng-if="comprobanteFactura.dtsFiscales._id">
-                                                <forma-editar-datos-fiscales datos="asignarComprobante.dtsFiscales"></forma-editar-datos-fiscales>
+                                                <forma-editar-datos-fiscales datos="comprobanteFactura.dtsFiscales"></forma-editar-datos-fiscales>
                                             </div>
                                             <div class="col-sm-12">
-                                                <forma-direccion direccion="asignarComprobante.dtsFiscales"></forma-direccion>
+                                                <forma-direccion direccion="comprobanteFactura.dtsFiscales"></forma-direccion>
                                             </div>
                                         </div>
                                     </ng-form>

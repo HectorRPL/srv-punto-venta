@@ -52,6 +52,18 @@ class Menudeo {
         }));
     }
 
+    abrirModalCliente(){
+        var modalInstance = this.$uibModal.open({
+            animation: true,
+            component: "AsignarComprobante",
+            size: 'lg'
+        }).result.then(this.$bindToContext((result) => {
+
+        }, function (reason) {
+
+        }));
+    }
+
     prueba(item) {
         this.abrirModal(item);
     }

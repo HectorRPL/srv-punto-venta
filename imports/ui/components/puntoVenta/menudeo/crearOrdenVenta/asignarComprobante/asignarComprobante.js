@@ -8,6 +8,7 @@ import {name as ComprobanteFactura} from './comprobanteFactura/comprobanteFactur
 import {actualizarVentaNumero} from '../../../../../../api/ventas/ordenes/methods';
 import template from './asignarComprobante.html';
 import {Session} from "meteor/session";
+import {DatosFiscales} from "../../../../../../api/datosFiscales/collection";
 
 class AsignarComprobante {
     constructor($scope, $reactive, $state, $stateParams) {
@@ -19,6 +20,14 @@ class AsignarComprobante {
         this.ventaId = $stateParams.ventaId;
         console.log(this.ventaId);
         this.entrega = '0';
+        this.dtsFiscalesSelec = '';
+        this.subscribe('datosFiscales.propietario', ()=> [{_id: this.getReactively('dtsFiscalesSelec._id')}]);
+
+        this.helpers({
+            dtsFiscales(){
+                return DatosFiscales.findOne({_id: this.getReactively('dtsFiscalesSelec._id')}) || {};
+            }
+        });
     }
 
     comprobante(valor) {
