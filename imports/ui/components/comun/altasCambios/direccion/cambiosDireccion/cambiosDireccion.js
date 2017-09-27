@@ -3,7 +3,7 @@
  */
 import {name as Alertas} from "../../../alertas/alertas";
 import {name as FormaDireccion} from "../../../formas/formaDireccion/formaDireccion";
-import {cambiosDireccion} from "../../../../../../api/direcciones/methods";
+import {actualizarDireccion} from "../../../../../../api/direcciones/methods";
 import template from "./cambiosDireccion.html";
 
 class CambiosDireccion {
@@ -24,7 +24,7 @@ class CambiosDireccion {
         delete direccionFinal.colonias;
         delete direccionFinal.fechaCreacion;
 
-        cambiosDireccion.callPromise(direccionFinal).then(this.$bindToContext(() => {
+        actualizarDireccion.callPromise(direccionFinal).then(this.$bindToContext(() => {
             this.tipoMsj = 'success';
             this.limpiarCampos(cambiosDireccionFrm);
         })).catch(this.$bindToContext((err) => {
@@ -39,7 +39,7 @@ class CambiosDireccion {
     }
 }
 
-const name = 'cambiosDireccion';
+const name = 'actualizarDireccion';
 
 export default angular
     .module(name, [

@@ -5,7 +5,7 @@ import {Meteor} from "meteor/meteor";
 import {Roles} from "meteor/alanning:roles";
 import template from "./ordenVenta.html";
 import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
-import {altaVenta} from "../../../../../api/ventas/methods";
+import {crearVenta} from "../../../../../api/ventas/methods";
 import {name as Alertas} from "../../../comun/alertas/alertas";
 import {Session} from "meteor/session";
 
@@ -29,7 +29,7 @@ class OrdenVenta {
 
         this.helpers({
             esVendedor(){
-                return Roles.userIsInRole(Meteor.userId(), 'gene_orde_vent_menu', 'vendedores');
+                return Roles.userIsInRole(Meteor.userId(), 'vendedores', 'vendedores');
             }
         });
     }
@@ -84,7 +84,7 @@ class OrdenVenta {
             iva: this.iva
         };
 
-        altaVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
+        crearVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {
                 console.log(err);
                 this.tipoMsj = 'danger';

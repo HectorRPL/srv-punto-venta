@@ -3,8 +3,8 @@
  */
 import template from './comprobanteFactura.html';
 import {DatosFiscales} from '../../../../../../../api/datosFiscales/collection';
-import {altaDatosFiscales, cambiosDatosFiscales} from '../../../../../../../api/datosFiscales/methods';
-import {asignarDatosFiscalesVnt, asignarNoVentas} from '../../../../../../../api/ventas/ordenes/methods';
+import {crearDatoFiscal, actualizarDatoFiscal} from '../../../../../../../api/datosFiscales/methods';
+import {actualizarVentaDatosFiscales, actualizarVentaNumero} from '../../../../../../../api/ventas/ordenes/methods';
 import {name as BuscarDatosFiscales} from '../../../../../comun/busquedas/buscarDatosFiscales/buscarDatosFiscales';
 import {Session} from "meteor/session";
 
@@ -41,17 +41,17 @@ class ComprobanteFactura {
         const datosFinales = angular.copy(this.dtsFiscales);
         delete datosFinales.colonias;
 
-        altaDatosFiscales.callPromise(datosFinales)
+        crearDatoFiscal.callPromise(datosFinales)
             .then(this.$bindToContext((result)=> {
                 return result;
             }))
             .then(this.$bindToContext((datosFiscalesId)=> {
-                return asignarDatosFiscalesVnt.callPromise({
+                return actualizarVentaDatosFiscales.callPromise({
                     ventaId: this.ventaId, datosFiscalesId: datosFiscalesId
                 });
             }))
             .then(this.$bindToContext((result)=> {
-                return asignarNoVentas.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId});
+                return actualizarVentaNumero.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId});
             }))
             .then(this.$bindToContext((result)=> {
                 console.log('Acabo en fomra correcta');
@@ -69,18 +69,18 @@ class ComprobanteFactura {
         delete datosFinales.colonias;
         delete datosFinales.fechaCreacion;
 
-        cambiosDatosFiscales.callPromise(datosFinales)
+        actualizarDatoFiscal.callPromise(datosFinales)
             .then(this.$bindToContext((result)=> {
                 return result;
             }))
             .then(this.$bindToContext((datosFiscalesId)=> {
-                return asignarDatosFiscalesVnt.callPromise({
+                return actualizarVentaDatosFiscales.callPromise({
                     ventaId: this.ventaId,
                     datosFiscalesId: datosFinales._id
                 });
             }))
             .then(this.$bindToContext((result)=> {
-                return asignarNoVentas.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId});
+                return actualizarVentaNumero.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId});
             }))
             .then(this.$bindToContext((result)=> {
                 console.log('Acabo en fomra correcta');

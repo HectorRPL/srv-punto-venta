@@ -5,7 +5,7 @@ import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/fo
 import {name as FormaDatosFiscales} from '../../../../comun/formas/formaDatosFiscales/formaDatosFiscales';
 import {name as FormaEditarDatosFiscales} from '../../../../comun/formas/formaEditarDatosFiscales/formaEditarDatosFiscales';
 import {name as ComprobanteFactura} from './comprobanteFactura/comprobanteFactura';
-import {asignarNoVentas} from '../../../../../../api/ventas/ordenes/methods';
+import {actualizarVentaNumero} from '../../../../../../api/ventas/ordenes/methods';
 import template from './asignarComprobante.html';
 import {Session} from "meteor/session";
 
@@ -27,7 +27,7 @@ class AsignarComprobante {
         if (this.entrega === '0') {
             this.state.go('.factura');
         } else {
-            asignarNoVentas.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId})
+            actualizarVentaNumero.callPromise({ventaId: this.ventaId, tiendaId: this.tiendaId})
                 .then(this.$bindToContext(()=> {
                     this.state.go('app.venta.finalizar', {ventaId: this.ventaId});
                 })).catch(this.$bindToContext((err)=>{

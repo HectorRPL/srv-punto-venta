@@ -24,28 +24,40 @@ const CAMPOS_EMPLEADOS = [
     'telefono'
 ];
 
-export const cambiosEmpleados = new ValidatedMethod({
-    name: 'empleados.cambiosEmpleados',
-    mixins: [CallPromiseMixin],
+export const actualizarEmpleado = new ValidatedMethod({
+    name: 'empleados.actualizarEmpleado',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_empleados'],
+            group: 'empleados'
+        }
+    ],
+    permissionsError: {
+        name: 'empleados.actualizarEmpleado',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
     validate: Empleados.simpleSchema().pick(CAMPOS_EMPLEADOS).validator({
         clean: true,
         filter: false
     }),
     run({
-        _id,
-        primerNombre,
-        segundoNombre,
-        apellidoPaterno,
-        pellidoMaterno,
-        celular,
-        departamentoId,
-        email,
-        nacimientoAnio,
-        nacimientoDia,
-        nacimientoMes,
-        sexo,
-        telefono,
-    }) {
+            _id,
+            primerNombre,
+            segundoNombre,
+            apellidoPaterno,
+            pellidoMaterno,
+            celular,
+            departamentoId,
+            email,
+            nacimientoAnio,
+            nacimientoDia,
+            nacimientoMes,
+            sexo,
+            telefono,
+        }) {
         return Empleados.update({_id: _id}, {
             $set: {
                 primerNombre,
@@ -69,7 +81,10 @@ export const cambiosEmpleados = new ValidatedMethod({
     }
 });
 
-const EMPLEADOS_METHODS = _.pluck([cambiosEmpleados], 'name');
+const EMPLEADOS_METHODS = _.pluck(
+    [
+        actualizarEmpleado
+    ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({
         name(name) {

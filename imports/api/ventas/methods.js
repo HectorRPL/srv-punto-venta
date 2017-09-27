@@ -19,17 +19,17 @@ var pedidoSchema = new SimpleSchema({
     numMeses: {type: [String], blackbox: true, optional: true}
 });
 
-export const altaVenta = new ValidatedMethod({
-    name: 'ventas.altaVenta',
+export const crearVenta = new ValidatedMethod({
+    name: 'ventas.crearVenta',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['crea_ventas_ordenes'],
+            group: 'ventas_ordenes'
         }
     ],
     permissionsError: {
-        name: 'ventas.altaVenta',
+        name: 'ventas.crearVenta',
         message: () => {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -116,7 +116,7 @@ export const altaVenta = new ValidatedMethod({
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
-        altaVenta
+        crearVenta
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

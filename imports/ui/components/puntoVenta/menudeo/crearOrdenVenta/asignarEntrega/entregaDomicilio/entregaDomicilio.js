@@ -2,9 +2,9 @@
  * Created by jvltmtz on 1/08/17.
  */
 import {Direcciones} from '../../../../../../../api/direcciones/collection';
-import {cambiosDireccion, altaDireccion} from '../../../../../../../api/direcciones/methods';
-import {asignarDireccionEntregaVnt} from '../../../../../../../api/ventas/ordenes/methods';
-import {cambiosClienteCel} from '../../../../../../../api/clientes/methods';
+import {actualizarDireccion, crearDireccion} from '../../../../../../../api/direcciones/methods';
+import {actualizarVentaDireccionEntrega} from '../../../../../../../api/ventas/ordenes/methods';
+import {actualizarClienteCel} from '../../../../../../../api/clientes/methods';
 import template from './entregaDomicilio.html';
 
 class EntregaDomicilio {
@@ -31,12 +31,12 @@ class EntregaDomicilio {
     guardar() {
         this.crearDireccion();
 
-        altaDireccion.callPromise(this.direccion)
+        crearDireccion.callPromise(this.direccion)
             .then(this.$bindToContext((result)=> {
                 return result;
             }))
             .then(this.$bindToContext((direccionId)=> {
-                return asignarDireccionEntregaVnt.callPromise({
+                return actualizarVentaDireccionEntrega.callPromise({
                     ventaId: this.ventaId, direccionId: direccionId
                 });
             }))
@@ -57,14 +57,14 @@ class EntregaDomicilio {
         this.crearDireccion();
 
         console.log(this.direccion);
-        cambiosDireccion.callPromise(this.direccion)
+        actualizarDireccion.callPromise(this.direccion)
             .then(this.$bindToContext((result)=> {
                 let datosTemp = {ventaId: this.ventaId, direccionId: this.direccion._id};
-                return asignarDireccionEntregaVnt.callPromise(datosTemp);
+                return actualizarVentaDireccionEntrega.callPromise(datosTemp);
             }))
             .then(this.$bindToContext((result)=> {
                 this.datosContacto._id = this.clienteId;
-                return cambiosClienteCel.callPromise(this.datosContacto)
+                return actualizarClienteCel.callPromise(this.datosContacto)
             }))
             .then(this.$bindToContext((result)=> {
                 this.state.go('app.venta.orden.comprobante.factura', {clienteId: this.clienteId});

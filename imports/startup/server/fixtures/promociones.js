@@ -14,7 +14,6 @@ var fs = require('fs');
 
 Meteor.startup(function () {
 
-    console.log(Promociones.find().count());
     if(Promociones.find().count() === 0){
         const primeraPromocion = {
             nombre: "PRIMERA PROMO",

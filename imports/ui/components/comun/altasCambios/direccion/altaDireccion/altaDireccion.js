@@ -3,7 +3,7 @@
  */
 import {name as Alertas} from "../../../alertas/alertas";
 import {name as FormaDireccion} from "../../../formas/formaDireccion/formaDireccion";
-import {altaDireccion} from "../../../../../../api/direcciones/methods";
+import {crearDireccion} from "../../../../../../api/direcciones/methods";
 import template from "./altaDireccion.html";
 
 class AltaDireccion {
@@ -23,7 +23,7 @@ class AltaDireccion {
         delete direccionFinal.colonias;
         direccionFinal.propietarioId = this.propietarioId;
 
-        altaDireccion.callPromise(direccionFinal).then(this.$bindToContext(() => {
+        crearDireccion.callPromise(direccionFinal).then(this.$bindToContext(() => {
             this.tipoMsj = 'success';
         })).catch(this.$bindToContext((err) => {
             console.log('[29]', err);
@@ -32,7 +32,7 @@ class AltaDireccion {
     }
 }
 
-const name = 'altaDireccion';
+const name = 'crearDireccion';
 
 export default angular
     .module(name, [

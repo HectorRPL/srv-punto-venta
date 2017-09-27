@@ -5,27 +5,22 @@ import {Meteor} from "meteor/meteor";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
+import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
 import {VentasOrdenes} from "./collection";
 import {_} from "meteor/underscore";
 
 
-export const asignarClienteVnt = new ValidatedMethod({
-    name: 'ordenesVentas.asignarClienteVnt',
-    /*
-
-
-    TODO: Algunos archivos no tienen implementado o no está importado el PermissionsMixin,
-
-    */
+export const actualizarVentaCliente = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarVentaCliente',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.asignarClienteVnt',
+        name: 'ordenesVentas.actualizarVentaCliente',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -42,17 +37,17 @@ export const asignarClienteVnt = new ValidatedMethod({
 
 });
 
-export const asignarDireccionEntregaVnt = new ValidatedMethod({
-    name: 'ordenesVentas.asignarDireccionEntregaVnt',
+export const actualizarVentaDireccionEntrega = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarVentaDireccionEntrega',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.asignarDireccionEntregaVnt',
+        name: 'ordenesVentas.actualizarVentaDireccionEntrega',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -72,17 +67,17 @@ export const asignarDireccionEntregaVnt = new ValidatedMethod({
     }
 });
 
-export const asignarDatosFiscalesVnt = new ValidatedMethod({
-    name: 'ordenesVentas.asignarDatosFiscalesVnt',
+export const actualizarVentaDatosFiscales = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarVentaDatosFiscales',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.asignarDatosFiscalesVnt',
+        name: 'ordenesVentas.actualizarVentaDatosFiscales',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -102,17 +97,17 @@ export const asignarDatosFiscalesVnt = new ValidatedMethod({
     }
 });
 
-export const asignarNoVentas = new ValidatedMethod({
-    name: 'ordenesVentas.asignarNoVentas',
+export const actualizarVentaNumero = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarVentaNumero',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
-            roles: ['gene_orde_vent_menu'],
-            group: 'vendedores'
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.asignarNoVentas',
+        name: 'ordenesVentas.actualizarVentaNumero',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -133,10 +128,10 @@ export const asignarNoVentas = new ValidatedMethod({
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
-        asignarClienteVnt,
-        asignarDireccionEntregaVnt,
-        asignarDatosFiscalesVnt,
-        asignarNoVentas
+        actualizarVentaCliente,
+        actualizarVentaDireccionEntrega,
+        actualizarVentaDatosFiscales,
+        actualizarVentaNumero
 
     ], 'name');
 if (Meteor.isServer) {
