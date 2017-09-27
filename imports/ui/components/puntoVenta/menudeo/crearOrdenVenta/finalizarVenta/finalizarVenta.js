@@ -4,6 +4,9 @@
 import {name as ProductosEntregar} from './productosEntregar/productosEntregar';
 import {name as ConfirmarImpresion} from './confirmarImpresion/confirmarImpresion';
 import {name as PrecioVentaOrden} from "../../../../comun/alertas/precioVentaOrden/precioVentaOrden";
+import {name as MostrarDatosCliente} from "../../../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
+import {name as MostrarDireccion} from "../../../../comun/mostrar/mostrarDireccion/mostrarDireccion";
+import {name as MostrarDatosFiscales} from "../../../../comun/mostrar/mostrarDatosFiscales/mostrarDatosFiscales";
 import {VentasPartidasOrdenes} from '../../../../../../api/ventas/ordenes/partidas/collection';
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
 import {Ventas} from '../../../../../../api/ventas/collection';
@@ -77,7 +80,10 @@ export default angular
     .module(name, [
         ProductosEntregar,
         ConfirmarImpresion,
-        PrecioVentaOrden
+        PrecioVentaOrden,
+        MostrarDatosCliente,
+        MostrarDireccion,
+        MostrarDatosFiscales
     ])
     .component(name, {
         template: template.default,

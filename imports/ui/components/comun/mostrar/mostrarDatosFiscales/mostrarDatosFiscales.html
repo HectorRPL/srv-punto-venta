@@ -1,0 +1,33 @@
+<a ng-click="mostrarDatosFiscales.abrirModalDatosFiscales()">
+    <address>
+        <span ng-hide="!mostrarDatosFiscales.datosFiscales._id"> <strong>DATOS FISCALES</strong></span><br>
+        {{mostrarDatosFiscales.datosFiscales.rfc}} <br>
+        <span style="color: red" ng-hide="mostrarDatosFiscales.datosFiscales._id || mostrarDatosFiscales.tiendaMatriz">
+        <strong class="label label-warning"><i class="fa fa-exclamation-triangle"></i>&nbsp; Remisión</strong>
+    </span>
+        <small>
+            <i class="fa fa-envelope" ng-show="mostrarDatosFiscales.datosFiscales._id"></i>&nbsp;
+            {{mostrarDatosFiscales.datosFiscales.email}}<br>
+            {{mostrarDatosFiscales.datosFiscales.razonSocial}} {{mostrarDatosFiscales.datosFiscales.tipoSociedad}}
+            {{mostrarDatosFiscales.datosFiscales.nombre}}&nbsp;
+            {{mostrarDatosFiscales.datosFiscales.segundoNombre}}&nbsp;
+            {{mostrarDatosFiscales.datosFiscales.apellidoPaterno}}&nbsp;
+            {{mostrarDatosFiscales.datosFiscales.apellidoMaterno}}&nbsp;
+            <br>
+            {{mostrarDatosFiscales.datosFiscales.calle}}
+            {{mostrarDatosFiscales.datosFiscales.numExt}}<span ng-show="mostrarDatosFiscales.datosFiscales._id">,</span>
+            <span ng-show="mostrarDatosFiscales.datosFiscales.numInt">Int. {{mostrarDatosFiscales.datosFiscales.numInt}}.</span> <br>
+            {{mostrarDatosFiscales.datosFiscales.colonia}}
+            <span ng-show="mostrarDatosFiscales.datosFiscales._id">CP.</span> {{mostrarDatosFiscales.datosFiscales.codigoPostal}}
+            {{mostrarDatosFiscales.datosFiscales.delMpio}}<span ng-show="mostrarDatosFiscales.datosFiscales._id">,</span>
+            {{mostrarDatosFiscales.datosFiscales.estado}}<br>
+        </small>
+    </address>
+</a>
+<div class="contact-box-footer">
+    <div class="m-t-xs btn-group">
+        <a class="btn btn-xs btn-white"><i class="fa fa-trash-o fa-lg"></i></a>
+        <a class="btn btn-xs btn-white"><i class="fa fa-pencil-square-o fa-lg"></i></a>
+        <a class="btn btn-xs btn-white"><i class="fa fa-plus-square-o fa-lg"></i></a>
+    </div>
+</div>
