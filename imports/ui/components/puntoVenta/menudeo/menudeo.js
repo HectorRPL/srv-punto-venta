@@ -82,7 +82,6 @@ class Menudeo {
         }));
     }
 
-
     abrirModalDatosFiscales() {
         let comprobante = '';
         var modalInstance = this.$uibModal.open({

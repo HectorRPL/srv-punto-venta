@@ -40,8 +40,9 @@ class AsignarCliente {
     actualizarCliente() {
         delete this.cliente.nombreCompleto;
         actualizarCliente.callPromise(this.cliente).then(this.$bindToContext((result) => {
-            this.modalInstance.close({clienteId: this.cliente});
-            return this.cliente._id;
+            // TODO: ¿Este código está bien?
+            this.modalInstance.close({cliente: this.cliente});
+            return this.cliente;
         }))
         .catch(this.$bindToContext((err) => {
             this.tipoMsj = 'danger';

@@ -86,7 +86,7 @@ class OrdenVenta {
         };
 
         console.log('[88][ordenCompra]', ordenCompra);
-        /*crearVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
+        crearVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {
                 console.log(err);
                 this.tipoMsj = 'danger';
@@ -96,7 +96,7 @@ class OrdenVenta {
                 console.log('--[98][result]--', result);
                 // this.state.go('app.venta.orden.cliente', {ventaId: result});
             }
-        }));*/
+        }));
     }
 
     limpiar() {

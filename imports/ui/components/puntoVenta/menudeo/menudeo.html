@@ -58,9 +58,10 @@
                     <orden-venta
                             tienda-Id="menudeo.tiendaId"
                             iva="menudeo.iva"
-                            cliente-Id="menudeo.cliente.clienteId"
+                            cliente-Id="menudeo.cliente.cliente._id"
                             pedido-Grl="menudeo.pedido">
                     </orden-venta>
+                    [menudeo.cliente]<pre>{{menudeo.cliente.cliente|json}}</pre>
                 </div>
             </div>
         </div>
