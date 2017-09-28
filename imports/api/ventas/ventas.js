@@ -13,12 +13,11 @@ const TIPO_VENTA = 'menudeo';
 
 VentasMenudeoOp = {
 
-    altaVenta(tiendaId, clienteId) {
+    altaVenta(tiendaId) {
         const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
         try {
             const venta = {
-                tiendaId: tiendaId,
-                clienteId: clienteId
+                tiendaId: tiendaId
             };
             const ventaId = crearVenta(venta);
 
@@ -26,7 +25,6 @@ VentasMenudeoOp = {
         } catch (err) {
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'venta-no-valida');
         }
-
     },
 
     altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId, clienteId) {
@@ -140,5 +138,4 @@ VentasMenudeoOp = {
             }
         });
     },
-
 };

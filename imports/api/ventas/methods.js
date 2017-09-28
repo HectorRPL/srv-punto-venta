@@ -116,7 +116,6 @@ export const crearVenta = new ValidatedMethod({
     }
 });
 
-
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
         crearVenta
