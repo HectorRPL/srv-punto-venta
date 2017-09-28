@@ -36,6 +36,7 @@ export const crearVenta = new ValidatedMethod({
     },
     validate: new SimpleSchema({
         tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        clienteId: {type: String, regEx: SimpleSchema.RegEx.Id},
         total: {type: Number, decimal: true},
         subTotal: {type: Number, decimal: true},
         importeIva: {type: Number, decimal: true},
@@ -43,7 +44,7 @@ export const crearVenta = new ValidatedMethod({
         mesesIntereses: {type: pedidoSchema, optional: true},
         iva: {type: Number}
     }).validator(),
-    run({otraFormaPago, mesesIntereses, tiendaId, total, subTotal, importeIva, iva}) {
+    run({otraFormaPago, mesesIntereses, tiendaId, clienteId, total, subTotal, importeIva, iva}) {
         let ventaId = '';
         let ordenesMeses = new Map();
 
@@ -55,7 +56,7 @@ export const crearVenta = new ValidatedMethod({
             if (mesesIntereses.pedido.length > 0) {
                 for (let i = 0; i < mesesIntereses.numMeses.length; i++) {
                     const noMes = mesesIntereses.numMeses[i];
-                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, empleado._id);
+                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, empleado._id, clienteId);
                     const ordenFinal = {
                         ventaOrdenId: resultOrdenId,
                         subTotal: 0
@@ -70,7 +71,7 @@ export const crearVenta = new ValidatedMethod({
                     ordenesMeses.set(pedido.mesesSinInteres, ordenResult);
                     pedido.ventaOrdenId = ordenResult.ventaOrdenId;
 
-                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId);
+                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId, clienteId);
                 }
             }
 
@@ -79,6 +80,7 @@ export const crearVenta = new ValidatedMethod({
                 VentasSaldos.insert({
                     ventaOrdenId: value.ventaOrdenId,
                     tiendaId: tiendaId,
+                    clienteId: clienteId,
                     total: total,
                     saldoCobrar: total,
                     subTotal: value.subTotal
@@ -89,19 +91,20 @@ export const crearVenta = new ValidatedMethod({
             let resultId = '';
             //Crear las ordenes de venta para otra forma de pago
             if (otraFormaPago.pedido.length > 0) {
-                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, empleado._id);
+                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, empleado._id, clienteId);
 
                 for (let k = 0; k < otraFormaPago.pedido.length; k++) {
                     let pedido = otraFormaPago.pedido[k];
                     otraPagoSubtotal += (pedido.total * pedido.precioFinal);
                     pedido.ventaOrdenId = resultId;
-                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId);
+                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId, clienteId);
                 }
                 const total = otraPagoSubtotal * (1 + (iva / 100));
 
                 VentasSaldos.insert({
                     ventaOrdenId: resultId,
                     tiendaId: tiendaId,
+                    clienteId: clienteId,
                     total: total,
                     saldoCobrar: total,
                     subTotal: otraPagoSubtotal

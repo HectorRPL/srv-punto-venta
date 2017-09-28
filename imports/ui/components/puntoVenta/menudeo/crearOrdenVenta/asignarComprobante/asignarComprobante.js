@@ -18,7 +18,6 @@ class AsignarComprobante {
         this.tiendaId = Session.get('estacionTrabajoId');
         this.clienteId = $stateParams.clienteId;
         this.ventaId = $stateParams.ventaId;
-        console.log(this.ventaId);
         this.entrega = '0';
         this.dtsFiscalesSelec = '';
         this.subscribe('datosFiscales.propietario', ()=> [{_id: this.getReactively('dtsFiscalesSelec._id')}]);
@@ -43,14 +42,11 @@ class AsignarComprobante {
                     console.log(err);
             }));
         }
-
     }
-
 }
 
 const name = 'asignarComprobante';
 
-// create a module
 export default angular
     .module(name, [
         FormaDireccion,
@@ -61,17 +57,11 @@ export default angular
     .component(name, {
         template: template.default,
         controllerAs: name,
-        controller: AsignarComprobante
-    })
-    .config(config);
-
-function config($stateProvider) {
-    'ngInject';
-
-    $stateProvider
-        .state('app.venta.orden.comprobante', {
-            url: '/:clienteId/comprobante',
-            template: '<asignar-comprobante></asignar-comprobante>',
-            abstract: true
-        });
-}
+        controller: AsignarComprobante,
+        bindings: {
+            close: '&',
+            dismiss: '&',
+            modalInstance: '<',
+            resolve: '<'
+        }
+    });

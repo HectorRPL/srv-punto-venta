@@ -13,11 +13,12 @@ const TIPO_VENTA = 'menudeo';
 
 VentasMenudeoOp = {
 
-    altaVenta(tiendaId) {
+    altaVenta(tiendaId, clienteId) {
         const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
         try {
             const venta = {
-                tiendaId: tiendaId
+                tiendaId: tiendaId,
+                clienteId: clienteId
             };
             const ventaId = crearVenta(venta);
 
@@ -28,12 +29,13 @@ VentasMenudeoOp = {
 
     },
 
-    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId) {
+    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId, clienteId) {
 
         try {
             const crearOrden = Meteor.wrapAsync(VentasOrdenes.insert, VentasOrdenes);
             const orden = {
                 ventaId: ventaId,
+                clienteId: clienteId,
                 tiendaId: tiendaId,
                 tipo: TIPO_VENTA,
                 empleadoId: empleadoId
@@ -51,9 +53,10 @@ VentasMenudeoOp = {
 
     },
 
-    crearPartida(partida, ventaId, tiendaOrigenId) {
+    crearPartida(partida, ventaId, clienteId, tiendaOrigenId) {
         const partidaFinal = {
             ventaId: ventaId,
+            clienteId: clienteId,
             ventaOrdenId: partida.ventaOrdenId,
             productoId: partida._id,
             factorId: partida.factorId,
@@ -73,11 +76,9 @@ VentasMenudeoOp = {
             }
 
         } catch (err) {
-            console.log('Erroe al crear la partida ', partidaId, partida.ordenVentaId, err);
+            console.log('Error al crear la partida ', partidaId, partida.ordenVentaId, err);
             //throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'partida-no-valida');
         }
-
-
     },
 
     crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId) {

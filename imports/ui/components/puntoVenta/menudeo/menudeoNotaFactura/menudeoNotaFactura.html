@@ -1,0 +1,24 @@
+<address>
+    <span ng-hide="!menudeoNotaFactura.datosFiscales._id"> <strong>DATOS FISCALES</strong></span><br>
+    {{menudeoNotaFactura.datosFiscales.rfc}} <br>
+    <span style="color: red" ng-hide="menudeoNotaFactura.datosFiscales._id || menudeoNotaFactura.tiendaMatriz">
+        <strong class="label label-warning"><i class="fa fa-exclamation-triangle"></i>&nbsp; Remisión</strong>
+    </span>
+    <small>
+        <i class="fa fa-envelope" ng-show="menudeoNotaFactura.datosFiscales._id"></i>&nbsp;
+        {{menudeoNotaFactura.datosFiscales.email}}<br>
+        {{menudeoNotaFactura.datosFiscales.razonSocial}} {{menudeoNotaFactura.datosFiscales.tipoSociedad}}
+        {{menudeoNotaFactura.datosFiscales.nombre}}&nbsp;
+        {{menudeoNotaFactura.datosFiscales.segundoNombre}}&nbsp;
+        {{menudeoNotaFactura.datosFiscales.apellidoPaterno}}&nbsp;
+        {{menudeoNotaFactura.datosFiscales.apellidoMaterno}}&nbsp;
+        <br>
+        {{menudeoNotaFactura.datosFiscales.calle}}
+        {{menudeoNotaFactura.datosFiscales.numExt}}<span ng-show="menudeoNotaFactura.datosFiscales._id">,</span>
+        <span ng-show="menudeoNotaFactura.datosFiscales.numInt">Int. {{menudeoNotaFactura.datosFiscales.numInt}}.</span> <br>
+        {{menudeoNotaFactura.datosFiscales.colonia}}
+        <span ng-show="menudeoNotaFactura.datosFiscales._id">CP.</span> {{menudeoNotaFactura.datosFiscales.codigoPostal}}
+        {{menudeoNotaFactura.datosFiscales.delMpio}}<span ng-show="menudeoNotaFactura.datosFiscales._id">,</span>
+        {{menudeoNotaFactura.datosFiscales.estado}}<br>
+    </small>
+</address>

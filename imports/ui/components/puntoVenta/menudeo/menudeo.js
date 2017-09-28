@@ -1,14 +1,19 @@
 /**
  * Created by Héctor on 19/06/2017.
  */
-import template from "./menudeo.html";
+import {Meteor}                           from "meteor/meteor";
+import {Session}                          from "meteor/session";
+import {Roles}                            from "meteor/alanning:roles";
+import {buscarProductoDescp}              from "../../../../api/catalogos/productos/busquedas";
 import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
-import {name as OrdenVenta} from "./ordenVenta/ordenVenta";
-import {name as CrearOrdenVenta} from "./crearOrdenVenta/crearOrdenVenta";
-import {name as LoginLinea} from "../loginLinea/loginLinea";
-import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas";
-import {Session} from "meteor/session";
-
+import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
+import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
+import {name as LoginLinea}               from "../loginLinea/loginLinea";
+import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
+import {name as AsignarComprobante}       from "../menudeo/crearOrdenVenta/asignarComprobante/asignarComprobante";
+import {name as MenudeoDatosCliente}      from "./menudeoDatosCliente/menudeoDatosCliente";
+import {name as MenudeoNotaFactura}       from "./menudeoNotaFactura/menudeoNotaFactura";
+import template                           from "./menudeo.html";
 
 class Menudeo {
 
@@ -21,8 +26,15 @@ class Menudeo {
         this.total = 0;
         this.iva = 16;
         this.productoSelec = '';
+        this.clienteId = '';
         this.tiendaId = Session.get('estacionTrabajoId');
         this.pedido = Session.get('ventaenCurso') || [] ;
+
+        this.helpers({
+            esVendedor(){
+                return Roles.userIsInRole(Meteor.userId(), 'vendedores', 'vendedores');
+            }
+        });
     }
 
     abrirModal(prodBuscado) {
@@ -52,15 +64,40 @@ class Menudeo {
         }));
     }
 
-    abrirModalCliente(){
+    abrirModalCliente() {
+        let cliente = '';
         var modalInstance = this.$uibModal.open({
             animation: true,
-            component: "AsignarComprobante",
-            size: 'lg'
+            component: 'AsignarCliente',
+            size: 'lg',
+            resolve: {
+                cliente: function () {
+                    return cliente;
+                }
+            }
         }).result.then(this.$bindToContext((result) => {
-
+            this.cliente = result;
         }, function (reason) {
+            console.log('[reason]', reason);
+        }));
+    }
 
+
+    abrirModalDatosFiscales() {
+        let comprobante = '';
+        var modalInstance = this.$uibModal.open({
+            animation: true,
+            component: 'AsignarComprobante',
+            size: 'lg',
+            resolve: {
+                comprobante: function () {
+                    return comprobante;
+                }
+            }
+        }).result.then(this.$bindToContext((result) => {
+            this.comprobante = result;
+        }, function (reason) {
+            console.log('[reason]', reason);
         }));
     }
 
@@ -84,7 +121,11 @@ export default angular
         EligeProductoInventarios,
         OrdenVenta,
         CrearOrdenVenta,
-        LoginLinea
+        LoginLinea,
+        AsignarCliente,
+        AsignarComprobante,
+        MenudeoDatosCliente,
+        MenudeoNotaFactura
     ])
     .component(name, {
         template: template.default,
