@@ -1,14 +1,16 @@
 /**
  * Created by Héctor on 19/06/2017.
  */
-import template from "./menudeo.html";
+import {Meteor}                           from "meteor/meteor";
+import {Session}                          from "meteor/session";
+import {Roles}                            from "meteor/alanning:roles";
+import {buscarProductoDescp}              from "../../../../api/catalogos/productos/busquedas";
 import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
-import {name as OrdenVenta} from "./ordenVenta/ordenVenta";
-import {name as CrearOrdenVenta} from "./crearOrdenVenta/crearOrdenVenta";
-import {name as LoginLinea} from "../loginLinea/loginLinea";
-import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas";
-import {Session} from "meteor/session";
-
+import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
+import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
+import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
+import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
+import template                           from "./menudeo.html";
 
 class Menudeo {
 
@@ -21,8 +23,15 @@ class Menudeo {
         this.total = 0;
         this.iva = 16;
         this.productoSelec = '';
+        this.clienteId = '';
         this.tiendaId = Session.get('estacionTrabajoId');
         this.pedido = Session.get('ventaenCurso') || [] ;
+
+        this.helpers({
+            esVendedor(){
+                return Roles.userIsInRole(Meteor.userId(), 'vendedores', 'vendedores');
+            }
+        });
     }
 
     abrirModal(prodBuscado) {
@@ -52,15 +61,21 @@ class Menudeo {
         }));
     }
 
-    abrirModalCliente(){
+    abrirModalCliente() {
+        let clienteId = '';
         var modalInstance = this.$uibModal.open({
             animation: true,
-            component: "AsignarComprobante",
-            size: 'lg'
+            component: 'AsignarCliente',
+            size: 'lg',
+            resolve: {
+                clienteId: function () {
+                    return clienteId;
+                }
+            }
         }).result.then(this.$bindToContext((result) => {
-
+            this.clienteId = result;
         }, function (reason) {
-
+            console.log('[reason]', reason);
         }));
     }
 
@@ -84,7 +99,8 @@ export default angular
         EligeProductoInventarios,
         OrdenVenta,
         CrearOrdenVenta,
-        LoginLinea
+        AsignarCliente,
+        MostrarDatosCliente
     ])
     .component(name, {
         template: template.default,

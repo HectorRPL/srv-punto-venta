@@ -25,19 +25,23 @@ VentasMenudeoOp = {
         } catch (err) {
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'venta-no-valida');
         }
-
     },
 
-    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId) {
+    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId, clienteId) {
 
+        var findOneAndUpdate = Meteor.wrapAsync(CountersVentas.rawCollection().findOneAndUpdate, CountersVentas.rawCollection());
         try {
+            let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
+            const noOrden = result.value.seq;
+
             const crearOrden = Meteor.wrapAsync(VentasOrdenes.insert, VentasOrdenes);
             const orden = {
                 ventaId: ventaId,
+                clienteId: clienteId,
                 tiendaId: tiendaId,
                 tipo: TIPO_VENTA,
-                empleadoId: empleadoId
-
+                empleadoId: empleadoId,
+                numVentaOrden: noOrden
             };
             if (numMeses > 0) {
                 orden.mesesSinInteres = numMeses;
@@ -48,12 +52,12 @@ VentasMenudeoOp = {
         } catch (err) {
             throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
         }
-
     },
 
-    crearPartida(partida, ventaId, tiendaOrigenId) {
+    crearPartida(partida, ventaId, clienteId, tiendaOrigenId) {
         const partidaFinal = {
             ventaId: ventaId,
+            clienteId: clienteId,
             ventaOrdenId: partida.ventaOrdenId,
             productoId: partida._id,
             factorId: partida.factorId,
@@ -73,11 +77,9 @@ VentasMenudeoOp = {
             }
 
         } catch (err) {
-            console.log('Erroe al crear la partida ', partidaId, partida.ordenVentaId, err);
+            console.log('Error al crear la partida ', partidaId, partida.ordenVentaId, err);
             //throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'partida-no-valida');
         }
-
-
     },
 
     crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId) {
@@ -139,5 +141,4 @@ VentasMenudeoOp = {
             }
         });
     },
-
 };

@@ -5,24 +5,7 @@
             <span>
                 <minimalize></minimalize>
             </span>
-            <form role="search" class="navbar-form-custom" method="post" action="">
-                <div class="form-group">
-                    <input type="text" placeholder="Search for something..." class="form-control" name="top-search"
-                           id="top-search">
-                </div>
-            </form>
         </div>
-        <ul class="nav navbar-top-links navbar-right">
-            <li ng-if="topNavbar.empleado">
-                <a href="">
-                    {{topNavbar.empleado.nombreCompleto}}
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    <i class="fa fa-sign-out"></i> Salir
-                </a>
-            </li>
-        </ul>
+        <nav-top-login-linea></nav-top-login-linea>
     </nav>
 </div>

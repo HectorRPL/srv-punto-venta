@@ -1,36 +1,41 @@
 <div class="row">
-    <div class="col-sm-12">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <div class="ibox-tools">
-                    <login-linea></login-linea>
-                </div>
-            </div>
-            <div class="ibox-content">
-                <div class="row m-b-sm m-t-sm">
-                    <div class="col-md-2">
-
+    <div class="col-lg-12">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="ibox-content p-xl">
+                <div class="row"  ng-show="menudeo.esVendedor">
+                    <div class="col-sm-12">
+                        <h5><a class="btn btn-xs btn-white" ng-click="menudeo.abrirModalCliente()"><i class="fa fa-plus-square-o fa-lg"></i></a> Cliente:</h5>
+                        <address>
+                            <mostrar-datos-cliente
+                                cliente-id="menudeo.clienteId.clienteId">
+                            </mostrar-datos-cliente>
+                        </address>
                     </div>
-                    <div class="col-md-8">
-                        <div class="input-group m-b">
-                            <input type="text"
-                                   class="input-sm form-control"
-                                   placeholder="Ingresa el Código y/o Nombre del Producto"
-                                   typeahead-on-select="menudeo.prueba($item, $model, $label, $event)"
-                                   uib-typeahead="producto as producto.campoBusqueda for producto in menudeo.buscarProducto($viewValue)"
-                                   ng-model="menudeo.prodSelec">
-                            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group m-b">
+                                <input type="text"
+                                       class="input-sm form-control"
+                                       placeholder="Ingresa el Código y/o Nombre del Producto"
+                                       typeahead-on-select="menudeo.prueba($item, $model, $label, $event)"
+                                       uib-typeahead="producto as producto.campoBusqueda for producto in menudeo.buscarProducto($viewValue)"
+                                       ng-model="menudeo.prodSelec">
+                                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                            </div>
                         </div>
                     </div>
+                    <orden-venta
+                            tienda-Id="menudeo.tiendaId"
+                            iva="menudeo.iva"
+                            cliente-Id="menudeo.clienteId.clienteId"
+                            pedido-Grl="menudeo.pedido">
+                    </orden-venta>
                 </div>
-                <button type="button" class="btn btn-block btn-default"
-                        ng-click="menudeo.abrirModalCliente()">
-                    <i class="fa fa-map-marker"></i> <strong>Modal</strong>
-                </button>
-                <!-- ORDEN DE VENTA -->
-                <orden-venta tienda-Id="menudeo.tiendaId" iva="menudeo.iva" pedido-Grl="menudeo.pedido"></orden-venta>
             </div>
         </div>
     </div>
 </div>
-

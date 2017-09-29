@@ -76,6 +76,7 @@ class OrdenVenta {
         this.mesesIntereses.numMeses = Array.from(this.numPedidosMeses.keys());
         const ordenCompra = {
             tiendaId: this.tiendaId,
+            clienteId: this.clienteId,
             total: this.total,
             subTotal: this.subTotal,
             importeIva: this.importeIva,
@@ -84,6 +85,7 @@ class OrdenVenta {
             iva: this.iva
         };
 
+        console.log('[88][ordenCompra]', ordenCompra);
         crearVenta.call(ordenCompra, this.$bindToContext((err, result)=> {
             if (err) {
                 console.log(err);
@@ -91,7 +93,8 @@ class OrdenVenta {
                 this.msj = err.message;
             } else {
                 this.limpiar();
-                this.state.go('app.venta.orden.cliente', {ventaId: result});
+                console.log('--[98][result]--', result);
+                // this.state.go('app.venta.orden.cliente', {ventaId: result});
             }
         }));
     }
@@ -125,6 +128,7 @@ export default angular
         bindings: {
             pedidoGrl: '=',
             iva: '<',
+            clienteId: '<',
             tiendaId: '<'
         }
     });
