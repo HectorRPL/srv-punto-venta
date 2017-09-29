@@ -13,6 +13,10 @@ class TopNavbar {
             }
         })
     }
+
+    login() {
+        console.log('El wero es gay');
+    }
 }
 
 const name = 'topNavbar';

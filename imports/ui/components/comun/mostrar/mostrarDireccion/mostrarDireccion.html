@@ -1,24 +1,18 @@
-<a ng-click="mostrarDireccion.abrirModalDireccion()">
-    <p>
+<address>
     <span ng-hide="mostrarDireccion.direccion._id" style="color: red">
-        <strong class="label label-warning"><i class="fa fa-exclamation-triangle"></i>&nbsp; SIN DIRECCION DE ENTREGA</strong>
+        <strong class="label label-warning">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp; SIN DIRECCION DE ENTREGA
+        </strong>
     </span>
-        <small>
-            {{mostrarDireccion.direccion.calle}}
-            {{mostrarDireccion.direccion.numExt}}<span ng-show="mostrarDireccion.direccion._id">,</span>
-            <span ng-show="mostrarDireccion.direccion.numInt">Int. {{mostrarDireccion.direccion.numInt}}.</span> <br>
-            {{mostrarDireccion.direccion.colonia}}
-            <span ng-show="mostrarDireccion.direccion._id">CP.</span> {{mostrarDireccion.direccion.codigoPostal}}
-            {{mostrarDireccion.direccion.delMpio}}<span ng-show="mostrarDireccion.direccion._id">,</span>
+    <small ng-show="mostrarDireccion.direccion._id">
+        <i class="fa fa-map-marker"></i>&nbsp;&nbsp;{{mostrarDireccion.direccion.calle}}
+            {{mostrarDireccion.direccion.numExt}},
+            <span ng-show="mostrarDireccion.direccion.numInt">
+            Int. {{mostrarDireccion.direccion.numInt}}.
+            </span><br>
+            CP. {{mostrarDireccion.direccion.codigoPostal}},
+            {{mostrarDireccion.direccion.colonia}}<br>
+            {{mostrarDireccion.direccion.delMpio}},
             {{mostrarDireccion.direccion.estado}}<br>
-        </small>
-    </p>
-</a>
-<div class="contact-box-footer">
-    <div class="m-t-xs btn-group">
-        <a class="btn btn-xs btn-white"><i class="fa fa-trash-o fa-lg"></i></a>
-        <a class="btn btn-xs btn-white"><i class="fa fa-pencil-square-o fa-lg"></i></a>
-        <a class="btn btn-xs btn-white"><i class="fa fa-plus-square-o fa-lg"></i></a>
-    </div>
-</div>
-<!--http://localhost:3001/app/venta/Eoh6TxmtG5SmdBbHB/finalizar-->
+    </small>
+</address>

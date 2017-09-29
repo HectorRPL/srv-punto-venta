@@ -40,15 +40,24 @@ class AsignarCliente {
     actualizarCliente() {
         delete this.cliente.nombreCompleto;
         actualizarCliente.callPromise(this.cliente).then(this.$bindToContext((result) => {
-            // TODO: ¿Este código está bien?
-            this.modalInstance.close({cliente: this.cliente});
-            return this.cliente;
+            this.modalInstance.close({clienteId: this.cliente._id});
+            return this.cliente._id;
         }))
         .catch(this.$bindToContext((err) => {
             this.tipoMsj = 'danger';
             this.msj = 'Erro al crear al cliente, intentar mas tarde';
         }));
     }
+
+    aceptar() {
+        this.modalInstance.close(true);
+    }
+
+    cerrar() {
+        this.modalInstance.dismiss('Cancelado');
+    }
+
+
 }
 
 const name = 'asignarCliente';

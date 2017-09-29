@@ -5,8 +5,13 @@
             <div class="input-group-addon">
                 <i class="fa fa-user" aria-hidden="true"></i>
             </div>
-            <input id="usuarioEmailId" class="form-control" name="usuario" type="text" placeholder="Usuario"
-                   aria-describedby="basic-addon1" required ng-model="loginLinea.credentials.username">
+            <input id="usuarioEmailId"
+                   class="form-control"
+                   name="usuario"
+                   type="text"
+                   placeholder="Usuario"
+                   aria-describedby="basic-addon1"
+                   required ng-model="loginLinea.credentials.username">
         </div>
         <div ng-messages="loginForm.usuario.$dirty && loginForm.usuario.$error" role="alert">
             <div ng-message="required" style="color:red">Campo requerido</div>
@@ -18,8 +23,13 @@
             <div class="input-group-addon">
                 <i class="fa fa-key" aria-hidden="true"></i>
             </div>
-            <input id="passwordId" class="form-control" name="password" type="password" placeholder="Contraseña"
-                   aria-describedby="basic-addon1" required ng-model="loginLinea.credentials.password">
+            <input id="passwordId"
+                   class="form-control"
+                   name="password"
+                   type="password"
+                   placeholder="Contraseña"
+                   aria-describedby="basic-addon1"
+                   required ng-model="loginLinea.credentials.password">
         </div>
         <div ng-messages="loginForm.password.$dirty && loginForm.password.$error" role="alert">
             <div ng-message="required" style="color:red">Campo requerido</div>

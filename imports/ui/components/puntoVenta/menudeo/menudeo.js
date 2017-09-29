@@ -10,9 +10,8 @@ import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
 import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
 import {name as LoginLinea}               from "../loginLinea/loginLinea";
 import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
-import {name as AsignarComprobante}       from "../menudeo/crearOrdenVenta/asignarComprobante/asignarComprobante";
-import {name as MenudeoDatosCliente}      from "./menudeoDatosCliente/menudeoDatosCliente";
-import {name as MenudeoNotaFactura}       from "./menudeoNotaFactura/menudeoNotaFactura";
+// import {name as AsignarComprobante}       from "../menudeo/crearOrdenVenta/asignarComprobante/asignarComprobante";
+import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import template                           from "./menudeo.html";
 
 class Menudeo {
@@ -65,24 +64,24 @@ class Menudeo {
     }
 
     abrirModalCliente() {
-        let cliente = '';
+        let clienteId = '';
         var modalInstance = this.$uibModal.open({
             animation: true,
             component: 'AsignarCliente',
             size: 'lg',
             resolve: {
-                cliente: function () {
-                    return cliente;
+                clienteId: function () {
+                    return clienteId;
                 }
             }
         }).result.then(this.$bindToContext((result) => {
-            this.cliente = result;
+            this.clienteId = result;
         }, function (reason) {
             console.log('[reason]', reason);
         }));
     }
 
-    abrirModalDatosFiscales() {
+    /*abrirModalDatosFiscales() {
         let comprobante = '';
         var modalInstance = this.$uibModal.open({
             animation: true,
@@ -98,7 +97,7 @@ class Menudeo {
         }, function (reason) {
             console.log('[reason]', reason);
         }));
-    }
+    }*/
 
     prueba(item) {
         this.abrirModal(item);
@@ -122,9 +121,8 @@ export default angular
         CrearOrdenVenta,
         LoginLinea,
         AsignarCliente,
-        AsignarComprobante,
-        MenudeoDatosCliente,
-        MenudeoNotaFactura
+        // AsignarComprobante,
+        MostrarDatosCliente
     ])
     .component(name, {
         template: template.default,

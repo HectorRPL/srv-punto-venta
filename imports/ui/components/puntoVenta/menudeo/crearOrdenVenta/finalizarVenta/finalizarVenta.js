@@ -8,6 +8,7 @@ import {name as MostrarDatosCliente} from "../../../../comun/mostrar/mostrarDato
 import {name as MostrarDireccion} from "../../../../comun/mostrar/mostrarDireccion/mostrarDireccion";
 import {name as MostrarDatosFiscales} from "../../../../comun/mostrar/mostrarDatosFiscales/mostrarDatosFiscales";
 import {VentasPartidasOrdenes} from '../../../../../../api/ventas/ordenes/partidas/collection';
+import {actualizarQuitrDirccn, actualizarQuitrDatsFiscls} from '../../../../../../api/ventas/ordenes/methods';
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
 import {Ventas} from '../../../../../../api/ventas/collection';
 import template from './finalizarVenta.html';
@@ -27,12 +28,6 @@ class FinalizarVenta {
         this.helpers({
             venta(){
               return Ventas.findOne({_id: this.ventaId});
-            },
-            ventaTotal(){
-                return Counts.get('venta.total');
-            },
-            ventaSubtotal(){
-                return Counts.get('venta.subTotal');
             },
             ordenesVenta(){
                 return VentasOrdenes.find({ventaId: this.ventaId});
@@ -68,9 +63,80 @@ class FinalizarVenta {
         }));
     }
 
-    crearFactor() {
+    abrirModlDirccin() {
+        const ventaId = this.ventaId;
+        const clienteId = this.ordenesVenta[0].clienteId;
 
+        console.log(clienteId);
+
+        var modalInstance = this.uibModal.open({
+            animation: true,
+            component: "AsignarDireccionEntrega",
+            size: 'lg',
+            resolve: {
+                ventaId: function () {
+                    return ventaId;
+                },
+                clienteId: function () {
+                    return clienteId;
+                }
+            }
+        }).result.then(this.$bindToContext((result) => {
+
+        }, function (reason) {
+
+        }));
     }
+
+    quitarDireccionEntrg() {
+        actualizarQuitrDirccn.callPromise({ventaId: this.ventaId})
+            .then(this.$bindToContext((result) => {
+                this.tipoMsj = 'success';
+            }))
+            .catch(this.$bindToContext((err) => {
+                console.log(err);
+                this.tipoMsj = 'danger';
+            }));
+    }
+
+    abrirModlDatsFiscls() {
+        const ventaId = this.ventaId;
+        const clienteId = this.ordenesVenta[0].clienteId;
+
+        var modalInstance = this.uibModal.open({
+            animation: true,
+            component: "AsignarFactura",
+            size: 'lg',
+            resolve: {
+                ventaId: function () {
+                    return ventaId;
+                },
+                clienteId: function () {
+                    return clienteId;
+                }
+            }
+        }).result.then(this.$bindToContext((result) => {
+
+        }, function (reason) {
+
+        }));
+    }
+
+
+
+    quitarDatsFiscls() {
+        actualizarQuitrDatsFiscls.callPromise({ventaId: this.ventaId})
+            .then(this.$bindToContext((result) => {
+                this.tipoMsj = 'success';
+            }))
+            .catch(this.$bindToContext((err) => {
+                console.log(err);
+                this.tipoMsj = 'danger';
+            }));
+    }
+
+
+
 
 }
 
