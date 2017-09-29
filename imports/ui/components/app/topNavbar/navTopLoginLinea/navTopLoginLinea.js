@@ -1,7 +1,9 @@
 /**
  * Created by Héctor on 29/09/2017.
  */
+import {Meteor} from "meteor/meteor";
 import {Empleados} from "../../../../../api/empleados/collection";
+import {name as Alertas} from "../../../comun/alertas/alertas";
 import template from "./navTopLoginLinea.html";
 
 class NavTopLoginLinea {
@@ -30,24 +32,27 @@ class NavTopLoginLinea {
             this.$bindToContext((err) => {
                 if (err) {
                     console.log(err);
-                    this.msj = 'Combinación de usuario y contraseña incorrectos.';
+                    this.msj = 'Error Usuario y/o Constraseña';
                     this.tipoMsj = 'danger';
                 } else {
                     console.log('SE logeo con exito');
+                    /*TODO: El botón apiñar menú se activa con el reload*/
                     this.$state.reload();
                 }
             })
         );
     }
 
-    cerrarSesion() {
-        console.log('Fala dar funcionalidad de salir');
+    salir() {
+        Meteor.logout();
     }
 }
 
 const name = 'navTopLoginLinea';
 
-export default angular.module(name, [])
+export default angular.module(name, [
+    Alertas
+])
     .component(name, {
         template: template.default,
         controllerAs: name,
