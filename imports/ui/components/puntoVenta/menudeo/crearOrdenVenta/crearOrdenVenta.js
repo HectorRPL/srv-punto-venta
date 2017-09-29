@@ -2,8 +2,8 @@
  * Created by Héctor on 09/05/2017.
  */
 import {name as AsignarCliente} from './asignarCliente/asignarCliente';
-import {name as AsignarEntrega} from './asignarEntrega/asignarEntrega';
-import {name as AsignarComprobante} from './asignarComprobante/asignarComprobante';
+import {name as AsignarDireccionEntrega} from './asignarDireccionEntrega/asignarDireccionEntrega';
+import {name as AsignarFactura} from './asignarFactura/asignarFactura';
 import {name as ResumenOrdenVenta} from './resumenOrdenVenta/resumenOrdenVenta';
 import {name as FinalizarVenta} from './finalizarVenta/finalizarVenta';
 import template from './crearOrdenVenta.html';
@@ -23,8 +23,8 @@ const name = 'crearOrdenVenta';
 export default angular
     .module(name, [
         AsignarCliente,
-        AsignarEntrega,
-        AsignarComprobante,
+        AsignarDireccionEntrega,
+        AsignarFactura,
         ResumenOrdenVenta,
         FinalizarVenta
     ])

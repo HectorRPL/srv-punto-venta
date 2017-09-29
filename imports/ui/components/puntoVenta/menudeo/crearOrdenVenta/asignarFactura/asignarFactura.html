@@ -1,0 +1,75 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <!--TITULO MODAL-->
+    <div class="col-sm-10">
+        <h2>Asignar Datos Fiscales</h2>
+    </div>
+    <!-- TACHE (CERRAR MODAL)-->
+    <div class="col-sm-2">
+        <div class="ibox-tools">
+            <br>
+            <a ng-click="asignarFactura.cerrar()"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- BODY MODAL -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="wizard">
+                        <div class="content">
+                            <form role="form" class="p-lg" id="asignarComprobanteFrmId" name="asignarComprobanteFrm" novalidate>
+                                <fieldset>
+                                    <buscar-datos-fiscales datos-fiscales="asignarFactura.dtsFiscalesSelec">
+                                    </buscar-datos-fiscales>
+                                    <forma-datos-fiscales ng-if="!asignarFactura.dtsFiscales._id"
+                                                          datos="asignarFactura.dtsFiscales">
+                                    </forma-datos-fiscales>
+                                    <forma-editar-datos-fiscales ng-if="asignarFactura.dtsFiscales._id"
+                                                                 datos="asignarFactura.dtsFiscales">
+                                    </forma-editar-datos-fiscales>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <forma-direccion direccion="asignarFactura.dtsFiscales"></forma-direccion>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <alertas tipo="asignarFactura.tipoMsj" mensaje="asignarFactura.msj"></alertas>
+        </div>
+    </div>
+    <!--FOOTER MODAL-->
+    <div class="inmodal">
+        <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-8">
+                    <alertas tipo="comprobanteFactura.tipoMsj" mensaje="comprobanteFactura.msj"></alertas>
+                </div>
+                <div class="col-sm-3">
+                    <!--BOTON GUARDAR-->
+                    <button type="button" class="btn btn-primary pull-right"
+                            ng-hide="asignarFactura.dtsFiscales._id"
+                            ng-disabled="asignarComprobanteFrm.$invalid"
+                            ng-click="asignarFactura.guardar()">
+                        Guardar
+                    </button>
+                    <!--BOTON GUARDAR-->
+                    <button type="button" class="btn btn-primary pull-right"
+                            ng-show="asignarFactura.dtsFiscales._id"
+                            ng-disabled="asignarComprobanteFrm.$invalid"
+                            ng-click="asignarFactura.actualizar()">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

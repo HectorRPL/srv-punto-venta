@@ -7,14 +7,41 @@
                     <div class="col-sm-6">
                         <address>
                             <h5>Cliente:</h5>
-                            <mostrar-datos-cliente cliente-id="finalizarVenta.ordenesVenta[0].clienteId"></mostrar-datos-cliente>
-                            <h5>Dirección de Entrega:</h5>
-                            <mostrar-direccion propietario-id="finalizarVenta.ordenesVenta[0].direccionEntregaId"></mostrar-direccion>
+                            <mostrar-datos-cliente
+                                    cliente-id="finalizarVenta.ordenesVenta[0].clienteId"></mostrar-datos-cliente>
+                            <h5>Dirección de Entrega:&nbsp; &nbsp;
+                                <button role="button" class="btn btn-xs btn-white"
+                                        ng-disabled="!finalizarVenta.ordenesVenta[0].direccionEntregaId"
+                                        ng-click="finalizarVenta.quitarDireccionEntrg()">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </button>
+                                <button role="button" class="btn btn-xs btn-white"
+                                        ng-disabled="finalizarVenta.ordenesVenta[0].direccionEntregaId"
+                                        ng-click="finalizarVenta.abrirModlDirccin()">
+                                    <i class="fa fa-pencil-square-o fa-lg"></i>
+                                </button>
+                            </h5>
+                            <mostrar-direccion direccion-id="finalizarVenta.ordenesVenta[0].direccionEntregaId">
+                            </mostrar-direccion>
                         </address>
                     </div>
                     <!--Datos Fiscales-->
                     <div class="col-sm-6 text-right">
-                        <mostrar-datos-fiscales datos-fiscales-id="finalizarVenta.ordenesVenta[0].datosFiscalesId"></mostrar-datos-fiscales>
+                        <h5>Comprobate:&nbsp;&nbsp;
+                            <button role="button" class="btn btn-xs btn-white"
+                                    ng-disabled="!finalizarVenta.ordenesVenta[0].datosFiscalesId"
+                                    ng-click="finalizarVenta.quitarDatsFiscls()">
+                                <i class="fa fa-trash-o fa-lg"></i>
+                            </button>
+                            <button role="button" class="btn btn-xs btn-white"
+                                    ng-disabled="finalizarVenta.ordenesVenta[0].datosFiscalesId"
+                                    ng-click="finalizarVenta.abrirModlDatsFiscls()">
+                                <i class="fa fa-pencil-square-o fa-lg"></i>
+                            </button>
+                        </h5>
+                        <mostrar-datos-fiscales
+                                datos-fiscales-id="finalizarVenta.ordenesVenta[0].datosFiscalesId">
+                        </mostrar-datos-fiscales>
                     </div>
                 </div>
                 <!--Tickets con SubPartidas-->
@@ -24,7 +51,8 @@
                         <uib-accordion-heading>
                             <sapn ng-show="orden.mesesSinInteres">
                                 No. Ticket: {{orden.numVentaOrden}}
-                                - <small>{{orden.mesesSinInteres}} Meses sin Intereses</small>
+                                -
+                                <small>{{orden.mesesSinInteres}} Meses sin Intereses</small>
                             </sapn>
                             <span ng-hide="orden.mesesSinInteres">
                                 No. Ticket: {{orden.numVentaOrden}} - <small>Efectivo</small>
@@ -38,7 +66,9 @@
                 </uib-accordion>
                 <!--Botón imprimir Tickets-->
                 <div class="text-right">
-                    <button class="btn btn-primary" ng-click="finalizarVenta.imprimir()"><i class="fa fa-print"></i> Imprimir Tickets</button>
+                    <button class="btn btn-primary" ng-click="finalizarVenta.imprimir()"><i class="fa fa-print"></i>
+                        Imprimir Tickets
+                    </button>
                 </div>
             </div>
         </div>

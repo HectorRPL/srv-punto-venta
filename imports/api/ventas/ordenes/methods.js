@@ -37,8 +37,8 @@ export const actualizarVentaCliente = new ValidatedMethod({
 
 });
 
-export const actualizarVentaDireccionEntrega = new ValidatedMethod({
-    name: 'ordenesVentas.actualizarVentaDireccionEntrega',
+export const actualizarDirccnEntrg = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarDirccnEntrg',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -47,7 +47,7 @@ export const actualizarVentaDireccionEntrega = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.actualizarVentaDireccionEntrega',
+        name: 'ordenesVentas.actualizarDirccnEntrg',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -67,8 +67,8 @@ export const actualizarVentaDireccionEntrega = new ValidatedMethod({
     }
 });
 
-export const actualizarVentaDatosFiscales = new ValidatedMethod({
-    name: 'ordenesVentas.actualizarVentaDatosFiscales',
+export const actualizarQuitrDirccn = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarQuitrDirccn',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -77,7 +77,36 @@ export const actualizarVentaDatosFiscales = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ordenesVentas.actualizarVentaDatosFiscales',
+        name: 'ordenesVentas.actualizarQuitrDirccn',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId}) {
+        if (Meteor.isServer) {
+            return VentasOrdenes.update({ventaId: ventaId}, {$unset: {direccionEntregaId: ''}}, {multi: true}, (err) => {
+                if (err) {
+                    throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+                }
+            });
+        }
+    }
+});
+
+export const actualizarVentDatsFiscls = new ValidatedMethod({
+    name: 'ordenesVentas.actualizarVentDatsFiscls',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
+        }
+    ],
+    permissionsError: {
+        name: 'ordenesVentas.actualizarVentDatsFiscls',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -97,7 +126,7 @@ export const actualizarVentaDatosFiscales = new ValidatedMethod({
     }
 });
 
-export const actualizarVentaNumero = new ValidatedMethod({
+export const actualizarQuitrDatsFiscls = new ValidatedMethod({
     name: 'ordenesVentas.actualizarVentaNumero',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
@@ -113,25 +142,28 @@ export const actualizarVentaNumero = new ValidatedMethod({
         }
     },
     validate: new SimpleSchema({
-        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id}
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id}
     }).validator(),
-    run({ventaId, tiendaId}) {
-
+    run({ventaId}) {
         if (Meteor.isServer) {
-            VentasMenudeoOp.actualiazarNoVenta(ventaId, tiendaId);
+            return VentasOrdenes.update({ventaId: ventaId},
+                {$unset: {datosFiscalesId: ''}}, {multi: true}, (err) => {
+                if (err) {
+                    throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
+                }
+            });
         }
     }
 
 });
 
-
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
         actualizarVentaCliente,
-        actualizarVentaDireccionEntrega,
-        actualizarVentaDatosFiscales,
-        actualizarVentaNumero
+        actualizarDirccnEntrg,
+        actualizarVentDatsFiscls,
+        actualizarQuitrDirccn,
+        actualizarQuitrDatsFiscls
 
     ], 'name');
 if (Meteor.isServer) {

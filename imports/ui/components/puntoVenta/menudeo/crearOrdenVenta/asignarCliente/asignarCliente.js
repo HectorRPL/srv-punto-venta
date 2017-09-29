@@ -65,6 +65,14 @@ class AsignarCliente {
             }));
     }
 
+    aceptar() {
+        this.modalInstance.close(true);
+    }
+
+    cerrar() {
+        this.modalInstance.dismiss('Cancelado');
+    }
+
 
 }
 

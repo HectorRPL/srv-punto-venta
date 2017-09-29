@@ -10,13 +10,14 @@ class MostrarDireccion {
         'ngInject';
         $reactive(this).attach($scope);
 
-        this.subscribe('direcciones.propietario', () => [{_id: this.getReactively('propietarioId')}]);
+        this.subscribe('direcciones.propietario', () => [{_id: this.getReactively('direccionId')}]);
         this.helpers({
             direccion() {
-                return Direcciones.findOne({_id: this.getReactively('propietarioId')});
+                return Direcciones.findOne({_id: this.getReactively('direccionId')});
             }
         });
     }
+
 }
 
 const name = 'mostrarDireccion';
@@ -28,6 +29,6 @@ export default angular
         controllerAs: name,
         controller: MostrarDireccion,
         bindings: {
-            propietarioId: '<'
+            direccionId: '<'
         }
     });
