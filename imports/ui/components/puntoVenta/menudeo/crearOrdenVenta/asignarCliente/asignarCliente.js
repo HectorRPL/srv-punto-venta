@@ -57,6 +57,14 @@ class AsignarCliente {
         this.modalInstance.dismiss('Cancelado');
     }
 
+    aceptar() {
+        this.modalInstance.close(true);
+    }
+
+    cerrar() {
+        this.modalInstance.dismiss('Cancelado');
+    }
+
 
 }
 
