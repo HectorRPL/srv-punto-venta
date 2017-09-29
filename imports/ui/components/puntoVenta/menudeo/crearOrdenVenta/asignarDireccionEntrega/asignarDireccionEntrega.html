@@ -1,0 +1,59 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <!--TITULO MODAL-->
+    <div class="col-sm-10">
+        <h2>Asignar Direccion Entrega</h2>
+    </div>
+    <!-- TACHE (CERRAR MODAL)-->
+    <div class="col-sm-2">
+        <div class="ibox-tools">
+            <br>
+            <a ng-click="asignarDireccionEntrega.cerrar()"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- BODY MODAL -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="wizard">
+                        <div class="content">
+                            <form role="form" class="p-lg" id="asignarEntregaFrmId" name="asignarEntregaFrm" novalidate>
+                                <fieldset>
+                                    <forma-direccion direccion="asignarDireccionEntrega.direccionCliente"></forma-direccion>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8">
+            <alertas tipo="asignarDireccionEntrega.tipoMsj" mensaje="asignarDireccionEntrega.msj"></alertas>
+        </div>
+    </div>
+    <!--FOOTER MODAL-->
+    <div class="inmodal">
+        <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- BOTON GUARDAR DATOS GENERALES (Del paso 1 al paso 2) -->
+                    <button type="button" class="btn btn-primary pull-right"
+                            ng-hide="asignarDireccionEntrega.direccionCliente._id"
+                            ng-disabled="entregaDomicilioFrm.$invalid"
+                            ng-click="asignarDireccionEntrega.guardar()">
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-primary pull-right"
+                            ng-show="asignarDireccionEntrega.direccionCliente._id"
+                            ng-disabled="entregaDomicilioFrm.$invalid"
+                            ng-click="asignarDireccionEntrega.actualizar()">
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
