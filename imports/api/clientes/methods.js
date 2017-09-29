@@ -31,8 +31,8 @@ export const crearCliente = new ValidatedMethod({
         clean: true,
         filter: false
     }),
-    run({nombres, apellidos, email, sexo}) {
-        return Clientes.insert({nombres, apellidos, email, sexo}, (err) => {
+    run({nombres, apellidos, email, sexo, telefono, celular}) {
+        return Clientes.insert({nombres, apellidos, email, sexo, telefono, celular}, (err) => {
             if (err) {
                 throw new Meteor.Error(500, 'Error al realizar la operación.', 'cliente-no-creado');
             }

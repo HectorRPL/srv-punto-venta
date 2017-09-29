@@ -46,7 +46,7 @@
                 </div>
                 <!--Tickets con SubPartidas-->
                 <uib-accordion close-others="finalizarVenta.soloUno">
-                    <div uib-accordion-group ng-repeat="orden in finalizarVenta.ordenesVenta"
+                    <div class="panel-default" uib-accordion-group ng-repeat="orden in finalizarVenta.ordenesVenta"
                          ng-click="finalizarVenta.mostrarPartidas(orden._id)">
                         <uib-accordion-heading>
                             <sapn ng-show="orden.mesesSinInteres">

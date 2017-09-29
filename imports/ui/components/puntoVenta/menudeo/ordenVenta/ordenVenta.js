@@ -2,12 +2,12 @@
  * Created by jvltmtz on 19/05/17.
  */
 import {Meteor} from "meteor/meteor";
-import {Roles} from "meteor/alanning:roles";
-import template from "./ordenVenta.html";
-import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
-import {crearVenta} from "../../../../../api/ventas/methods";
-import {name as Alertas} from "../../../comun/alertas/alertas";
 import {Session} from "meteor/session";
+import {Roles} from "meteor/alanning:roles";
+import {crearVenta} from "../../../../../api/ventas/methods";
+import {name as CrearOrdenVenta} from "../crearOrdenVenta/crearOrdenVenta";
+import {name as Alertas} from "../../../comun/alertas/alertas";
+import template from "./ordenVenta.html";
 
 class OrdenVenta {
 
@@ -94,7 +94,7 @@ class OrdenVenta {
             } else {
                 this.limpiar();
                 console.log('--[98][result]--', result);
-                // this.state.go('app.venta.orden.cliente', {ventaId: result});
+                this.state.go('app.venta.finalizar', {ventaId: result});
             }
         }));
     }
@@ -107,7 +107,7 @@ class OrdenVenta {
         Session.setPersistent('ventaenCurso', []);
     }
 
-    generarTotales(){
+    generarTotales() {
         this.importeIva = this.subTotal * (this.iva / 100);
         this.total = this.subTotal * (1 + (this.iva / 100));
     }
