@@ -33,13 +33,14 @@ class AsignarFactura {
         crearDatoFiscal.callPromise(datosFinales)
             .then(this.$bindToContext((result) => {
                 return actualizarVentDatsFiscls.callPromise({
-                    ventaId: this.ventaId, datosFiscalesId: result
+                    ventaId: this.resolve.ventaId, datosFiscalesId: result
                 });
             }))
             .then(this.$bindToContext((datosFiscalesId) => {
-                return;
+                this.tipoMsj = 'success';
             }))
             .catch(this.$bindToContext((err) => {
+                console.log(err);
                 this.tipoMsj = 'danger';
             }));
     }
@@ -61,6 +62,7 @@ class AsignarFactura {
                 this.tipoMsj = 'success';
             }))
             .catch(this.$bindToContext((err) => {
+                console.log(err);
                 this.tipoMsj = 'danger';
                 this.msj = err.message;
             }));

@@ -38,7 +38,11 @@
         <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
         <div class="modal-footer">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-md-offset-8 col-sm-4">
+                    <button type="button" class="btn btn-default"
+                            ng-click="asignarDireccionEntrega.cerrar()">
+                        Cerrar
+                    </button>
                     <!-- BOTON GUARDAR DATOS GENERALES (Del paso 1 al paso 2) -->
                     <button type="button" class="btn btn-primary pull-right"
                             ng-hide="asignarDireccionEntrega.direccionCliente._id"

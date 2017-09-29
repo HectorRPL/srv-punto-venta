@@ -17,7 +17,8 @@
                 <div class="ibox-content">
                     <div class="wizard">
                         <div class="content">
-                            <form role="form" class="p-lg" id="asignarComprobanteFrmId" name="asignarComprobanteFrm" novalidate>
+                            <form role="form" class="p-lg" id="asignarComprobanteFrmId" name="asignarComprobanteFrm"
+                                  novalidate>
                                 <fieldset>
                                     <buscar-datos-fiscales datos-fiscales="asignarFactura.dtsFiscalesSelec">
                                     </buscar-datos-fiscales>
@@ -50,10 +51,11 @@
         <!-- BOTON / SIGUIENTE / GUARDAR / GUARDAR-->
         <div class="modal-footer">
             <div class="row">
-                <div class="col-md-offset-1 col-md-8">
-                    <alertas tipo="comprobanteFactura.tipoMsj" mensaje="comprobanteFactura.msj"></alertas>
-                </div>
-                <div class="col-sm-3">
+                <div class="col-md-offset-8 col-sm-4">
+                    <button type="button" class="btn btn-default"
+                            ng-click="asignarFactura.cerrar()">
+                        Cerrar
+                    </button>
                     <!--BOTON GUARDAR-->
                     <button type="button" class="btn btn-primary pull-right"
                             ng-hide="asignarFactura.dtsFiscales._id"
