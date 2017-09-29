@@ -1,0 +1,57 @@
+<form class="navbar-form navbar-right" role="form" id="navTopLoginLineaFrmId" name="navTopLoginLineaFrm" novalidate>
+    <div class="form-group"
+         ng-class="{ 'has-error' : navTopLoginLineaFrm.usuario.$invalid && !navTopLoginLineaFrm.usuario.$pristine }">
+        <div class="input-group">
+            <alertas tipo="navTopLoginLinea.tipoMsj" mensaje="navTopLoginLinea.msj"></alertas>
+        </div>
+    </div>
+    <ul class="nav navbar-top-links navbar-right" ng-show="navTopLoginLinea.empleado.nombreCompleto">
+        <li>{{navTopLoginLinea.empleado.nombreCompleto}}</li>&nbsp;&nbsp;
+        <li>
+            <button class="btn btn-default btn-sm"
+                    ng-click="navTopLoginLinea.cerrarSesion()"><i class="fa fa-sign-out"></i>
+                Salir
+            </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </li>
+    </ul>
+    <div class="form-group" ng-hide="navTopLoginLinea.empleado.nombreCompleto" ng-class="{ 'has-error' : navTopLoginLineaFrm.usuario.$invalid && !navTopLoginLineaFrm.usuario.$pristine }">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <input id="usuarioEmailId"
+                   class="form-control"
+                   name="usuario"
+                   type="text"
+                   placeholder="Vendedor"
+                   aria-describedby="basic-addon1"
+                   required
+                   ng-model="navTopLoginLinea.credentials.username">
+        </div>
+    </div>
+    <div class="form-group" ng-hide="navTopLoginLinea.empleado.nombreCompleto"
+         ng-class="{ 'has-error' : navTopLoginLineaFrm.password.$invalid && !navTopLoginLineaFrm.password.$pristine }">
+        <div class="input-group">
+            <div class="input-group-addon">
+                <i class="fa fa-key" aria-hidden="true"></i>
+            </div>
+            <input id="passwordId"
+                   class="form-control"
+                   name="password"
+                   type="password"
+                   placeholder="Contraseña"
+                   aria-describedby="basic-addon1"
+                   required
+                   ng-model="navTopLoginLinea.credentials.password">
+        </div>
+        <div ng-messages="navTopLoginLineaFrm.password.$dirty && navTopLoginLineaFrm.password.$error" role="alert">
+            <div ng-message="required" style="color:red">Campo requerido</div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-sm"
+            ng-hide="navTopLoginLinea.empleado.nombreCompleto"
+            ng-disabled="navTopLoginLineaFrm.$invalid"
+            ng-click="navTopLoginLinea.login()">
+        Ingresar
+    </button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</form>

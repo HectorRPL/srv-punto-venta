@@ -1,6 +1,10 @@
-import template from "./loginLinea.html";
+/**
+ * Created by Héctor on 29/09/2017.
+ */
+import {Empleados} from "../../../../../api/empleados/collection";
+import template from "./navTopLoginLinea.html";
 
-class LoginLinea {
+class NavTopLoginLinea {
     constructor($scope, $reactive, $state) {
         'ngInject';
         this.$state = $state;
@@ -11,6 +15,13 @@ class LoginLinea {
         };
         this.msj = '';
         this.tipoMsj = '';
+
+        this.subscribe('empleados.logeado');
+        this.helpers({
+            empleado(){
+                return Empleados.findOne();
+            }
+        })
     }
 
     login() {
@@ -28,14 +39,17 @@ class LoginLinea {
             })
         );
     }
+
+    cerrarSesion() {
+        console.log('Fala dar funcionalidad de salir');
+    }
 }
 
-const name = 'loginLinea';
+const name = 'navTopLoginLinea';
 
-// create a module
 export default angular.module(name, [])
     .component(name, {
         template: template.default,
         controllerAs: name,
-        controller: LoginLinea
+        controller: NavTopLoginLinea
     });

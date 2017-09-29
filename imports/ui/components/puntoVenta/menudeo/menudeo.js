@@ -8,7 +8,6 @@ import {buscarProductoDescp}              from "../../../../api/catalogos/produc
 import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
 import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
 import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
-import {name as LoginLinea}               from "../loginLinea/loginLinea";
 import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
 // import {name as AsignarComprobante}       from "../menudeo/crearOrdenVenta/asignarComprobante/asignarComprobante";
 import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
@@ -119,7 +118,6 @@ export default angular
         EligeProductoInventarios,
         OrdenVenta,
         CrearOrdenVenta,
-        LoginLinea,
         AsignarCliente,
         // AsignarComprobante,
         MostrarDatosCliente
