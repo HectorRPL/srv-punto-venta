@@ -9,7 +9,6 @@ import {name as EligeProductoInventarios} from "./eligeProductoInventarios/elige
 import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
 import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
 import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
-// import {name as AsignarComprobante}       from "../menudeo/crearOrdenVenta/asignarComprobante/asignarComprobante";
 import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import template                           from "./menudeo.html";
 
@@ -80,24 +79,6 @@ class Menudeo {
         }));
     }
 
-    /*abrirModalDatosFiscales() {
-        let comprobante = '';
-        var modalInstance = this.$uibModal.open({
-            animation: true,
-            component: 'AsignarComprobante',
-            size: 'lg',
-            resolve: {
-                comprobante: function () {
-                    return comprobante;
-                }
-            }
-        }).result.then(this.$bindToContext((result) => {
-            this.comprobante = result;
-        }, function (reason) {
-            console.log('[reason]', reason);
-        }));
-    }*/
-
     prueba(item) {
         this.abrirModal(item);
     }
@@ -119,7 +100,6 @@ export default angular
         OrdenVenta,
         CrearOrdenVenta,
         AsignarCliente,
-        // AsignarComprobante,
         MostrarDatosCliente
     ])
     .component(name, {
