@@ -8,9 +8,11 @@ import {name as Alertas} from '../../../../comun/alertas/alertas';
 import {name as BuscarCliente} from '../../../../comun/busquedas/buscarCliente/buscarCliente';
 import {name as AltaCliente} from '../../../../clientes/altaCliente/altaCliente';
 import {name as CambiosCliente} from '../../../../clientes/cambiosCliente/cambiosCliente';
+import {name as FormaDatosPersonales} from '../../../../comun/formas/formaDatosPersonales/formaDatosPersonales';
 import template from './asignarCliente.html';
 
 class AsignarCliente {
+
     constructor($scope, $reactive, $state, $stateParams) {
         'ngInject';
         $reactive(this).attach($scope);
@@ -29,7 +31,6 @@ class AsignarCliente {
 
     agregarCliente() {
         crearCliente.callPromise(this.cliente).then(this.$bindToContext((result) => {
-            console.log('[32][result]', result);
             this.modalInstance.close({clienteId: result});
         })).catch(this.$bindToContext((err) => {
             this.tipoMsj = 'danger';
@@ -65,7 +66,6 @@ class AsignarCliente {
         this.modalInstance.dismiss('Cancelado');
     }
 
-
 }
 
 const name = 'asignarCliente';
@@ -75,7 +75,8 @@ export default angular
         Alertas,
         BuscarCliente,
         AltaCliente,
-        CambiosCliente
+        CambiosCliente,
+        FormaDatosPersonales
     ])
     .component(name, {
         template: template.default,
