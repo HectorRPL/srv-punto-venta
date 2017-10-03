@@ -27,6 +27,7 @@ class AsignarDireccionEntrega {
 
     guardar() {
         this.crearDireccion();
+        this.direccion.propietarioId = this.resolve.clienteId;
 
         crearDireccion.callPromise(this.direccion)
             .then(this.$bindToContext((result) => {
@@ -35,7 +36,7 @@ class AsignarDireccionEntrega {
                 });
             }))
             .then(this.$bindToContext((result) => {
-                this.tipoMsj = 'success';
+                this.modalInstance.close(true);
             }))
             .catch(this.$bindToContext((err) => {
                 this.tipoMsj = 'danger';
@@ -51,10 +52,9 @@ class AsignarDireccionEntrega {
                 return actualizarDirccnEntrg.callPromise(datosTemp);
             }))
             .then(this.$bindToContext((result) => {
-                this.tipoMsj = 'success';
+                this.modalInstance.close(true);
             }))
             .catch(this.$bindToContext((err) => {
-                console.log(err);
                 this.tipoMsj = 'danger';
             }));
     }
