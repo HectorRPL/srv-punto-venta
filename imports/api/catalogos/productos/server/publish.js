@@ -11,14 +11,13 @@ if (Meteor.isServer) {
     });
 
 
-    Meteor.publish('productos.id', (selector) => {
-        if (Object.keys(selector).length === 0 && selector.constructor === Object){
+    Meteor.publish('productos.id', function (selector) {
+        if (Object.keys(selector).length === 0 && selector.constructor === Object) {
             this.ready();
         } else {
             return Productos.find(selector);
         }
     });
-
 
 
 }
