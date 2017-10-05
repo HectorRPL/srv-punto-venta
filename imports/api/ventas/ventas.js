@@ -41,7 +41,8 @@ VentasMenudeoOp = {
                 tiendaId: tiendaId,
                 tipo: TIPO_VENTA,
                 empleadoId: empleadoId,
-                numVentaOrden: noOrden
+                numVentaOrden: noOrden,
+                estado:'1'
             };
             if (numMeses > 0) {
                 orden.mesesSinInteres = numMeses;
