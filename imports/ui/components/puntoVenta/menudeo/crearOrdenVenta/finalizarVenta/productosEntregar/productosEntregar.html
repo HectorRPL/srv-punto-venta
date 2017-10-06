@@ -1,49 +1,55 @@
-<form name="productosEntregarFrm" id="productosEntregarFrmId" novalidate>
-    <table class="table table-hover margin bottom">
-        <thead>
-        <tr>
-            <th style="width: 1%" class="text-center">Cantidad.</th>
-            <th>Producto</th>
-            <th class="text-right">Cantidad a entregar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="partida in productosEntregar.partidas">
-            <td class="text-center">{{partida.numTotalProductos}} {{partida.producto().unidad}} </td>
-            <td>{{partida.producto().campoBusqueda}}</td>
-            <td class="text-right small">
-                <div class="form-group" ng-class="{ 'has-error' : productosEntregarFrm['noProdcutos'+$index].$invalid
-                    && !productosEntregarFrm['noProdcutos'+$index].$pristine}">
-                    <div class="input-group m-b pull-right">
-                        <input type="number" id="{{partida._id}}"  name="noProdcutos{{$index}}"
-                               class="input-xs form-control"
-                               placeholder="Cantidad Productos"
-                               required
-                               min="0"
-                               value="0"
-                               cantidad-invalida
-                               ng-model="productosEntregar.noProductos[partida._id]">
-                        <div ng-messages="productosEntregarFrm['noProdcutos'+$index].$dirty && productosEntregarFrm['noProdcutos'+$index].$error" role="alert">
-                            <label> <span class="font-bold text-navy"></span>
-                                <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                                <span class="animated fadeIn" style="color:red;" ng-message="cantidadInvalida">Cantidad invalida</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="text-center"> </td>
-            <td><alertas tipo="productosEntregar.tipoMsj"> </alertas> </td>
-            <td class="text-right small">
-                <button class="btn btn-sm btn-primary pull-right"
-                        ng-disabled="productosEntregarFrm.$invalid"
-                        ng-click="productosEntregar.guardar()">
-                    Guardar
-                </button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</form>
+<div class="clients-list">
+    <div class="full-height-scroll" full-scroll>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Producto</th>
+                    <th>De mi tienda</th>
+                    <th>Restantes</th>
+                    <th>Cantidad a entregar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="partida in productosEntregar.partidas">
+                    <td class="text-center">
+                        {{partida.numTotalProductos}} {{partida.producto().unidad}}
+                    </td>
+                    <td>
+                        {{partida.producto().campoBusqueda}}
+                    </td>
+                    <td>
+                        <productos-mi-invntr partida-id="partida._id">
+                        </productos-mi-invntr>
+                    </td>
+                    <td>{{}}</td>
+                    <td>
+                        <form role="form" class="form-inline" id="productosEntregarFrmId"
+                              name="productosEntregarFrm" novalidate>
+                            <div class="input-group input-group-sm" ng-class="{ 'has-error' : productosEntregarFrm['numProductos'+$index].$invalid
+                                && !productosEntregarFrm['numProductos'+$index].$pristine}">
+                                <input id="{{partida._id}}" name="numProductos{{$index}}"
+                                       class="form-control " type="number" placeholder="Cantidad Productos"
+                                       aria-describedby="sizing-addon1" required min="0"
+                                       cantidad-invalida ng-model="partida.prodctsEntregar">
+                                <div ng-messages="productosEntregarFrm['numProductos'+$index].$dirty
+                                    && productosEntregarFrm['numProductos'+$index].$error"
+                                     role="alert">
+                                    <div style="color: red" ng-message="required">requerido</div>
+                                    <div style="color: red" ng-message="cantidadInvalida">Cantidad invalida</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" ng-disabled="productosEntregarFrm.$invalid"
+                                    ng-click="productosEntregar.guardar(partida._id, partida.prodctsEntregar)" type="button">
+                                Guardar
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

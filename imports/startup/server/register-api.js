@@ -20,3 +20,4 @@ import "../../api/datosFiscales/server/publish";
 import "../../api/datosFiscales/methods";
 import "../../api/ventas/entregas/methods";
 import "../../api/ventas/saldos/server/publish";
+import "../../api/ventas/ordenes/partidas/productos/server/publish";

@@ -37,7 +37,7 @@ class AsignarFactura {
                 });
             }))
             .then(this.$bindToContext((datosFiscalesId) => {
-                this.tipoMsj = 'success';
+                this.modalInstance.close(true);
             }))
             .catch(this.$bindToContext((err) => {
                 console.log(err);
@@ -59,7 +59,7 @@ class AsignarFactura {
                 });
             }))
             .then(this.$bindToContext((datosFiscalesId) => {
-                this.tipoMsj = 'success';
+                this.modalInstance.close(true);
             }))
             .catch(this.$bindToContext((err) => {
                 console.log(err);

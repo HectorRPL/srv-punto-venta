@@ -3,29 +3,32 @@
  */
 import {buscarCantidaAlmacen} from '../../../../../../../api/ventas/ordenes/partidas/productos/busquedas';
 import {crearVentaEntrega} from '../../../../../../../api/ventas/entregas/methods';
+import {name as ProductosMiInvtr} from "./productosMiInvntr/productosMiInvntr";
 import template from './productosEntregar.html';
 import {Session} from "meteor/session";
+import {VentasProductosPartidas} from "../../../../../../../api/ventas/ordenes/partidas/productos/collection";
 
 class ProductosEntregar {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         this.tiendaId = Session.get('estacionTrabajoId');
-
     }
 
-    guardar() {
+    guardar(partidaId, prodctsEntregar) {
         const entregaFinal = {
             ventaOrdenId: this.ventaOrdenId,
             tiendaId: this.tiendaId,
+            partidaId: partidaId,
             tipo: 'mostrador',
-            entregas: this.noProductos
+            numProductos: prodctsEntregar
         };
+
         crearVentaEntrega.callPromise(entregaFinal)
-            .then(this.$bindToContext((result)=> {
+            .then(this.$bindToContext((result) => {
                 this.tipoMsj = 'success';
             }))
-            .catch(this.$bindToContext((err)=> {
+            .catch(this.$bindToContext((err) => {
                 console.log(err);
                 this.tipoMsj = 'danger';
             }));
@@ -35,7 +38,9 @@ class ProductosEntregar {
 const name = 'productosEntregar';
 
 export default angular
-    .module(name, [])
+    .module(name, [
+        ProductosMiInvtr
+    ])
     .component(name, {
         template: template.default,
         controllerAs: name,

@@ -73,28 +73,27 @@ export const crearVentaEntrega = new ValidatedMethod({
     validate: new SimpleSchema({
         ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
         tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
         tipo: {type: String},
-        entregas: {type: Object, blackbox: true},
+        numProductos: {type: Number}
     }).validator(),
-    run({ventaOrdenId, tiendaId, tipo, entregas}) {
+    run({ventaOrdenId, tiendaId, partidaId, tipo, numProductos}) {
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
-            const props = Object.entries(entregas);
-            props.forEach((item)=> {
-                const entrega = {
-                    partidaId: item[0],
-                    tiendaId: tiendaId,
-                    ventaOrdenId: ventaOrdenId,
-                    numProductos: item[1],
-                    empleadoSolicitaId: empleado._id,
-                    tipo: tipo
-                };
-                return VentasEntregas.insert(entrega, (err)=>{
-                    if(err){
-                        throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
-                    }
-                });
-            })
+
+            const entrega = {
+                ventaOrdenId: ventaOrdenId,
+                tiendaId: tiendaId,
+                partidaId: partidaId,
+                tipo: tipo,
+                empleadoSolicitaId: empleado._id,
+                numProductos: numProductos
+            };
+            return VentasEntregas.insert(entrega, (err)=>{
+                if(err){
+                    throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
+                }
+            });
         }
 
     }
