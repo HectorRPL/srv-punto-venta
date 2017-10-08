@@ -31,6 +31,7 @@ Schema.ventasProductosPartidas = new SimpleSchema({
     fechaCreacion: {type: Date, defaultValue: new Date, denyUpdate: true},
     tiendaGrupo: {type: Boolean, optional: true},
     numCompraOrden: {type: String, optional: true},
+    descontado: {type: Boolean, optional: true}
 
 });
 
