@@ -2,7 +2,7 @@
  * Created by jvltmtz on 15/09/17.
  */
 import {Mongo} from "meteor/mongo";
-import ventasSaldosCounts from "./saldosCount";
+import ventasSaldosHooks from "./ventasSaldosHooks";
 
 class VentasSaldosCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -12,9 +12,8 @@ class VentasSaldosCollection extends Mongo.Collection {
 
     update(selector, modifier, options, callback) {
         const result = super.update(selector, modifier, options, callback);
-        if (_.has(modifier.$set, 'saldoCobrar')) {
-            ventasSaldosCounts._afterUpdateSaldos(selector);
-        }
+        ventasSaldosHooks._afterUpdateVentsSalds(selector, modifier, options);
+
         return result;
     }
 }
@@ -48,3 +47,4 @@ Schema.ventasSaldos = new SimpleSchema({
 });
 
 VentasSaldos.attachSchema(Schema.ventasSaldos);
+

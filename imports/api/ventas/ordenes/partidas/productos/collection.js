@@ -2,8 +2,24 @@
  * Created by jvltmtz on 8/06/17.
  */
 import {Mongo} from "meteor/mongo";
+import {ProductosInventarios} from "../../../../inventarios/productosInventarios/collection";
+import {VentasOrdenes} from "../../../../ventas/ordenes/collection";
+import {Tiendas} from "../../../../catalogos/tiendas/collection";
 
-export const VentasProductosPartidas = new Mongo.Collection('ventasProductosPartidas');
+class VentasProductosPartidasCollection extends Mongo.Collection {
+    insert(doc, callback) {
+        const result = super.insert(doc, callback);
+        return result;
+    }
+
+    update(selector, modifier, options, callback) {
+
+        const result = super.update(selector, modifier, options, callback);
+
+        return result;
+    }
+}
+export const VentasProductosPartidas = new VentasProductosPartidasCollection('ventasProductosPartidas');
 
 VentasProductosPartidas.deny({
     insert() {
@@ -32,7 +48,25 @@ Schema.ventasProductosPartidas = new SimpleSchema({
     tiendaGrupo: {type: Boolean, optional: true},
     numCompraOrden: {type: String, optional: true},
     descontado: {type: Boolean, optional: true}
-
 });
 
 VentasProductosPartidas.attachSchema(Schema.ventasProductosPartidas);
+
+VentasProductosPartidas.helpers({
+    pedido(){
+        return ProductosInventarios.findOne({_id: this.productoInventarioId});
+    },
+    orden(){
+        return VentasOrdenes.findOne({_id: this.ventaOrdenId});
+    },
+    proveedor(){
+        if (this.tiendaGrupo) {
+            return Tiendas.findOne({_id: this.proveedorId});
+        } else {
+            return Proveedores.findOne({_id: this.proveedorId});
+        }
+    },
+    tiendaOrigen(){
+        return Tiendas.findOne({_id: this.tiendaOrigenId});
+    }
+});

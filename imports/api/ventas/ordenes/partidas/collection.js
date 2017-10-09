@@ -4,7 +4,7 @@
 import {Mongo} from "meteor/mongo";
 import {_} from 'meteor/underscore';
 import {Productos} from "../../../catalogos/productos/collection"
-import partidasEntregasCount from './partidasEntregasCount';
+import ventasPartidasHooks from './ventasPartidasHooks';
 
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -13,10 +13,9 @@ class VentasPartidasOrdenesCollection extends Mongo.Collection {
     }
 
     update(selector, modifier, options, callback) {
+
         const result = super.update(selector, modifier, options, callback);
-        if(_.has(modifier.$set, 'entregada')){
-            partidasEntregasCount._afterUpdateEntregadaOrden(selector);
-        }
+        ventasPartidasHooks.afterUpdatePartida(selector, modifier);
 
         return result;
     }
@@ -47,12 +46,12 @@ Schema.ventasPartidasOrdenes = new SimpleSchema({
     precioFinal: {type: Number, decimal: true},
     numTotalProductos: {type: Number},
     descuento: {type: Number, optional:true},
-    entregado: {type: Boolean, defaultValue: false},
+    entregada: {type: Boolean, defaultValue: false},
     comision: {type: Number, decimal: true, optional: true},
     cancelada: {type: Boolean, optional: true},
     numTotalEntregados: {type: Number, defaultValue: 0},
     numTotalDevoluciones: {type: Number, optional: true},
-    fechaCreacion: {type: Date, defaultValue: new Date, denyUpdate: true}
+    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true}
 
 });
 

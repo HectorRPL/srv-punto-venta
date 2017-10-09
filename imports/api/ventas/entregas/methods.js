@@ -34,11 +34,11 @@ export const actualizarVentaEntrega = new ValidatedMethod({
     }),
     run({_id, numProductosRechzds, observaciones}) {
         if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
+            const empleado = Empleados.findOne({propietarioId: this.userId});
             return VentasEntregas.update({_id: _id},
                 {
                     $set: {
-                        usuarioEntregaId: empleado._id,
+                        empleadoEntregaId: empleado._id,
                         fechaEntrega: new Date(),
                         numProductosRechzds: numProductosRechzds,
                         observaciones: observaciones
@@ -101,7 +101,8 @@ export const crearVentaEntrega = new ValidatedMethod({
 
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
-        crearVentaEntrega,
+        actualizarVentaEntrega,
+        crearVentaEntrega
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

@@ -1,5 +1,5 @@
 /**
- * Created by Héctor on 16/05/2017.
+ * Created by Héctor on 09/09/2017.
  */
 import {Meteor} from "meteor/meteor";
 import {Bancos} from "../collection";

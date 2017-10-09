@@ -1,7 +1,7 @@
 /**
  * Created by jvltmtz on 18/09/17.
  */
-
+import {Meteor} from "meteor/meteor";
 import {VentasSaldos} from "../collection";
 
 if (Meteor.isServer) {

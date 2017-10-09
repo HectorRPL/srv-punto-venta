@@ -2,7 +2,7 @@
  * Created by jvltmtz on 25/08/17.
  */
 import {Mongo} from "meteor/mongo";
-import partidasOrdenesCount from './entregasCount';
+import ventasEntregasHooks from './ventasEntregasHooks';
 
 class VentasEntregasCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -12,7 +12,7 @@ class VentasEntregasCollection extends Mongo.Collection {
 
     update(selector, modifier, options, callback){
         const result = super.update(selector, modifier, options, callback);
-        partidasOrdenesCount.afterUpdateEntrega(selector, modifier);
+        ventasEntregasHooks.afterUpdateVentsEntrgs(selector, modifier, options);
         return result;
     }
 }

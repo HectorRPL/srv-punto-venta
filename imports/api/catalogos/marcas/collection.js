@@ -1,5 +1,5 @@
 /**
- * Created by jvltmtz on 9/03/17.
+ * Created by jvltmtz on 24/08/17.
  */
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
