@@ -1,7 +1,8 @@
 /**
- * Created by Héctor on 19/06/2017.
+ * Created by Héctor on 09/09/2017.
  */
 import {Meteor} from "meteor/meteor";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
