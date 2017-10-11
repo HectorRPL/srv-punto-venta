@@ -28,19 +28,17 @@ export const actualizarVentaEntrega = new ValidatedMethod({
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['numProductosRechzds', 'observaciones']).validator({
+    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['numProdcutos', 'observaciones']).validator({
         clean: true,
         filter: false
     }),
-    run({_id, numProductosRechzds, observaciones}) {
+    run({_id, numProductos, observaciones}) {
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: this.userId});
             return VentasEntregas.update({_id: _id},
                 {
                     $set: {
-                        empleadoEntregaId: empleado._id,
-                        fechaEntrega: new Date(),
-                        numProductosRechzds: numProductosRechzds,
+                        numProductos: numProductos,
                         observaciones: observaciones
                     }
                 },

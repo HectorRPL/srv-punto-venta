@@ -8,7 +8,6 @@ import "jquery/dist/jquery";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js";
 import {name as App} from "../imports/ui/components/app/app";
-import {name as Login} from "../imports/ui/components/login/login";
 
 class Main {}
 
@@ -20,8 +19,7 @@ export default angular
         angularUBoostrap,
         angularMessages,
         uiRouter,
-        App,
-        Login
+        App
     ])
     .config(config);
 function config($locationProvider, $urlRouterProvider, $stateProvider) {

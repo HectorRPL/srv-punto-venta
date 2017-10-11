@@ -2,30 +2,31 @@
  * Created by jvltmtz on 23/08/17.
  */
 import {buscarCantidaAlmacen} from '../../../../../../../api/ventas/ordenes/partidas/productos/busquedas';
-import {crearVentaEntrega} from '../../../../../../../api/ventas/entregas/methods';
 import {name as ProductosMiInvtr} from "./productosMiInvntr/productosMiInvntr";
 import template from './productosEntregar.html';
 import {Session} from "meteor/session";
-import {VentasProductosPartidas} from "../../../../../../../api/ventas/ordenes/partidas/productos/collection";
+import {crearVentaEntrega,actualizarVentaEntrega} from "../../../../../../../api/ventas/entregas/methods";
 
 class ProductosEntregar {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         this.tiendaId = Session.get('estacionTrabajoId');
+        this.entregaMostrarId = '';
     }
 
-    guardar(partidaId, prodctsEntregar) {
+    guardar(partida) {
         const entregaFinal = {
             ventaOrdenId: this.ventaOrdenId,
             tiendaId: this.tiendaId,
-            partidaId: partidaId,
+            partidaId: partida._id,
             tipo: 'mostrador',
-            numProductos: prodctsEntregar
+            numProductos: partida.prodctsEntregar
         };
 
         crearVentaEntrega.callPromise(entregaFinal)
             .then(this.$bindToContext((result) => {
+                partida.entregaMostrarId = result;
                 this.tipoMsj = 'success';
             }))
             .catch(this.$bindToContext((err) => {
@@ -33,6 +34,22 @@ class ProductosEntregar {
                 this.tipoMsj = 'danger';
             }));
     }
+
+    actualizar(partida){
+        const entrega = {
+          _id: partida.entregaMostrarId,
+          numProductos: partida.numProductos
+        };
+        actualizarVentaEntrega.callPromise(entrega)
+            .then(this.$bindToContext((result) => {
+                this.tipoMsj = 'success';
+            }))
+            .catch(this.$bindToContext((err) => {
+                console.log(err);
+                this.tipoMsj = 'dandger';
+            }))
+    }
+
 }
 
 const name = 'productosEntregar';
