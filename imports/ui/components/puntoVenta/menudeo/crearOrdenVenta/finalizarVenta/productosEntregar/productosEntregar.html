@@ -24,16 +24,16 @@
             </td>
             <td>{{}}</td>
             <td>
-                <form role="form" class="form-inline" id="productosEntregarFrmId"
-                      name="productosEntregarFrm" novalidate>
-                    <div class="input-group input-group-sm" ng-class="{ 'has-error' : productosEntregarFrm['numProductos'+$index].$invalid
-                                && !productosEntregarFrm['numProductos'+$index].$pristine}">
+                <form role="form" class="form-inline" id="entregarProductosFrmId"
+                      name="entregarProductosFrm" novalidate>
+                    <div class="input-group input-group-sm" ng-class="{ 'has-error' : entregarProductosFrm['numProductos'+$index].$invalid
+                                && !entregarProductosFrm['numProductos'+$index].$pristine}">
                         <input id="{{partida._id}}" name="numProductos{{$index}}"
                                class="form-control " type="number" placeholder="Cantidad Productos"
                                aria-describedby="sizing-addon1" required min="0"
                                cantidad-invalida ng-model="partida.prodctsEntregar">
-                        <div ng-messages="productosEntregarFrm['numProductos'+$index].$dirty
-                                    && productosEntregarFrm['numProductos'+$index].$error"
+                        <div ng-messages="entregarProductosFrm['numProductos'+$index].$dirty
+                                    && entregarProductosFrm['numProductos'+$index].$error"
                              role="alert">
                             <div style="color: red" ng-message="required">requerido</div>
                             <div style="color: red" ng-message="cantidadInvalida">Cantidad invalida</div>
@@ -41,13 +41,12 @@
                     </div>
                     <!-- botones -->
                     <button class="btn btn-primary" ng-hide="partida.entregaMostrarId"
-                            ng-disabled="productosEntregarFrm.$invalid" type="button"
+                            ng-disabled="entregarProductosFrm.$invalid" type="button"
                             ng-click="productosEntregar.guardar(partida)">
                         Guardar
                     </button>
-
                     <button class="btn btn-primary" ng-show="partida.entregaMostrarId"
-                            ng-disabled="productosEntregarFrm.$invalid" type="button"
+                            ng-disabled="entregarProductosFrm.$invalid" type="button"
                             ng-click="productosEntregar.actualizar(partida)">
                         Actualizar
                     </button>

@@ -5,14 +5,13 @@ import {buscarCantidaAlmacen} from '../../../../../../../api/ventas/ordenes/part
 import {name as ProductosMiInvtr} from "./productosMiInvntr/productosMiInvntr";
 import template from './productosEntregar.html';
 import {Session} from "meteor/session";
-import {crearVentaEntrega,actualizarVentaEntrega} from "../../../../../../../api/ventas/entregas/methods";
+import {crearVentEntrg, actualizarVentEntrgMostrdr} from "../../../../../../../api/ventas/entregas/methods";
 
 class ProductosEntregar {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         this.tiendaId = Session.get('estacionTrabajoId');
-        this.entregaMostrarId = '';
     }
 
     guardar(partida) {
@@ -24,7 +23,7 @@ class ProductosEntregar {
             numProductos: partida.prodctsEntregar
         };
 
-        crearVentaEntrega.callPromise(entregaFinal)
+        crearVentEntrg.callPromise(entregaFinal)
             .then(this.$bindToContext((result) => {
                 partida.entregaMostrarId = result;
                 this.tipoMsj = 'success';
@@ -34,19 +33,21 @@ class ProductosEntregar {
                 this.tipoMsj = 'danger';
             }));
     }
-
+    //TODO: Al momento de refrescar se regresa a guardar
     actualizar(partida){
         const entrega = {
           _id: partida.entregaMostrarId,
-          numProductos: partida.numProductos
+          numProductos: partida.prodctsEntregar
         };
-        actualizarVentaEntrega.callPromise(entrega)
+        console.log(entrega);
+        actualizarVentEntrgMostrdr.callPromise(entrega)
             .then(this.$bindToContext((result) => {
                 this.tipoMsj = 'success';
             }))
             .catch(this.$bindToContext((err) => {
-                console.log(err);
-                this.tipoMsj = 'dandger';
+                console.log('actualizar ', err);
+                this.tipoMsj = 'danger';
+                this.msj = err.message;
             }))
     }
 

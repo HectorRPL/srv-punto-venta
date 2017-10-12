@@ -104,7 +104,6 @@ VentasMenudeoOp = {
             console.log(e);
         }
 
-        console.log(item[1], item[1].prodFaltante);
 
         if (item[1].prodFaltante && item[1].prodFaltante > 0) {
             const producto2 = {

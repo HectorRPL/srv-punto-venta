@@ -36,8 +36,6 @@ class NavTopLoginLinea {
                     this.tipoMsj = 'danger';
                 } else {
                     console.log('SE logeo con exito');
-                    /*TODO: El botón apiñar menú se activa con el reload*/
-                    this.$state.reload();
                 }
             })
         );

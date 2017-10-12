@@ -11,10 +11,11 @@ import {VentasEntregas} from './collection';
 import {_} from "meteor/underscore";
 
 const CAMPO_ID = ['_id'];
-const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'numProdcutos', 'usuarioSolicitaId', 'tipo'];
+const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'numProductos', 'usuarioSolicitaId', 'tipo'];
 
-export const actualizarVentaEntrega = new ValidatedMethod({
-    name: 'ventasEntregas.actualizarVentaEntrega',
+
+export const actualizarVentEntrgMostrdr = new ValidatedMethod({
+    name: 'ventasEntregas.actualizarVentEntrgMostrdr',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -23,23 +24,21 @@ export const actualizarVentaEntrega = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.actualizarVentaEntrega',
+        name: 'ventasEntregas.actualizarVentEntrgMostrdr',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['numProdcutos', 'observaciones']).validator({
+    validate: VentasEntregas.simpleSchema().pick(CAMPO_ID, ['numProductos']).validator({
         clean: true,
         filter: false
     }),
-    run({_id, numProductos, observaciones}) {
+    run({_id, numProductos}) {
         if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: this.userId});
             return VentasEntregas.update({_id: _id},
                 {
                     $set: {
-                        numProductos: numProductos,
-                        observaciones: observaciones
+                        numProductos: numProductos
                     }
                 },
                 (err)=> {
@@ -53,8 +52,8 @@ export const actualizarVentaEntrega = new ValidatedMethod({
     }
 });
 
-export const crearVentaEntrega = new ValidatedMethod({
-    name: 'ventasEntregas.crearVentaEntrega',
+export const crearVentEntrg = new ValidatedMethod({
+    name: 'ventasEntregas.crearVentEntrg',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -63,7 +62,7 @@ export const crearVentaEntrega = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.crearVentaEntrega',
+        name: 'ventasEntregas.crearVentEntrg',
         message: ()=> {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -99,8 +98,8 @@ export const crearVentaEntrega = new ValidatedMethod({
 
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
-        actualizarVentaEntrega,
-        crearVentaEntrega
+        actualizarVentEntrgMostrdr,
+        crearVentEntrg
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

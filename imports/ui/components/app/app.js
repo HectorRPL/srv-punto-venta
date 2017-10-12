@@ -31,7 +31,9 @@ export default angular
         template: template.default,
         controllerAs: name,
         controller: App
-    }).config(config);
+    })
+    .config(config)
+    .run(run);
 
 function config($stateProvider) {
     'ngInject';
@@ -42,3 +44,14 @@ function config($stateProvider) {
         });
 };
 
+function run($rootScope, $state) {
+    'ngInject';
+
+    $rootScope.$on('$stateChangeError',
+        (event, toState, toParams, fromState, fromParams, error) => {
+            if (error === 'AUTH_REQUIRED') {
+                $state.go('app.venta.menudeo');
+            }
+        }
+    );
+}
