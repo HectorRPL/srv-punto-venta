@@ -35,9 +35,8 @@ class NavTopLoginLinea {
                     this.msj = 'Error Usuario y/o Constraseña';
                     this.tipoMsj = 'danger';
                 } else {
-                    console.log('SE logeo con exito');
-                    /*TODO: El botón apiñar menú se activa con el reload*/
-                    this.$state.reload();
+                    // TODO ¿dejamos este 'else'?
+                    console.log('Se logeo con exito');
                 }
             })
         );
