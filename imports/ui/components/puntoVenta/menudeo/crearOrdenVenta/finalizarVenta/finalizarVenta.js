@@ -14,9 +14,10 @@ import {Ventas} from '../../../../../../api/ventas/collection';
 import template from './finalizarVenta.html';
 
 class FinalizarVenta {
-    constructor($scope, $reactive, $stateParams, $uibModal) {
+    constructor($scope, $reactive, $stateParams, $uibModal, $state) {
         'ngInject';
         $reactive(this).attach($scope);
+        this.$state = $state;
         this.soloUno = true;
         this.ventaId = $stateParams.ventaId;
         this.uibModal =$uibModal;
@@ -57,7 +58,12 @@ class FinalizarVenta {
 
             }
         }).result.then(this.$bindToContext((result) => {
-
+            //TODO: Mandar a imprimir
+            Meteor.logout((err)=>{
+                if(!err){
+                    this.$state.go('app.venta.menudeo');
+                }
+            });
         }, function (reason) {
 
         }));
@@ -164,6 +170,15 @@ function config($stateProvider) {
     $stateProvider
         .state('app.venta.finalizar', {
             url: '/:ventaId/finalizar',
-            template: '<finalizar-venta></finalizar-venta>'
+            template: '<finalizar-venta></finalizar-venta>',
+            resolve: {
+                currentUser($q) {
+                    if (Meteor.user() === null) {
+                        return $q.reject('AUTH_REQUIRED');
+                    } else {
+                        return $q.resolve();
+                    }
+                }
+            }
         });
 }

@@ -20,14 +20,30 @@
                             <form role="form" class="p-lg" id="asignarComprobanteFrmId" name="asignarComprobanteFrm"
                                   novalidate>
                                 <fieldset>
-                                    <buscar-datos-fiscales datos-fiscales="asignarFactura.dtsFiscalesSelec">
-                                    </buscar-datos-fiscales>
-                                    <forma-datos-fiscales ng-if="!asignarFactura.dtsFiscales._id"
-                                                          datos="asignarFactura.dtsFiscales">
-                                    </forma-datos-fiscales>
-                                    <forma-editar-datos-fiscales ng-if="asignarFactura.dtsFiscales._id"
-                                                                 datos="asignarFactura.dtsFiscales">
-                                    </forma-editar-datos-fiscales>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label>Buscar R.F.C.</label>
+                                            <buscar-datos-fiscales datos-fiscales="asignarFactura.dtsFiscalesSelec">
+                                            </buscar-datos-fiscales>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h2>Datos Fiscales</h2>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="!asignarFactura.dtsFiscales._id">
+                                        <div class="col-sm-12">
+                                            <forma-datos-fiscales datos="asignarFactura.dtsFiscales">
+                                            </forma-datos-fiscales>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="asignarFactura.dtsFiscales._id">
+                                        <div class="col-sm-12">
+                                            <forma-editar-datos-fiscales datos="asignarFactura.dtsFiscales">
+                                            </forma-editar-datos-fiscales>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <forma-direccion direccion="asignarFactura.dtsFiscales"></forma-direccion>
