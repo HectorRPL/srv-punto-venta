@@ -1,13 +1,14 @@
 /**
  * Created by Héctor on 09/02/2017.
  */
+import {Session} from "meteor/session";
+import "metismenu/dist/metisMenu.js";
+import {name as CapitalizarInputs} from "../directives/capitalizarInputs/capitalizarInputs";
 import {name as Navigation} from "./navigation/navigation";
 import {name as TopNavbar} from "./topNavbar/topNavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import {name as Alertas} from "../comun/alertas/alertas";
-import "metismenu/dist/metisMenu.js";
 import template from "./app.html";
-import {Session} from "meteor/session";
 
 class App {
     constructor() {
@@ -23,6 +24,7 @@ const name = 'app';
 
 export default angular
     .module(name, [
+        CapitalizarInputs,
         Navigation,
         TopNavbar,
         PuntoVenta,
