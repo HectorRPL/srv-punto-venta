@@ -7,6 +7,7 @@ import {nvd3} from "angular-nvd3";
 import {name as PieChartClass} from "./pieChart/pieChart";
 import {name as MultiBarChart} from "./multiBarChart/multiBarChart";
 import {name as CumulativeLineChart} from "./cumulativeLineChart/cumulativeLineChart"
+import {NumberChart} from "../../../api/charts/numberChart/collection";
 
 class Dashboards {
 
@@ -14,6 +15,13 @@ class Dashboards {
         'ngInject';
         $reactive(this).attach($scope);
 
+        this.subscribe('numberChart.todos', ()=> [{_id: 'vnDcocGpkyamPJrwK'}]);
+
+        this.helpers({
+            numChart(){
+                return NumberChart.findOne();
+            }
+        });
     }
 
 }
