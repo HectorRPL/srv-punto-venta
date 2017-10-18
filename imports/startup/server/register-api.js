@@ -25,3 +25,4 @@ import "../../api/ventas/ordenes/partidas/productos/server/publish";
 import "../../api/charts/numberChart/server/publish";
 // PIE CHART
 import "../../api/charts/pieChart/server/publish";
+import "../../api/charts/pieChart/methods";

@@ -6,9 +6,6 @@ import {PieChart} from "../collection";
 
 if (Meteor.isServer) {
     Meteor.publish('pieChart.todos', function () {
-
-        console.log(PieChart.find().fetch());
         return PieChart.find();
-
     });
 }
