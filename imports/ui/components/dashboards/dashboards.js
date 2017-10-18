@@ -4,7 +4,7 @@
 import template from "./dashboards.html";
 import "nvd3/build/nv.d3.css";
 import {nvd3} from "angular-nvd3";
-import {name as PieChart} from "./pieChart/pieChart";
+import {name as PieChartClass} from "./pieChart/pieChart";
 import {name as MultiBarChart} from "./multiBarChart/multiBarChart";
 import {name as CumulativeLineChart} from "./cumulativeLineChart/cumulativeLineChart"
 import {NumberChart} from "../../../api/charts/numberChart/collection";
@@ -31,7 +31,7 @@ const name = 'dashboards';
 export default angular
     .module(name, [
         'nvd3',
-        PieChart,
+        PieChartClass,
         MultiBarChart,
         CumulativeLineChart
     ])

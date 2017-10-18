@@ -1,13 +1,21 @@
 /**
  * Created by Héctor on 06/03/2017.
  */
+import {PieChart} from '../../../../api/charts/pieChart/collection';
 import template from "./pieChart.html";
 
-class PieChart {
-
+class PieChartClass {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
+
+        this.subscribe('pieChart.todos');
+        this.helpers({
+            data() {
+                console.log(PieChart.find());
+                return PieChart.find();
+            }
+        });
 
         this.options = {
             chart: {
@@ -29,37 +37,7 @@ class PieChart {
                 }
             }
         };
-
-        this.data = [
-            {
-                key: "One",
-                color: "#1c84c6",
-                y: 5
-            },
-            {
-                key: "Two",
-                color:"#23c6c8",
-                y: 2
-            },
-            {
-                key: "Three",
-                color:"#1ab394",
-                y: 9
-            },
-            {
-                key: "Four",
-                color:"#ed5565",
-                y: 7
-            },
-            {
-                key: "Five",
-                color: "#f8ac59",
-                y: 4
-            }
-        ];
-
     }
-
 }
 
 const name = 'pieChart';
@@ -70,5 +48,5 @@ export default angular
     .component(name, {
         template: template.default,
         controllerAs: name,
-        controller: PieChart
+        controller: PieChartClass
     });
