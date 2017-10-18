@@ -4,6 +4,7 @@
 import {name as Navigation} from "./navigation/navigation";
 import {name as TopNavbar} from "./topNavbar/topNavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
+import {name as Dashboards} from "../dashboards/dashboards";
 import {name as Alertas} from "../comun/alertas/alertas";
 import "metismenu/dist/metisMenu.js";
 import template from "./app.html";
@@ -26,7 +27,8 @@ export default angular
         Navigation,
         TopNavbar,
         PuntoVenta,
-        Alertas
+        Alertas,
+        Dashboards
     ]).component(name, {
         template: template.default,
         controllerAs: name,
