@@ -2,12 +2,22 @@
  * Created by Héctor on 06/03/2017.
  */
 import template from "./lineWithFocusChart.html";
+import {LineFocusChart} from "../../../../api/charts/lineFocusChart/collection";
 
 class LineWithFocusChart {
 
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
+
+        this.subscribe('lineFocusChart.todos');
+        this.helpers({
+            data(){
+                console.log(LineFocusChart.find({}));
+                return LineFocusChart.find({});
+            }
+        });
+
 
         this.options = {
             chart: {
@@ -46,51 +56,6 @@ class LineWithFocusChart {
 
             }
         };
-
-        this.data = [
-            {
-                key: 'Stream' + 1,
-                color: "#1c84c6",
-                values: [
-                    {x: 0, y: 10},
-                    {x: 1, y: 20},
-                    {x: 2, y: 30},
-                    {x: 3, y: 40},
-                    {x: 4, y: 50}]
-            },
-            {
-                key: 'Stream' + 2,
-                color: "#23c6c8",
-                values: [
-                    {x: 2, y: 40},
-                    {x: 4, y: 50},
-                    {x: 6, y: 60}]
-            },
-            {
-                key: 'Stream' + 3,
-                color: "#1ab394",
-                values: [
-                    {x: 3, y: 70},
-                    {x: 6, y: 80},
-                    {x: 9, y: 90}]
-            },
-            {
-                key: 'Stream' + 4,
-                color: "#ed5565",
-                values: [
-                    {x: 5, y: 10},
-                    {x: 10, y: 20},
-                    {x: 15, y: 30}]
-            },
-            {
-                key: 'Stream' + 5,
-                color: "#f8ac59",
-                values: [
-                    {x: 10, y: 10},
-                    {x: 20, y: 20},
-                    {x: 30, y: 30}]
-            }
-        ];
 
 
     }

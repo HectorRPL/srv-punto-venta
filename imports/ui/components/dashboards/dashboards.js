@@ -7,6 +7,7 @@ import {nvd3} from "angular-nvd3";
 import {name as PieChartClass} from "./pieChart/pieChart";
 import {name as MultiBarChart} from "./multiBarChart/multiBarChart";
 import {name as CumulativeLineChart} from "./cumulativeLineChart/cumulativeLineChart"
+import {name as LineWithFocusChart} from "./lineWithFocusChart/lineWithFocusChart"
 import {NumberChart} from "../../../api/charts/numberChart/collection";
 
 class Dashboards {
@@ -33,7 +34,8 @@ export default angular
         'nvd3',
         PieChartClass,
         MultiBarChart,
-        CumulativeLineChart
+        CumulativeLineChart,
+        LineWithFocusChart
     ])
     .component(name, {
         template: template.default,

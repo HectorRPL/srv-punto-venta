@@ -26,3 +26,5 @@ import "../../api/charts/numberChart/server/publish";
 import "../../api/charts/numberChart/methods";
 // PIE CHART
 import "../../api/charts/pieChart/server/publish";
+import "../../api/charts/cumulativeChart/server/publish";
+import "../../api/charts/lineFocusChart/server/publish";

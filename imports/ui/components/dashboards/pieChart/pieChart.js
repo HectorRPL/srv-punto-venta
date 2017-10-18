@@ -12,7 +12,6 @@ class PieChartClass {
         this.subscribe('pieChart.todos');
         this.helpers({
             data() {
-                console.log(PieChart.find());
                 return PieChart.find();
             }
         });
