@@ -23,3 +23,5 @@ import "../../api/ventas/saldos/server/publish";
 import "../../api/ventas/ordenes/partidas/productos/server/publish";
 // CHART
 import "../../api/charts/numberChart/server/publish";
+// PIE CHART
+import "../../api/charts/pieChart/server/publish";
