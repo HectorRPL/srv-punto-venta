@@ -35,7 +35,7 @@ class NavTopLoginLinea {
                     this.msj = 'Error Usuario y/o Constraseña';
                     this.tipoMsj = 'danger';
                 } else {
-                    console.log('SE logeo con exito');
+                    console.log('Se logeo con exito');
                 }
             })
         );
