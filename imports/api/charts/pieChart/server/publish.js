@@ -5,9 +5,10 @@ import {Meteor} from "meteor/meteor";
 import {PieChart} from "../collection";
 
 if (Meteor.isServer) {
-    Meteor.publish('pieChart.todos', function (filter) {
+    Meteor.publish('pieChart.todos', function () {
 
-        return PieChart.find(filter);
+        console.log(PieChart.find().fetch());
+        return PieChart.find();
 
     });
 }
