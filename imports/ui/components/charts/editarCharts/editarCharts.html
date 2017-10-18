@@ -1,0 +1,210 @@
+<div class="row">
+    <!--PIE CHART-->
+    <div class="col-sm-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Editar Pie</h5>
+            </div>
+            <!--FORMA PARA EL PIE-->
+            <div class="ibox-content">
+                <!--ONE-->
+                <form name="actualizaOneFrm">
+                    <div class="row">
+                        <!--CANTIDAD A MODIFICAR ONE-->
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : actualizaOneFrm.one.$invalid && !actualizaOneFrm.one.$pristine}">
+                                <div ng-messages="actualizaOneFrm.one.$dirty && actualizaOneFrm.one.$error" role="alert">
+                                    <label>One *
+                                        <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="maxlength">8 dígitos</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="max">límite</span>
+                                    </label>
+                                    <input id="oneId"
+                                           class="form-control"
+                                           name="one"
+                                           type="number"
+                                           maxlength="9"
+                                           min="0"
+                                           max="999999.99"
+                                           aria-describedby="sizing-addon1"
+                                           required
+                                           ng-model="editarCharts.one">
+                                </div>
+                            </div>
+                        </div>
+                        <!--BOTON ENVIAR-->
+                        <div class="col-sm-3">
+                            <label>Acción</label>
+                            <button class="btn btn-primary animated fadeInRight"
+                                    ng-disabled="actualizaOneFrm.$invalid"
+                                    ng-click="editarCharts.actualizarOne()"> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--TWO-->
+                <form name="actualizaTwoFrm">
+                    <div class="row">
+                        <!--CANTIDAD A MODIFICAR two-->
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : actualizaTwoFrm.two.$invalid && !actualizaTwoFrm.two.$pristine}">
+                                <div ng-messages="actualizaTwoFrm.two.$dirty && actualizaTwoFrm.two.$error" role="alert">
+                                    <label>two *
+                                        <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="maxlength">8 dígitos</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="max">límite</span>
+                                    </label>
+                                    <input id="twoId"
+                                           class="form-control"
+                                           name="two"
+                                           type="number"
+                                           maxlength="9"
+                                           min="0"
+                                           max="999999.99"
+                                           aria-describedby="sizing-addon1"
+                                           required
+                                           ng-model="editarCharts.two">
+                                </div>
+                            </div>
+                        </div>
+                        <!--BOTON ENVIAR-->
+                        <div class="col-sm-3">
+                            <label>Acción</label>
+                            <button class="btn btn-primary animated fadeInRight"
+                                    ng-disabled="actualizaTwoFrm.$invalid"
+                                    ng-click="editarCharts.actualizarTwo()"> Enviar
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+                <!--TRE-->
+                <form name="actualizaThreeFrm">
+                    <div class="row">
+                        <!--CANTIDAD A MODIFICAR three-->
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : actualizaThreeFrm.three.$invalid && !actualizaThreeFrm.three.$pristine}">
+                                <div ng-messages="actualizaThreeFrm.three.$dirty && actualizaThreeFrm.three.$error" role="alert">
+                                    <label>three *
+                                        <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="maxlength">8 dígitos</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="max">límite</span>
+                                    </label>
+                                    <input id="threeId"
+                                           class="form-control"
+                                           name="three"
+                                           type="number"
+                                           maxlength="9"
+                                           min="0"
+                                           max="999999.99"
+                                           aria-describedby="sizing-addon1"
+                                           required
+                                           ng-model="editarCharts.three">
+                                </div>
+                            </div>
+                        </div>
+                        <!--BOTON ENVIAR-->
+                        <div class="col-sm-3">
+                            <label>Acción</label>
+                            <button class="btn btn-primary animated fadeInRight"
+                                    ng-disabled="actualizaThreeFrm.$invalid"
+                                    ng-click="editarCharts.actualizarThree()"> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--FOUR-->
+                <form name="actualizaFourFrm">
+                    <div class="row">
+                        <!--CANTIDAD A MODIFICAR four-->
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : actualizaFourFrm.four.$invalid && !actualizaFourFrm.four.$pristine}">
+                                <div ng-messages="actualizaFourFrm.four.$dirty && actualizaFourFrm.four.$error" role="alert">
+                                    <label>four *
+                                        <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="maxlength">8 dígitos</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="max">límite</span>
+                                    </label>
+                                    <input id="fourId"
+                                           class="form-control"
+                                           name="four"
+                                           type="number"
+                                           maxlength="9"
+                                           min="0"
+                                           max="999999.99"
+                                           aria-describedby="sizing-addon1"
+                                           required
+                                           ng-model="editarCharts.four">
+                                </div>
+                            </div>
+                        </div>
+                        <!--BOTON ENVIAR-->
+                        <div class="col-sm-3">
+                            <label>Acción</label>
+                            <button class="btn btn-primary animated fadeInRight"
+                                    ng-disabled="actualizaFourFrm.$invalid"
+                                    ng-click="editarCharts.actualizarFour()"> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--FIVE-->
+                <form name="actualizaFiveFrm">
+                    <div class="row">
+                        <!--CANTIDAD A MODIFICAR five-->
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : actualizaFiveFrm.five.$invalid && !actualizaFiveFrm.five.$pristine}">
+                                <div ng-messages="actualizaFiveFrm.five.$dirty && actualizaFiveFrm.five.$error" role="alert">
+                                    <label>five *
+                                        <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="maxlength">8 dígitos</span>
+                                        <span style="color:red;" class="animated fadeIn" ng-message="max">límite</span>
+                                    </label>
+                                    <input id="fiveId"
+                                           class="form-control"
+                                           name="five"
+                                           type="number"
+                                           maxlength="9"
+                                           min="0"
+                                           max="999999.99"
+                                           aria-describedby="sizing-addon1"
+                                           required
+                                           ng-model="editarCharts.five">
+                                </div>
+                            </div>
+                        </div>
+                        <!--BOTON ENVIAR-->
+                        <div class="col-sm-3">
+                            <label>Acción</label>
+                            <button class="btn btn-primary animated fadeInRight"
+                                    ng-disabled="actualizaFiveFrm.$invalid"
+                                    ng-click="editarCharts.actualizarFive()"> Enviar
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--ALERTA-->
+        <alertas tipo="editarCharts.tipoMsj" mensaje="editarCharts.msj"></alertas>
+    </div>
+    <!--RANDOM-->
+    <div class="col-sm-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>Editar ChartsNumbers</h5>
+            </div>
+            <div class="ibox-content">
+
+                <div class="row">
+                    <div class="col-sm 12">
+                        <button class="btn btn-primary pull-right"
+                                ng-click="editarCharts.generarRandom()"> Acción
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

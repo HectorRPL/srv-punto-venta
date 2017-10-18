@@ -75,6 +75,12 @@
                     <span class="nav-label">Dashboards</span>
                 </a>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.charts.editarCharts">
+                    <i class="fa fa-pie-chart"></i>
+                    <span class="nav-label">Edit Chart</span>
+                </a>
+            </li>
             <li ng-class="{active: $state.includes('app.compras')}">
                 <a href="#"><i class="fa fa-handshake-o"></i> <span class="nav-label">Compras</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse" ng-class="{in: $state.includes('app.compras')}">
