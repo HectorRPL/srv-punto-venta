@@ -1,4 +1,5 @@
 <div class="row">
+    <!--PIE CHART-->
     <div class="col-sm-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -188,13 +189,21 @@
         <!--ALERTA-->
         <alertas tipo="editarCharts.tipoMsj" mensaje="editarCharts.msj"></alertas>
     </div>
+    <!--RANDOM-->
     <div class="col-sm-6">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Editar ChartsNumbers</h5>
             </div>
             <div class="ibox-content">
-                <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A dignissimos, fugiat ipsa libero natus odio officia? Excepturi reprehenderit, voluptate. Asperiores commodi corporis eius, illo magnam nam porro quia tempore vitae?</h2>
+
+                <div class="row">
+                    <div class="col-sm 12">
+                        <button class="btn btn-primary pull-right"
+                                ng-click="editarCharts.generarRandom()"> Acción
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

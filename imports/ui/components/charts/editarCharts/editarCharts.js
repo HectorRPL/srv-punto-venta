@@ -1,18 +1,20 @@
 /**
  * Created by Héctor on 09/09/2017.
  */
-import {actualizarPieChartOne} from '../../../../api/charts/pieChart/methods';
-import {actualizarPieChartTwo} from '../../../../api/charts/pieChart/methods';
+import {actualizarPieChartOne}   from '../../../../api/charts/pieChart/methods';
+import {actualizarPieChartTwo}   from '../../../../api/charts/pieChart/methods';
 import {actualizarPieChartThree} from '../../../../api/charts/pieChart/methods';
-import {actualizarPieChartFour} from '../../../../api/charts/pieChart/methods';
-import {actualizarPieChartFive} from '../../../../api/charts/pieChart/methods';
-import template from "./editarCharts.html";
+import {actualizarPieChartFour}  from '../../../../api/charts/pieChart/methods';
+import {actualizarPieChartFive}  from '../../../../api/charts/pieChart/methods';
+import {actualizarNumChart}      from '../../../../api/charts/numberChart/methods';
+import template                  from "./editarCharts.html";
 
 class EditarCharts {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         this.actualiza = {};
+        this.actualizaRandom = {};
     }
 
     actualizarOne() {
@@ -80,6 +82,20 @@ class EditarCharts {
         actualizarPieChartFive.callPromise(this.actualiza).then(this.$bindToContext(() => {
             this.tipoMsj = 'success';
         })).catch(this.$bindToContext((err) => {
+            this.msj = err.reason;
+            this.tipoMsj = 'danger';
+        }));
+    }
+
+    generarRandom() {
+
+        this.actualizaRandom = {
+            _id: 'vnDcocGpkyamPJrwK'
+        }
+        actualizarNumChart.callPromise(this.actualizaRandom).then(this.$bindToContext(() => {
+            this.tipoMsj = 'success';
+        })).catch(this.$bindToContext((err) => {
+            console.log(err);
             this.msj = err.reason;
             this.tipoMsj = 'danger';
         }));
