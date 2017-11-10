@@ -21,6 +21,7 @@ import "../../api/datosFiscales/methods";
 import "../../api/ventas/entregas/methods";
 import "../../api/ventas/saldos/server/publish";
 import "../../api/ventas/ordenes/partidas/productos/server/publish";
+import "../../api/ventas/entregas/server/publish";
 // CHART
 import "../../api/charts/numberChart/server/publish";
 import "../../api/charts/numberChart/methods";

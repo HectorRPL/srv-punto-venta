@@ -11,6 +11,7 @@ import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVent
 import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
 import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import template                           from "./menudeo.html";
+import {ConfiguracionesGlobales} from "../../../../api/catalogos/configuracionesGlobales/collection";
 
 class Menudeo {
 
@@ -26,16 +27,21 @@ class Menudeo {
         this.clienteId = '';
         this.tiendaId = Session.get('estacionTrabajoId');
         this.pedido = Session.get('ventaenCurso') || [] ;
+        this.subscribe('configuracionesGlobales.lista', () => [{_id: 'iva'}]);
 
         this.helpers({
             esVendedor(){
                 return Roles.userIsInRole(Meteor.userId(), 'vendedores', 'vendedores');
+            },
+            conf(){
+                return ConfiguracionesGlobales.findOne({_id: "iva"})
             }
         });
     }
 
     abrirModal(prodBuscado) {
         prodBuscado.tiendaId = this.tiendaId;
+        prodBuscado.iva = this.conf.valor;
         var modalInstance = this.$uibModal.open({
             animation: true,
             component: "EligeProductoInventarios",

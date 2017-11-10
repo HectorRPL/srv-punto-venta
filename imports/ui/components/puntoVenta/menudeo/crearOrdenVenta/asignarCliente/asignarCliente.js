@@ -30,7 +30,8 @@ class AsignarCliente {
     }
 
     agregarCliente() {
-        crearCliente.callPromise(this.cliente).then(this.$bindToContext((result) => {
+        crearCliente.callPromise(this.cliente)
+            .then(this.$bindToContext((result) => {
             this.modalInstance.close({clienteId: result});
         })).catch(this.$bindToContext((err) => {
             this.tipoMsj = 'danger';

@@ -3,12 +3,13 @@
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="ibox-content p-xl">
                 <div class="row" ng-show="menudeo.esVendedor">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <address>
                             <h5>Cliente:
                                 <button class="btn btn-xs btn-white" ng-click="menudeo.abrirModalCliente()">
                                     <i class="fa fa-plus-square-o fa-2x"></i>
                                 </button>
+                                <br>
                                 <mostrar-datos-cliente
                                         cliente-id="menudeo.clienteId.clienteId">
                                 </mostrar-datos-cliente>
@@ -32,11 +33,12 @@
                             </div>
                         </div>
                     </div>
+                    {{menudeo.conf}}
                     <orden-venta
-                            tienda-Id="menudeo.tiendaId"
-                            iva="menudeo.iva"
-                            cliente-Id="menudeo.clienteId.clienteId"
-                            pedido-Grl="menudeo.pedido">
+                            tienda-id="menudeo.tiendaId"
+                            iva="menudeo.conf.valor"
+                            cliente-id="menudeo.clienteId.clienteId"
+                            pedido-grl="menudeo.pedido">
                     </orden-venta>
                 </div>
             </div>

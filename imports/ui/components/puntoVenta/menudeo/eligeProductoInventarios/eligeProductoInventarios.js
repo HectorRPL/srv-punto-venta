@@ -18,6 +18,7 @@ class EligeProductoInventarios {
         this.productosTiendas = new Map();
         this.precioFinal = '';
         this.descuentoFinal = 0;
+        this.mesesSinInteres = '0';
 
         this.subscribe('productos.id', ()=> [{_id: this.getReactively('resolve.producto._id')}]);
         this.subscribe('marcas.id', ()=> [{_id: this.getReactively('resolve.producto.marcaId')}]);
@@ -66,11 +67,9 @@ class EligeProductoInventarios {
             precioFinal: this.precioFinal,
             precioBase: this.miInventario.precioUno(),
             descuento: this.descuentoFinal,
-            total: this.cantidadSolicitada + this.totalProductosTiendas
+            total: this.cantidadSolicitada + this.totalProductosTiendas,
+            mesesSinInteres: this.mesesSinInteres
         };
-        if(this.mesesSinInteres){
-            prod.mesesSinInteres = this.mesesSinInteres
-        }
 
         this.modalInstance.close(prod);
     }

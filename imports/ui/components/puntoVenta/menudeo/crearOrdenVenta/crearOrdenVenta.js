@@ -4,7 +4,6 @@
 import {name as AsignarCliente} from './asignarCliente/asignarCliente';
 import {name as AsignarDireccionEntrega} from './asignarDireccionEntrega/asignarDireccionEntrega';
 import {name as AsignarFactura} from './asignarFactura/asignarFactura';
-import {name as ResumenOrdenVenta} from './resumenOrdenVenta/resumenOrdenVenta';
 import {name as FinalizarVenta} from './finalizarVenta/finalizarVenta';
 import template from './crearOrdenVenta.html';
 
@@ -25,7 +24,6 @@ export default angular
         AsignarCliente,
         AsignarDireccionEntrega,
         AsignarFactura,
-        ResumenOrdenVenta,
         FinalizarVenta
     ])
     .component(name, {

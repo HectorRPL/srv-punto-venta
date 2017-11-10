@@ -13,7 +13,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="orden in ordenVenta.pedidoGrl"
-            ng-init="ordenVenta.generarSubTotal(orden)">
+            ng-init="ordenVenta.generarSubTotal(orden, $index)">
             <!--CANTIDAD-->
             <td>
                 <button type="button"
@@ -45,16 +45,16 @@
                 <a>
                             <span class="text-navy pull-right">
                                 (- {{orden.descuento  | number : 0}}
-                                %)&nbsp;&nbsp;${{orden.precioBase * (orden.descuento/100) | number : 2}}
+                                %)&nbsp;&nbsp;${{(orden.precioBase * orden.descuento/100) * (1 + (ordenVenta.iva/100)) | number : 2}}
                             </span>
                 </a>
             </td>
             <!--PRECIO FINAL DESCUENTO-->
             <td class="text-right">
-                ${{orden.precioFinal  | number : 2}}
+                ${{orden.precioFinal * (1 + (ordenVenta.iva/100))  | number : 2}}
             </td>
             <!--IMPORTE-->
-            <td>${{(orden.precioFinal * orden.total) | number : 2}}</td>
+            <td>${{(orden.precioFinal * orden.total)  * (1 + (ordenVenta.iva/100)) | number : 2}}</td>
         </tr>
         </tbody>
     </table>
@@ -67,11 +67,11 @@
     </tr>
     <tr>
         <td><strong>IVA :</strong></td>
-        <td>${{ordenVenta.importeIva   | number : 2}}</td>
+        <td>${{ordenVenta.subTotal * (ordenVenta.iva/100)   | number : 2}}</td>
     </tr>
     <tr>
         <td><strong>TOTAL :</strong></td>
-        <td>${{ordenVenta.total | number : 2}}</td>
+        <td>${{ordenVenta.subTotal * (1 + (ordenVenta.iva/100)) | number : 2}}</td>
     </tr>
     </tbody>
 </table>
@@ -94,7 +94,10 @@
             <i class="fa fa-eraser"></i> Limpiar
         </button>
     </div>
-    <div class="col-md-offset-6 col-md-3">
+    <div class="col-md-6">
+        <alertas tipo="ordenVenta.tipoMsj" mensaje="ordenVenta.msj"></alertas>
+    </div>
+    <div class="col-md-3">
         <button class="btn btn-primary pull-right"
                 ng-show="ordenVenta.esVendedor"
                 ng-disabled="ordenVenta.subTotal === 0 || ordenVenta.clienteId === undefined"
