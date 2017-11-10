@@ -5,6 +5,8 @@ import {Mongo} from "meteor/mongo";
 import {ProductosInventarios} from "../../../../inventarios/productosInventarios/collection";
 import {VentasOrdenes} from "../../../../ventas/ordenes/collection";
 import {Tiendas} from "../../../../catalogos/tiendas/collection";
+import {Proveedores} from "../../../../catalogos/proveedores/collection";
+import productosPartidasHooks from "./productosPartidasHooks";
 
 class VentasProductosPartidasCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -13,9 +15,7 @@ class VentasProductosPartidasCollection extends Mongo.Collection {
     }
 
     update(selector, modifier, options, callback) {
-
         const result = super.update(selector, modifier, options, callback);
-
         return result;
     }
 }
@@ -46,7 +46,7 @@ Schema.ventasProductosPartidas = new SimpleSchema({
     deMiInventario: {type: Boolean, optional: true},
     fechaCreacion: {type: Date, defaultValue: new Date, denyUpdate: true},
     tiendaGrupo: {type: Boolean, optional: true},
-    numCompraOrden: {type: String, optional: true},
+    compraOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     descontado: {type: Boolean, optional: true}
 });
 

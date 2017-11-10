@@ -8,7 +8,9 @@ import ventasPartidasHooks from './ventasPartidasHooks';
 
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
+
         const result = super.insert(doc, callback);
+        ventasPartidasHooks.afterInsertPartidas(doc);
         return result;
     }
 
@@ -16,7 +18,6 @@ class VentasPartidasOrdenesCollection extends Mongo.Collection {
 
         const result = super.update(selector, modifier, options, callback);
         ventasPartidasHooks.afterUpdatePartida(selector, modifier);
-
         return result;
     }
 }
@@ -42,15 +43,14 @@ Schema.ventasPartidasOrdenes = new SimpleSchema({
     ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
     productoId: {type: String, regEx: SimpleSchema.RegEx.Id},
     factorId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    iva: {type: Number},
     precioBase: {type: Number, decimal: true},
     precioFinal: {type: Number, decimal: true},
-    numTotalProductos: {type: Number},
+    numProductos: {type: Number},
     descuento: {type: Number, optional:true},
-    entregada: {type: Boolean, defaultValue: false},
     comision: {type: Number, decimal: true, optional: true},
-    cancelada: {type: Boolean, optional: true},
-    numTotalEntregados: {type: Number, defaultValue: 0},
-    numTotalDevoluciones: {type: Number, optional: true},
+    numEntregados:        {type: Number,  defaultValue: 0},
+    numCancelados:        {type: Number,  defaultValue: 0},
     fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true}
 
 });

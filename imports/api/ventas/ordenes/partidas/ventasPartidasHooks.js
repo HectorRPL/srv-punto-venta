@@ -8,24 +8,40 @@ import {VentasPartidasOrdenes} from './collection.js';
 const ventasPartidasHooks = {
     _updateOrdenEntregada(selector) {
 
-        const partida = VentasPartidasOrdenes.findOne(selector, {fields: {ventaOrdenId: 1}});
+    },
+    _updateOrdenCancelada(selector) {
 
-        const result = VentasPartidasOrdenes.find(
+
+    },
+    _updateComprsOrdns(doc) {
+
+        const subTotal = (doc.precioFinal * doc.numProductos);
+        const total = subTotal * (1 + (doc.iva / 100));
+
+        VentasOrdenes.update({_id: doc.ventaOrdenId},
             {
-                ventaOrdenId: partida.ventaOrdenId,
-                entregada: false
-            }
-        ).count();
+                $inc: {
+                    total: total,
+                    subTotal: subTotal,
+                    saldoPorCobrar: total,
+                    totalPagado: 0,
+                    numTotalProductos: doc.numProductos
+                }
+            });
+    },
+    afterUpdatePartida(selector, modifier) {
 
-        if (result === 0) {
-            VentasOrdenes.update({_id: partida.ventaOrdenId}, {$set: {entregada: true}});
+        if (_.has(modifier.$set, 'numEntregados')) {
+            this._updateOrdenEntregada(selector);
+        }
+
+        if (_.has(modifier.$set, 'numCancelados')) {
+            this._updateOrdenCancelada(selector, modifier);
         }
     },
-    afterUpdatePartida(selector, modifier){
-        if(_.has(modifier.$set, 'entregada')){
-           this._updateOrdenEntregada(selector);
 
-        }
+    afterInsertPartidas(doc) {
+        this._updateComprsOrdns(doc);
     }
 
 };

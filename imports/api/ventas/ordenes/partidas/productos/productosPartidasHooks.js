@@ -8,6 +8,7 @@ import {ProductosInventarios} from "../../../../inventarios/productosInventarios
 
 const productosPartidasHooks = {
         _updateDescntrMiInvntr(prod) {
+
             const prodsDescontar = (prod.numProductos * -1);
             ProductosInventarios.update({_id: prod.productoInventarioId},
                 {$inc: {cantidad: prodsDescontar}},

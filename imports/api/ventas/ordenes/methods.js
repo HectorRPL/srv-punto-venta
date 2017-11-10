@@ -154,8 +154,9 @@ export const actualizarQuitrDatsFiscls = new ValidatedMethod({
             });
         }
     }
-
 });
+
+
 
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
