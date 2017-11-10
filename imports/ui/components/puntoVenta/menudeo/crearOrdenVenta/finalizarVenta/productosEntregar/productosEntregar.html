@@ -1,44 +1,79 @@
-<div class="clients-list">
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th class="text-right">#</th>
-                <th class="text-right">Unidad</th>
-                <th class="text-left">Producto</th>
-                <th>En Inventario</th>
-                <th>Distribución Entregas</th>
-                <th>Entregar en Mostrador</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="partida in productosEntregar.partidasOrdenes">
-                <td class="text-right">
-                    {{partida.numProductos}}
-                </td>
-                <td class="text-right">
-                    {{partida.producto().unidad}}
-                </td>
-                <td class="text-left">
-                    {{partida.producto().campoBusqueda}}
-                </td>
-                <td>
-                    <productos-mi-invntr partida-id="partida._id">
-                    </productos-mi-invntr>
-                </td>
-                <td>
-                    <entregas-partidas partida-id="partida._id">
-                    </entregas-partidas>
-                </td>
-                <td>
-                    <entregas-mostrador partida="partida" index="$index"></entregas-mostrador>
-                </td>
-                <td>
-                    <alertas tipo="productosEntregar.tipoMsj" mensaje="productosEntregar.msj"></alertas>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Productos a entregar</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="clients-list">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-right">#</th>
+                                <th class="text-right">Unidad</th>
+                                <th class="text-left">Producto</th>
+                                <th>En Inventario</th>
+                                <th>Distribución Entregas</th>
+                                <th>Entregar en Mostrador</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="partida in productosEntregar.partidasOrdenes">
+                                <td class="text-right">
+                                    {{partida.numProductos}}
+                                </td>
+                                <td class="text-right">
+                                    {{partida.producto().unidad}}
+                                </td>
+                                <td class="text-left">
+                                    {{partida.producto().campoBusqueda}}
+                                </td>
+                                <td>
+                                    <productos-mi-invntr partida-id="partida._id">
+                                    </productos-mi-invntr>
+                                </td>
+                                <td>
+                                    <entregas-partidas partida-id="partida._id">
+                                    </entregas-partidas>
+                                </td>
+                                <td>
+                                    <entregas-mostrador partida="partida" index="$index"></entregas-mostrador>
+                                </td>
+                                <td>
+                                    <alertas tipo="productosEntregar.tipoMsj" mensaje="productosEntregar.msj"></alertas>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--Botón imprimir Tickets-->
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="col-sm-2">
+                            <button class="btn btn-default pull-left"
+                                    ng-hide="productosEntregar.totalEntregas === productosEntregar.totalProductos"
+                                    ng-click="productosEntregar.cancelar()">
+                                <i class="fa fa-trash"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary pull-right"
+                                ng-hide="productosEntregar.totalEntregas < productosEntregar.totalProductos"
+                                ng-click="productosEntregar.finalizarVenta()">
+                            <i class="fa fa-print"></i>
+                            Tickets
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

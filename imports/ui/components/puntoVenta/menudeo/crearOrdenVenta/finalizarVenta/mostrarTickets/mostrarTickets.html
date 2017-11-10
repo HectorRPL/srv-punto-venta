@@ -1,0 +1,33 @@
+<div ng-repeat="ordenVenta in mostrarTickets.ordenesVenta"
+     class="col-lg-3" ng-show="ordenVenta.numOrdenVenta">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span class="label label-success pull-right">
+            <span ng-show="ordenVenta.mesesSinInteres">{{ordenVenta.mesesSinInteres}} - meses</span>
+            <span ng-hide="ordenVenta.mesesSinInteres">Al Contado</span>
+            </span>
+            <h5>Ticket: {{ordenVenta.numOrdenVenta}}</h5>
+        </div>
+        <div class="ibox-content">
+            <h1 class="no-margins">${{ordenVenta.total | number:2}}</h1>
+            <small>Total</small>
+        </div>
+    </div>
+</div>
+<!--Botón imprimir Tickets-->
+<div class="row">
+    <div class="col-sm-2">
+
+    </div>
+    <div class="col-sm-8">
+
+    </div>
+    <div class="col-sm-2">
+        <button class="btn btn-primary pull-right"
+                ng-hide="mostrarTickets.totalEntregas < mostrarTickets.totalProductos"
+                ng-click="mostrarTickets.imprimir()">
+            <i class="fa fa-print"></i>
+            Tickets
+        </button>
+    </div>
+</div>

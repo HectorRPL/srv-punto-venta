@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="ibox">
             <div class="ibox-title">
-                <h5>Venta Mostrador</h5>
+                <h5>Datos de la Venta</h5>
             </div>
             <div class="ibox-content">
                 <div class="row">
@@ -11,20 +11,20 @@
                         <address>
                             <h5>Cliente:</h5>
                             <mostrar-datos-cliente
-                                    cliente-id="finalizarVenta.ordenesVenta[0].clienteId"></mostrar-datos-cliente>
+                                    cliente-id="finalizarVenta.ordenesVenta.clienteId"></mostrar-datos-cliente>
                             <h5>Dirección de Entrega:&nbsp; &nbsp;
                                 <button role="button" class="btn btn-xs btn-white"
-                                        ng-disabled="!finalizarVenta.ordenesVenta[0].direccionEntregaId"
+                                        ng-disabled="!finalizarVenta.ordenesVenta.direccionEntregaId"
                                         ng-click="finalizarVenta.quitarDireccionEntrg()">
                                     <i class="fa fa-trash-o fa-2x"></i>
                                 </button>
                                 <button role="button" class="btn btn-xs btn-white"
-                                        ng-disabled="finalizarVenta.ordenesVenta[0].direccionEntregaId"
+                                        ng-disabled="finalizarVenta.ordenesVenta.direccionEntregaId"
                                         ng-click="finalizarVenta.abrirModlDirccin()">
                                     <i class="fa fa-plus-square-o fa-2x"></i>
                                 </button>
                             </h5>
-                            <mostrar-direccion direccion-id="finalizarVenta.ordenesVenta[0].direccionEntregaId">
+                            <mostrar-direccion direccion-id="finalizarVenta.ordenesVenta.direccionEntregaId">
                             </mostrar-direccion>
                         </address>
                     </div>
@@ -32,68 +32,23 @@
                     <div class="col-sm-6 text-right">
                         <h5>Comprobate:&nbsp;&nbsp;
                             <button role="button" class="btn btn-xs btn-white"
-                                    ng-disabled="!finalizarVenta.ordenesVenta[0].datosFiscalesId"
+                                    ng-disabled="!finalizarVenta.ordenesVenta.datosFiscalesId"
                                     ng-click="finalizarVenta.quitarDatsFiscls()">
                                 <i class="fa fa-trash-o fa-2x"></i>
                             </button>
                             <button role="button" class="btn btn-xs btn-white"
-                                    ng-disabled="finalizarVenta.ordenesVenta[0].datosFiscalesId"
+                                    ng-disabled="finalizarVenta.ordenesVenta.datosFiscalesId"
                                     ng-click="finalizarVenta.abrirModlDatsFiscls()">
                                 <i class="fa fa-plus-square-o fa-2x"></i>
                             </button>
                         </h5>
                         <mostrar-datos-fiscales
-                                datos-fiscales-id="finalizarVenta.ordenesVenta[0].datosFiscalesId">
+                                datos-fiscales-id="finalizarVenta.ordenesVenta.datosFiscalesId">
                         </mostrar-datos-fiscales>
-                    </div>
-                </div>
-                <!--Tickets con SubPartidas -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <productos-entregar></productos-entregar>
-                    </div>
-                </div>
-                <!--Botón imprimir Tickets-->
-                <div class="row">
-                    <div class="col-sm-2">
-                        <div class="col-sm-2">
-                            <button class="btn btn-default pull-left"
-                                    ng-hide="finalizarVenta.totalEntregas === finalizarVenta.totalProductos"
-                                    ng-click="finalizarVenta.cancelar()">
-                                <i class="fa fa-trash"></i>
-                                Cancelar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-
-                    </div>
-                    <div class="col-sm-2">
-                        <button class="btn btn-primary pull-right"
-                                ng-hide="finalizarVenta.totalEntregas < finalizarVenta.totalProductos"
-                                ng-click="finalizarVenta.imprimir()">
-                            <i class="fa fa-print"></i>
-                            Tickets
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div ng-repeat="ordenVenta in finalizarVenta.ordenesVenta"
-     class="col-lg-3" ng-show="ordenVenta.numOrdenVenta">
-    <div class="ibox float-e-margins">
-        <div class="ibox-title">
-            <span class="label label-success pull-right">
-                <span ng-show="ordenVenta.mesesSinInteres">{{ordenVenta.mesesSinInteres}} - meses</span>
-                <span ng-hide="ordenVenta.mesesSinInteres">Al Contado</span>
-            </span>
-            <h5>Ticket: {{ordenVenta.numOrdenVenta}}</h5>
-        </div>
-        <div class="ibox-content">
-            <h1 class="no-margins">${{ordenVenta.total | number:2}}</h1>
-            <small>Total</small>
-        </div>
-    </div>
-</div>
+<div ui-view=""></div>

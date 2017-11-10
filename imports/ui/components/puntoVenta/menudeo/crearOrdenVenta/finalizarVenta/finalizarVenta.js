@@ -2,12 +2,11 @@
  * Created by jvltmtz on 16/08/17.
  */
 import {name as ProductosEntregar} from './productosEntregar/productosEntregar';
-import {name as ConfirmarImpresion} from './confirmarImpresion/confirmarImpresion';
 import {name as MostrarDatosCliente} from "../../../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import {name as MostrarDireccion} from "../../../../comun/mostrar/mostrarDireccion/mostrarDireccion";
 import {name as MostrarDatosFiscales} from "../../../../comun/mostrar/mostrarDatosFiscales/mostrarDatosFiscales";
+import {name as MostrarTickets} from "./mostrarTickets/mostrarTickets";
 import {actualizarQuitrDatsFiscls, actualizarQuitrDirccn} from '../../../../../../api/ventas/ordenes/methods';
-import {actualizarNumVentaOrden} from '../../../../../../api/ventas/methods';
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
 import {Ventas} from '../../../../../../api/ventas/collection';
 import template from './finalizarVenta.html';
@@ -16,54 +15,25 @@ class FinalizarVenta {
     constructor($scope, $reactive, $stateParams, $uibModal, $state) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.$state = $state;
-        this.soloUno = true;
         this.ventaId = $stateParams.ventaId;
         this.uibModal = $uibModal;
 
         this.subscribe('ventas.id', () => [{_id: this.ventaId}]);
-        this.subscribe('ventas.count.totalProductos', () => [{ventaId: this.ventaId}]);
-        this.subscribe('ventas.count.totalEntregas', () => [{ventaId: this.ventaId}]);
-        this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}]);
+        this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}, {limit: 1}]);
 
         this.helpers({
             venta() {
                 return Ventas.findOne({_id: this.ventaId});
             },
             ordenesVenta() {
-                return VentasOrdenes.find({ventaId: this.ventaId});
-            },
-            totalProductos() {
-                return Counts.get('ventaNumTotalProductos');
-            },
-            totalEntregas() {
-                return Counts.get('ventaNumTotalEntregas');
+                return VentasOrdenes.findOne({ventaId: this.ventaId});
             }
         });
-    }
-
-    imprimir() {
-        const venta = {
-            ventaId: this.ventaId,
-            tiendaId: this.venta.tiendaId
-        };
-
-        actualizarNumVentaOrden.callPromise(venta)
-            .then(this.$bindToContext((result) => {
-                this.msj = err.reason;
-                this.tipoMsj = 'danger';
-            }))
-            .catch(this.$bindToContext((err) => {
-                this.msj = err.reason;
-                this.tipoMsj = 'danger';
-            }));
     }
 
     abrirModlDirccin() {
         const ventaId = this.ventaId;
         const clienteId = this.ordenesVenta.clienteId;
-
-        console.log(clienteId);
 
         var modalInstance = this.uibModal.open({
             animation: true,
@@ -139,10 +109,10 @@ const name = 'finalizarVenta';
 export default angular
     .module(name, [
         ProductosEntregar,
-        ConfirmarImpresion,
         MostrarDatosCliente,
         MostrarDireccion,
-        MostrarDatosFiscales
+        MostrarDatosFiscales,
+        MostrarTickets
     ])
     .component(name, {
         template: template.default,
