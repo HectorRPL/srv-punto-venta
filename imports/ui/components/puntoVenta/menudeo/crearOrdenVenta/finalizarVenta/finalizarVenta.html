@@ -1,7 +1,10 @@
 <div class="row">
     <div class="col-lg-12">
-        <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="ibox-content p-xl">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Venta Mostrador</h5>
+            </div>
+            <div class="ibox-content">
                 <div class="row">
                     <!--Cliente | Datos de Entrega-->
                     <div class="col-sm-6">
@@ -44,33 +47,53 @@
                         </mostrar-datos-fiscales>
                     </div>
                 </div>
-                <!--Tickets con SubPartidas-->
-                <uib-accordion close-others="finalizarVenta.soloUno">
-                    <div class="panel-default" uib-accordion-group ng-repeat="orden in finalizarVenta.ordenesVenta"
-                         ng-click="finalizarVenta.mostrarPartidas(orden._id)">
-                        <uib-accordion-heading>
-                            <sapn ng-show="orden.mesesSinInteres">
-                                No. Ticket: {{orden.numVentaOrden}}
-                                -
-                                <small>{{orden.mesesSinInteres}} Meses sin Intereses</small>
-                            </sapn>
-                            <span ng-hide="orden.mesesSinInteres">
-                                No. Ticket: {{orden.numVentaOrden}} - <small>Efectivo</small>
-                            </span>
-                            <precio-venta-orden venta-orden-id="orden._id"></precio-venta-orden>
-                        </uib-accordion-heading>
-                        <productos-entregar partidas="finalizarVenta.partidasOrdenes"
-                                            venta-orden-id="finalizarVenta.ventaOrdenId">
-                        </productos-entregar>
+                <!--Tickets con SubPartidas -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <productos-entregar></productos-entregar>
                     </div>
-                </uib-accordion>
+                </div>
                 <!--Botón imprimir Tickets-->
-                <div class="text-right">
-                    <button class="btn btn-primary" ng-click="finalizarVenta.imprimir()"><i class="fa fa-print"></i>
-                        Imprimir Tickets
-                    </button>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="col-sm-2">
+                            <button class="btn btn-default pull-left"
+                                    ng-hide="finalizarVenta.totalEntregas === finalizarVenta.totalProductos"
+                                    ng-click="finalizarVenta.cancelar()">
+                                <i class="fa fa-trash"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-primary pull-right"
+                                ng-hide="finalizarVenta.totalEntregas < finalizarVenta.totalProductos"
+                                ng-click="finalizarVenta.imprimir()">
+                            <i class="fa fa-print"></i>
+                            Tickets
+                        </button>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div ng-repeat="ordenVenta in finalizarVenta.ordenesVenta"
+     class="col-lg-3" ng-show="ordenVenta.numOrdenVenta">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <span class="label label-success pull-right">
+                <span ng-show="ordenVenta.mesesSinInteres">{{ordenVenta.mesesSinInteres}} - meses</span>
+                <span ng-hide="ordenVenta.mesesSinInteres">Al Contado</span>
+            </span>
+            <h5>Ticket: {{ordenVenta.numOrdenVenta}}</h5>
+        </div>
+        <div class="ibox-content">
+            <h1 class="no-margins">${{ordenVenta.total | number:2}}</h1>
+            <small>Total</small>
         </div>
     </div>
 </div>

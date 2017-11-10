@@ -1,0 +1,30 @@
+<form role="form" class="form-inline" id="entregasFrmId"
+      name="entregasFrm" novalidate>
+    <div class="input-group input-group-sm"
+         ng-class="{ 'has-error' : entregasFrm['numProductos'+ entregasMostrador.index].$invalid
+                                && !entregasFrm['numProductos'+ entregasMostrador.index].$pristine}">
+        <input id="{{entregasMostrador.partida._id}}" name="numProductos{{entregasMostrador.index}}" type="number"
+               class="form-control input-xs" placeholder="Cantidad Productos"
+               aria-describedby="sizing-addon1" required min="0"
+               cantidad-invalida ng-model="entregasMostrador.partida.prodctsEntregar">
+        <div ng-messages="entregasFrm['numProductos'+entregasMostrador.index].$dirty
+                                    && entregasFrm['numProductos'+entregasMostrador.index].$error"
+             role="alert">
+            <div style="color: red" ng-message="required">requerido</div>
+            <div style="color: red" ng-message="cantidadInvalida">Cantidad invalida</div>
+        </div>
+    </div>
+    <!-- botones -->
+    <button type="button" class="btn btn-sm btn-primary"
+            ng-disabled="entregasFrm.$invalid"
+            ng-hide="entregasMostrador.partida.numProductos === entregasMostrador.numProdctsEnt"
+            ng-click="entregasMostrador.guardar(entregasMostrador.partida)">
+        Guardar
+    </button>
+    <button class="btn btn-sm btn-primary" type="button"
+            ng-disabled="entregasFrm.$invalid"
+            ng-show="entregasMostrador.partida.numProductos === entregasMostrador.numProdctsEnt"
+            ng-click="entregasMostrador.actualizar(entregasMostrador.partida)">
+        Actualizar
+    </button>
+</form>

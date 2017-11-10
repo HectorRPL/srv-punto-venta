@@ -3,12 +3,11 @@
  */
 import {name as ProductosEntregar} from './productosEntregar/productosEntregar';
 import {name as ConfirmarImpresion} from './confirmarImpresion/confirmarImpresion';
-import {name as PrecioVentaOrden} from "../../../../comun/alertas/precioVentaOrden/precioVentaOrden";
 import {name as MostrarDatosCliente} from "../../../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import {name as MostrarDireccion} from "../../../../comun/mostrar/mostrarDireccion/mostrarDireccion";
 import {name as MostrarDatosFiscales} from "../../../../comun/mostrar/mostrarDatosFiscales/mostrarDatosFiscales";
-import {VentasPartidasOrdenes} from '../../../../../../api/ventas/ordenes/partidas/collection';
-import {actualizarQuitrDirccn, actualizarQuitrDatsFiscls} from '../../../../../../api/ventas/ordenes/methods';
+import {actualizarQuitrDatsFiscls, actualizarQuitrDirccn} from '../../../../../../api/ventas/ordenes/methods';
+import {actualizarNumVentaOrden} from '../../../../../../api/ventas/methods';
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
 import {Ventas} from '../../../../../../api/ventas/collection';
 import template from './finalizarVenta.html';
@@ -20,58 +19,49 @@ class FinalizarVenta {
         this.$state = $state;
         this.soloUno = true;
         this.ventaId = $stateParams.ventaId;
-        this.uibModal =$uibModal;
+        this.uibModal = $uibModal;
 
-        this.subscribe('ventas.id', ()=> [{_id: this.ventaId}]);
-        this.subscribe('ventasOrdenes.id', ()=> [{ventaId: this.ventaId}]);
-        this.subscribe('ventasPartidasOrdenes.ordenId', ()=> [{ventaOrdenId: this.getReactively('ventaOrdenId')}]);
+        this.subscribe('ventas.id', () => [{_id: this.ventaId}]);
+        this.subscribe('ventas.count.totalProductos', () => [{ventaId: this.ventaId}]);
+        this.subscribe('ventas.count.totalEntregas', () => [{ventaId: this.ventaId}]);
+        this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}]);
 
         this.helpers({
-            venta(){
-              return Ventas.findOne({_id: this.ventaId});
+            venta() {
+                return Ventas.findOne({_id: this.ventaId});
             },
-            ordenesVenta(){
+            ordenesVenta() {
                 return VentasOrdenes.find({ventaId: this.ventaId});
             },
-            partidasOrdenes(){
-                return VentasPartidasOrdenes.find();
+            totalProductos() {
+                return Counts.get('ventaNumTotalProductos');
+            },
+            totalEntregas() {
+                return Counts.get('ventaNumTotalEntregas');
             }
         });
     }
 
-    mostrarPartidas(ordenId) {
-        this.ventaOrdenId = ordenId;
-    }
+    imprimir() {
+        const venta = {
+            ventaId: this.ventaId,
+            tiendaId: this.venta.tiendaId
+        };
 
-    imprimir(){
-        const direccionEntregaId = this.venta.direccionEntregaId;
-        var modalInstance = this.uibModal.open({
-            animation: true,
-            component: 'ConfirmarImpresion',
-            backdrop: 'static',
-            size: 'md',
-            keyboard: true,
-            resolve: {
-                direccionId: function () {
-                    return direccionEntregaId;
-                }
-
-            }
-        }).result.then(this.$bindToContext((result) => {
-            //TODO: Mandar a imprimir
-            Meteor.logout((err)=>{
-                if(!err){
-                    this.$state.go('app.venta.menudeo');
-                }
-            });
-        }, function (reason) {
-
-        }));
+        actualizarNumVentaOrden.callPromise(venta)
+            .then(this.$bindToContext((result) => {
+                this.msj = err.reason;
+                this.tipoMsj = 'danger';
+            }))
+            .catch(this.$bindToContext((err) => {
+                this.msj = err.reason;
+                this.tipoMsj = 'danger';
+            }));
     }
 
     abrirModlDirccin() {
         const ventaId = this.ventaId;
-        const clienteId = this.ordenesVenta[0].clienteId;
+        const clienteId = this.ordenesVenta.clienteId;
 
         console.log(clienteId);
 
@@ -98,6 +88,7 @@ class FinalizarVenta {
         actualizarQuitrDirccn.callPromise({ventaId: this.ventaId})
             .then(this.$bindToContext((result) => {
                 this.tipoMsj = 'success';
+                this.msj = 'Se han imprimido los tickets : ';
             }))
             .catch(this.$bindToContext((err) => {
                 console.log(err);
@@ -107,7 +98,7 @@ class FinalizarVenta {
 
     abrirModlDatsFiscls() {
         const ventaId = this.ventaId;
-        const clienteId = this.ordenesVenta[0].clienteId;
+        const clienteId = this.ordenesVenta.clienteId;
 
         var modalInstance = this.uibModal.open({
             animation: true,
@@ -129,7 +120,6 @@ class FinalizarVenta {
     }
 
 
-
     quitarDatsFiscls() {
         actualizarQuitrDatsFiscls.callPromise({ventaId: this.ventaId})
             .then(this.$bindToContext((result) => {
@@ -142,8 +132,6 @@ class FinalizarVenta {
     }
 
 
-
-
 }
 
 const name = 'finalizarVenta';
@@ -152,7 +140,6 @@ export default angular
     .module(name, [
         ProductosEntregar,
         ConfirmarImpresion,
-        PrecioVentaOrden,
         MostrarDatosCliente,
         MostrarDireccion,
         MostrarDatosFiscales

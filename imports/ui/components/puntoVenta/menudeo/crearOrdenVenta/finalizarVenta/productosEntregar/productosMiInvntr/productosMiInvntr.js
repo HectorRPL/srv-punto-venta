@@ -15,7 +15,9 @@ class ProductosMiInvntr {
 
         this.helpers({
             prodctMiTienda() {
-                return VentasProductosPartidas.findOne({partidaId: this.getReactively('partidaId')});
+                return VentasProductosPartidas.findOne({
+                    partidaId: this.getReactively('partidaId')
+                });
             }
         });
 
