@@ -11,82 +11,66 @@ import {CountersVentas} from "../catalogos/counters/countersVentas";
 const MENSAJE_ERROR_ORDEN_VENTA = 'Error al crear la venta, reportar al administrador del sistema.';
 const TIPO_VENTA = 'menudeo';
 
-VentasMenudeoOp = {
+VentasOperaciones = {
 
     altaVenta(tiendaId) {
-        const crearVenta = Meteor.wrapAsync(Ventas.insert, Ventas);
-        try {
-            const venta = {
-                tiendaId: tiendaId
-            };
-            const ventaId = crearVenta(venta);
-
-            return ventaId;
-        } catch (err) {
-            throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'venta-no-valida');
-        }
-    },
-
-    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId, clienteId) {
-
-        var findOneAndUpdate = Meteor.wrapAsync(CountersVentas.rawCollection().findOneAndUpdate, CountersVentas.rawCollection());
-        try {
-            let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
-            const noOrden = result.value.seq;
-
-            const crearOrden = Meteor.wrapAsync(VentasOrdenes.insert, VentasOrdenes);
-            const orden = {
-                ventaId: ventaId,
-                clienteId: clienteId,
-                tiendaId: tiendaId,
-                tipo: TIPO_VENTA,
-                empleadoId: empleadoId,
-                numVentaOrden: noOrden,
-                estado:'1'
-            };
-            if (numMeses > 0) {
-                orden.mesesSinInteres = numMeses;
+        return Ventas.insert({
+            tiendaId: tiendaId
+        }, (err) => {
+            if (err) {
+                throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'venta-no-valida');
             }
-            const ordenId = crearOrden(orden);
+        });
 
-            return ordenId;
-        } catch (err) {
-            throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
-        }
     },
 
-    crearPartida(partida, ventaId, clienteId, tiendaOrigenId) {
+    altaOrdenVenta(ventaId, tiendaId, numMeses, empleadoId, clienteId, tipo) {
+
+        const orden = {
+            ventaId: ventaId,
+            clienteId: clienteId,
+            tiendaId: tiendaId,
+            tipo: tipo,
+            empleadoId: empleadoId
+        };
+
+        if (numMeses > 0) {
+            orden.mesesSinInteres = numMeses;
+        }
+
+        return VentasOrdenes.insert(orden, (err) => {
+            if(err){
+                throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
+            }
+
+        });
+    },
+
+    crearPartida(partida, ventaId, ventaOrdenId, clienteId, iva) {
+
         const partidaFinal = {
             ventaId: ventaId,
             clienteId: clienteId,
-            ventaOrdenId: partida.ventaOrdenId,
+            ventaOrdenId: ventaOrdenId,
             productoId: partida._id,
             factorId: partida.factorId,
             precioBase: partida.precioBase,
             precioFinal: partida.precioFinal,
             descuento: partida.descuento,
-            numTotalProductos: partida.total
+            numProductos: partida.total,
+            iva: iva
         };
-        let partidaId = '';
-        try {
-            const crearPartida = Meteor.wrapAsync(VentasPartidasOrdenes.insert, VentasPartidasOrdenes);
-            partidaId = crearPartida(partidaFinal);
 
-            for (let j = 0; j < partida.tiendas.length; j++) {
-                let item = partida.tiendas[j];
-                this.crearProdcutosPartidas(item, partida.ventaOrdenId, partidaId, tiendaOrigenId);
+        return VentasPartidasOrdenes.insert(partidaFinal, (err) => {
+            if (err) {
+                console.log('Error al crear la partida ', partidaId, ventaOrdenId, err);
             }
+        });
 
-        } catch (err) {
-            console.log('Error al crear la partida ', partidaId, partida.ordenVentaId, err);
-            //throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'partida-no-valida');
-        }
     },
 
     crearProdcutosPartidas(item, ventaOrdenId, partidaId, tiendaOrigenId) {
 
-
-        const crearProductos = Meteor.wrapAsync(VentasProductosPartidas.insert, VentasProductosPartidas);
         const producto = {
             partidaId: partidaId,
             ventaOrdenId: ventaOrdenId,
@@ -98,11 +82,11 @@ VentasMenudeoOp = {
             tiendaGrupo: item[1].tiendaGrupo,
         };
 
-        try {
-            crearProductos(producto);
-        } catch (e) {
-            console.log(e);
-        }
+        VentasProductosPartidas.insert(producto, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
 
 
         if (item[1].prodFaltante && item[1].prodFaltante > 0) {
@@ -116,11 +100,11 @@ VentasMenudeoOp = {
                 tiendaGrupo: false,
             };
 
-            try {
-                crearProductos(producto2);
-            } catch (e) {
-                console.log(e);
-            }
+            VentasProductosPartidas.insert(producto2, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
         }
 
     },
@@ -134,7 +118,8 @@ VentasMenudeoOp = {
             try {
                 let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
                 const noOrden = result.value.seq;
-                VentasOrdenes.update({_id: orden._id}, {$set: {numVentaOrden: noOrden, estado: '1'}});
+                VentasOrdenes.update({_id: orden._id},
+                    {$set: {numOrdenVenta: noOrden, estado: '1'}});
                 count++;
             } catch (e) {
                 throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');

@@ -9,15 +9,10 @@ import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
 import {Empleados} from "../../api/empleados/collection";
 import {Ventas} from "./collection";
 import {VentasOrdenes} from "./ordenes/collection";
-import {VentasSaldos} from "./saldos/collection";
 import {_} from "meteor/underscore";
 
 const TIPO_VENTA = 'MENUDEO';
 
-var pedidoSchema = new SimpleSchema({
-    pedido: {type: [Object], blackbox: true},
-    numMeses: {type: [String], blackbox: true, optional: true}
-});
 
 export const crearVenta = new ValidatedMethod({
     name: 'ventas.crearVenta',
@@ -37,67 +32,121 @@ export const crearVenta = new ValidatedMethod({
     validate: new SimpleSchema({
         tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
         clienteId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        pedido: {type: [Object], blackbox: true},
+        numTickets: {type: [String], blackbox: true, optional: true},
+        iva: {type: Number},
+        tipo: {type: String}
+    }).validator(),
+    run({
+            tiendaId, clienteId, pedido, numTickets, iva, tipo
+        }) {
+        let ventaId = '';
+        let ticketsIds = new Map();
+        if (Meteor.isServer) {
+            try {
+                const empleado = Empleados.findOne({propietarioId: this.userId});
+                ventaId = VentasOperaciones.altaVenta(tiendaId);
+
+                for (let i = 0; i < numTickets.length; i++) {
+                    const numTicket = numTickets[i];
+                    const ventaOrdenId = VentasOperaciones.altaOrdenVenta(ventaId, tiendaId, numTicket,
+                        empleado._id, clienteId, tipo);
+
+                    ticketsIds.set(numTicket, ventaOrdenId);
+                }
+
+                for (let j = 0; j < pedido.length; j++) {
+
+                    let partida = pedido[j];
+                    const ordenId = ticketsIds.get(partida.mesesSinInteres);
+
+                    let partidaId = VentasOperaciones.crearPartida(partida, ventaId,
+                        ordenId, clienteId, iva);
+
+                    for (let j = 0; j < partida.tiendas.length; j++) {
+                        let item = partida.tiendas[j];
+                        VentasOperaciones.crearProdcutosPartidas(item, ordenId, partidaId, tiendaId);
+                    }
+                }
+
+            } catch (err) {
+                console.log('############ ', err);
+                throw err;
+            }
+            return ventaId;
+        }
+    }
+});
+
+export const actualizarNumVentaOrden = new ValidatedMethod({
+    name: 'ventas.actualizarNumVentaOrden',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['actu_ventas_ordenes'],
+            group: 'ventas_ordenes'
+        }
+    ],
+    permissionsError: {
+        name: 'ventas.actualizarNumVentaOrden',
+        message: ()=> {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id}
+    }).validator(),
+    run({ventaId, tiendaId}) {
+        if (Meteor.isServer) {
+            try{
+                VentasOperaciones.actualiazarNoVenta(ventaId, tiendaId);
+            } catch(e){
+                throw e;
+            }
+        }
+    }
+});
+
+export const crearVentaTinda = new ValidatedMethod({
+    name: 'ventas.crearVentaTinda',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['crea_ventas_ordenes_tienda'],
+            group: 'ventas_ordenes'
+        }
+    ],
+    permissionsError: {
+        name: 'ventas.crearVentaTinda',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        clienteId: {type: String, regEx: SimpleSchema.RegEx.Id},
         total: {type: Number, decimal: true},
         subTotal: {type: Number, decimal: true},
         importeIva: {type: Number, decimal: true},
-        otraFormaPago: {type: pedidoSchema, optional: true},
-        mesesIntereses: {type: pedidoSchema, optional: true},
-        iva: {type: Number}
+        iva: {type: Number},
+        pedido: {type: [Object], blackbox: true}
     }).validator(),
-    run({otraFormaPago, mesesIntereses, tiendaId, clienteId, total, subTotal, importeIva, iva}) {
-        let ventaId = '';
-        let ordenesMeses = new Map();
-
+    run({pedido, tiendaId, clienteId, total, subTotal, importeIva, iva}) {
         if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
-            ventaId = VentasMenudeoOp.altaVenta(tiendaId);
-
-            //Crea las ordenes de venta para meses sin intereses
-            if (mesesIntereses.pedido.length > 0) {
-                for (let i = 0; i < mesesIntereses.numMeses.length; i++) {
-                    const noMes = mesesIntereses.numMeses[i];
-                    let resultOrdenId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, noMes, empleado._id, clienteId);
-                    const ordenFinal = {
-                        ventaOrdenId: resultOrdenId,
-                        subTotal: 0
-                    };
-                    ordenesMeses.set(noMes, ordenFinal);
-                }
-
-                for (let j = 0; j < mesesIntereses.pedido.length; j++) {
-                    let pedido = mesesIntereses.pedido[j];
-                    let ordenResult = ordenesMeses.get(pedido.mesesSinInteres);
-                    ordenResult.subTotal += (pedido.total * pedido.precioFinal);
-                    ordenesMeses.set(pedido.mesesSinInteres, ordenResult);
-                    pedido.ventaOrdenId = ordenResult.ventaOrdenId;
-
-                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId, clienteId);
-                }
-            }
-
-            ordenesMeses.forEach((value, key, map) => {
-                const total = value.subTotal * (1 + (iva / 100));
-                VentasSaldos.insert({
-                    ventaOrdenId: value.ventaOrdenId,
-                    tiendaId: tiendaId,
-                    clienteId: clienteId,
-                    total: total,
-                    saldoCobrar: total,
-                    subTotal: value.subTotal
-                });
-            });
-
             let otraPagoSubtotal = 0;
             let resultId = '';
-            //Crear las ordenes de venta para otra forma de pago
-            if (otraFormaPago.pedido.length > 0) {
-                resultId = VentasMenudeoOp.altaOrdenVenta(ventaId, tiendaId, 0, empleado._id, clienteId);
 
-                for (let k = 0; k < otraFormaPago.pedido.length; k++) {
-                    let pedido = otraFormaPago.pedido[k];
+            let ventaId = VentasOperaciones.altaVenta(tiendaId);
+            const empleado = Empleados.findOne({propietarioId: this.userId});
+            if (pedido.length > 0) {
+                resultId = VentasOperaciones.altaOrdenVenta(ventaId, tiendaId, 0, empleado._id, clienteId);
+
+                for (let k = 0; k < pedido.length; k++) {
+                    let pedido = pedido[k];
                     otraPagoSubtotal += (pedido.total * pedido.precioFinal);
                     pedido.ventaOrdenId = resultId;
-                    VentasMenudeoOp.crearPartida(pedido, ventaId, tiendaId, clienteId);
+                    VentasOperaciones.crearPartida(pedido, ventaId, tiendaId, clienteId);
                 }
                 const total = otraPagoSubtotal * (1 + (iva / 100));
 
@@ -112,13 +161,17 @@ export const crearVenta = new ValidatedMethod({
             }
 
             return ventaId;
+
         }
+
     }
 });
 
+
 const ORDENES_VENTAS_METHODS = _.pluck(
     [
-        crearVenta
+        crearVenta,
+        actualizarNumVentaOrden
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

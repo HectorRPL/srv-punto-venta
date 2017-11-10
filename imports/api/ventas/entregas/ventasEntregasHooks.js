@@ -6,30 +6,30 @@ import {VentasEntregas} from './collection';
 import {VentasPartidasOrdenes} from '../ordenes/partidas/collection';
 
 const ventasEntregasHooks = {
-    _updatePartidasEntrega(partidaId) {
-        const selecEntregas = [
-            {$match: {partidaId: partidaId}},
+    _updatePartidasEntrega(doc) {
+        const selectorEntregas = [
+            {$match: {partidaId: doc.partidaId}},
             {
                 $group: {
                     _id: '$partidaId',
-                    totalProdcutos: {$sum: '$numProductos'}
+                    sumEntregados: {$sum: '$numProductos'}
                 }
             }
         ];
-        const sumaProductos = Meteor.wrapAsync(VentasEntregas.rawCollection().aggregate, VentasEntregas.rawCollection());
+        const sumaProductos = Meteor.wrapAsync(VentasEntregas.rawCollection().aggregate,
+            VentasEntregas.rawCollection());
         try {
-            const result = sumaProductos(selecEntregas);
-            if (result.length > 0) {
-                const totalEntregados = result[0].totalProdcutos;
-                const partida = VentasPartidasOrdenes.findOne({_id: partidaId},
-                    {fields: {numTotalProductos: 1}});
-                let modificador = {
-                    $set: {
-                        entregada: partida.numTotalProductos === totalEntregados,
-                        numTotalEntregados: totalEntregados
-                    }
-                };
-                VentasPartidasOrdenes.update({_id: partidaId}, modificador);
+
+            const totalEntregados = sumaProductos(selectorEntregas);
+
+            if (totalEntregados.length > 0) {
+
+                VentasPartidasOrdenes.update({_id: doc.partidaId},
+                    {
+                        $set: {
+                            numEntregados: totalEntregados[0].sumEntregados
+                        }
+                    });
             }
         } catch (e) {
             console.log(e);
@@ -38,7 +38,7 @@ const ventasEntregasHooks = {
     afterUpdateVentsEntrgs(selector, modifier, options) {
         if (_.has(modifier.$set, 'fechaEntrega')) {
             VentasEntregas.find(selector, {fields: {partidaId: 1}}).forEach((entrega) => {
-                this._updatePartidasEntrega(entrega.partidaId);
+                this._updatePartidasEntrega(doc);
             });
 
         }
