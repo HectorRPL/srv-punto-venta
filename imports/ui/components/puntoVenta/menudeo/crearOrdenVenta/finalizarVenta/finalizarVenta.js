@@ -127,6 +127,7 @@ function config($stateProvider) {
     $stateProvider
         .state('app.venta.finalizar', {
             url: '/:ventaId/finalizar',
+            abstract: true,
             template: '<finalizar-venta></finalizar-venta>',
             resolve: {
                 currentUser($q) {
