@@ -6,7 +6,7 @@ import {Ventas} from "./collection";
 import {VentasOrdenes} from "./ordenes/collection";
 import {VentasPartidasOrdenes} from "./ordenes/partidas/collection";
 import {VentasProductosPartidas} from "./ordenes/partidas/productos/collection";
-import {CountersVentas} from "../catalogos/counters/countersVentas";
+import {Counters} from "../catalogos/counters/collection";
 
 const MENSAJE_ERROR_ORDEN_VENTA = 'Error al crear la venta, reportar al administrador del sistema.';
 const TIPO_VENTA = 'menudeo';
@@ -39,7 +39,7 @@ VentasOperaciones = {
         }
 
         return VentasOrdenes.insert(orden, (err) => {
-            if(err){
+            if (err) {
                 throw new Meteor.Error(403, MENSAJE_ERROR_ORDEN_VENTA, 'orden-no-valida');
             }
 
@@ -114,12 +114,17 @@ VentasOperaciones = {
         let count = 0;
         ordenes.forEach((orden) => {
 
-            var findOneAndUpdate = Meteor.wrapAsync(CountersVentas.rawCollection().findOneAndUpdate, CountersVentas.rawCollection());
+            var findOneAndUpdate = Meteor.wrapAsync(Counters.rawCollection().findOneAndUpdate,
+                Counters.rawCollection());
+
             try {
-                let result = findOneAndUpdate({_id: tiendaId}, {$inc: {seq: 1}}, {returnOriginal: false, upsert: true});
+                let result = findOneAndUpdate(
+                    {tiendaId: tiendaId, nombre: 'VENTAS'},
+                    {$inc: {seq: 1}},
+                    {returnOriginal: false, upsert: true});
                 const noOrden = result.value.seq;
                 VentasOrdenes.update({_id: orden._id},
-                    {$set: {numOrdenVenta: noOrden, estado: '1'}});
+                    {$set: {numVentaOrden: noOrden,}});
                 count++;
             } catch (e) {
                 throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');

@@ -9,12 +9,12 @@ import {VentasSaldos} from "../saldos/collection";
 import ventasOrdenesHooks from './ventasOrdenesHooks';
 
 class VentasOrdenesCollection extends Mongo.Collection {
-    insert (doc, callback){
+    insert(doc, callback) {
         const result = super.insert(doc, callback);
         return result;
     }
 
-    update(selector, modifier, options, callback){
+    update(selector, modifier, options, callback) {
         const result = super.update(selector, modifier, options, callback);
         ventasOrdenesHooks.afterUpdateVentsOrdns(selector, modifier, options);
         return result;
@@ -24,45 +24,52 @@ class VentasOrdenesCollection extends Mongo.Collection {
 export const VentasOrdenes = new VentasOrdenesCollection('ventasOrdenes');
 
 VentasOrdenes.deny({
-    insert() {return true;},
-    update() {return true;},
-    remove() {return true;}
+    insert() {
+        return true;
+    },
+    update() {
+        return true;
+    },
+    remove() {
+        return true;
+    }
 });
 
 const Schema = {};
 
 Schema.ventasOrdenes = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-    ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    mesesSinInteres: {type: Number, optional: true},
-    numOrdenVenta: {type: String, optional: true},
-    fechaCreacion: {type: Date, defaultValue: new Date},
-    tipo: {type: String},
-    empleadoId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    clienteId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    ventaId:            {type: String, regEx: SimpleSchema.RegEx.Id},
+    tiendaId:           {type: String, regEx: SimpleSchema.RegEx.Id},
+    mesesSinInteres:    {type: Number, optional: true},
+    numVentaOrden:      {type: String, optional: true},
+    fechaCreacion:      {type: Date, defaultValue: new Date},
+    tipo:               {type: String},
+    empleadoId:         {type: String, regEx: SimpleSchema.RegEx.Id},
+    clienteId:          {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    total:           {type: Number, defaultValue: 0, decimal: true},
+    datosFiscalesId:    {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    total:              {type: Number, defaultValue: 0, decimal: true},
     subTotal:           {type: Number, defaultValue: 0, decimal: true},
-    saldoPorCobrar:      {type: Number, defaultValue: 0, decimal: true},
+    saldoPorCobrar:     {type: Number, defaultValue: 0, decimal: true},
     totalPagado:        {type: Number, defaultValue: 0, decimal: true},
     numTotalProductos:  {type: Number, defaultValue: 0},
     numTotalCancelados: {type: Number, defaultValue: 0},
     numTotalEntregados: {type: Number, defaultValue: 0},
-    impresa: {type: Boolean, optional: true, defaultValue: false}
+    impresa:            {type: Boolean, optional: true, defaultValue: false},
+    cs:                 {type: Number, optional: true}
 });
 
 VentasOrdenes.attachSchema(Schema.ventasOrdenes);
 
 VentasOrdenes.helpers({
-    empleado(){
+    empleado() {
         return Empleados.findOne({_id: this.empleadoId});
     },
-    cliente(){
+    cliente() {
         return Clientes.findOne({_id: this.clienteId});
     },
-    saldos(){
+    saldos() {
         return VentasSaldos.findOne({ventaOrdenId: this._id});
     }
 });

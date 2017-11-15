@@ -38,7 +38,7 @@ const ventasOrdenesHooks = {
 
     afterUpdateVentsOrdns(selector, modifier, options) {
 
-        if (_.has(modifier, '$set') &&_.has(modifier.$set, 'numOrdenVenta')) {
+        if (_.has(modifier, '$set') &&_.has(modifier.$set, 'numVentaOrden')) {
             VentasProductosPartidas.find({ventaOrdenId: selector._id},
                 {fields: {productoInventarioId: 1, numProductos:1}})
                 .forEach((producto) => {
