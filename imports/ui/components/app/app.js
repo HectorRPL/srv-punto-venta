@@ -8,8 +8,6 @@ import {name as Navigation} from "./navigation/navigation";
 import {name as TopNavbar} from "./topNavbar/topNavbar";
 import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
 import {name as Alertas} from "../comun/alertas/alertas";
-import {name as Dashboards} from "../dashboards/dashboards";
-import {name as Charts} from "../charts/charts";
 import template from "./app.html";
 
 class App {
@@ -30,9 +28,7 @@ export default angular
         Navigation,
         TopNavbar,
         PuntoVenta,
-        Alertas,
-        Dashboards,
-        Charts
+        Alertas
     ]).component(name, {
         template: template.default,
         controllerAs: name,
