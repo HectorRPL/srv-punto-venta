@@ -5,7 +5,6 @@ import {Mongo} from "meteor/mongo";
 import {Ventas} from "../../ventas/collection";
 import {Empleados} from "../../empleados/collection";
 import {Clientes} from "../../clientes/collection";
-import {VentasSaldos} from "../saldos/collection";
 import ventasOrdenesHooks from './ventasOrdenesHooks';
 
 class VentasOrdenesCollection extends Mongo.Collection {
@@ -68,8 +67,5 @@ VentasOrdenes.helpers({
     },
     cliente() {
         return Clientes.findOne({_id: this.clienteId});
-    },
-    saldos() {
-        return VentasSaldos.findOne({ventaOrdenId: this._id});
     }
 });

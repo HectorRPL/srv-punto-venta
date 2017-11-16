@@ -19,14 +19,6 @@ import "../../api/empleados/server/publish";
 import "../../api/datosFiscales/server/publish";
 import "../../api/datosFiscales/methods";
 import "../../api/ventas/entregas/methods";
-import "../../api/ventas/saldos/server/publish";
 import "../../api/ventas/ordenes/partidas/productos/server/publish";
 import "../../api/ventas/entregas/server/publish";
-// CHART
-import "../../api/charts/numberChart/server/publish";
-import "../../api/charts/numberChart/methods";
-// PIE CHART
-import "../../api/charts/pieChart/server/publish";
-import "../../api/charts/pieChart/methods";
-import "../../api/charts/cumulativeChart/server/publish";
-import "../../api/charts/lineFocusChart/server/publish";
+

@@ -5,7 +5,6 @@ import {Meteor} from "meteor/meteor";
 import {VentasOrdenes} from "../collection";
 import {Empleados} from "../../../empleados/collection";
 import {Clientes} from "../../../clientes/collection";
-import {VentasSaldos} from "../../saldos/collection";
 import {Counts} from "meteor/tmeasday:publish-counts";
 
 if (Meteor.isServer) {

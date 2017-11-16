@@ -8,7 +8,6 @@ import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
 import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
 import {_} from "meteor/underscore";
 import {VentasOrdenes} from "./collection";
-import {VentasSaldos} from "../saldos/collection";
 
 export const buscarVentasOrdenes = new ValidatedMethod({
     name: 'ventasOrdenes.buscarVentasOrdenes',
@@ -25,6 +24,7 @@ export const buscarVentasOrdenes = new ValidatedMethod({
     }
 });
 
+
 export const obtenerSaldoPorCobrar = new ValidatedMethod({
     name: 'ventasOrdenes.obtenerSaldoPorCobrar',
     mixins: [CallPromiseMixin],
@@ -32,8 +32,8 @@ export const obtenerSaldoPorCobrar = new ValidatedMethod({
         ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id}
     }).validator(),
     run({ventaOrdenId}) {
-        const saldos = VentasSaldos.findOne({ventaOrdenId: ventaOrdenId});
-        return Math.round(saldos.saldoCobrar * 100) / 100;
+        const saldos = VentasOrdenes.findOne({_id: ventaOrdenId}, {fileds: {saldoPorCobrar: 1}});
+        return Math.round(saldos.saldoPorCobrar * 100) / 100;
     }
 });
 
