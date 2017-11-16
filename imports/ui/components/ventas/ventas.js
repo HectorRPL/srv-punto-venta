@@ -3,6 +3,8 @@
  */
 import template from "./ventas.html";
 import {name as Menudeo} from "./menudeo/menudeo";
+import {name as Cancelaciones} from "./cancelaciones/cancelaciones";
+
 
 class Ventas {
 
@@ -17,6 +19,7 @@ const name = 'ventas';
 export default angular
     .module(name, [
         Menudeo,
+        Cancelaciones
     ])
     .component(name, {
         template: template.default,

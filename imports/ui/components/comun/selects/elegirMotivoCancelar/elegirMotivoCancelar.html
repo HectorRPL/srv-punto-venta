@@ -1,0 +1,8 @@
+<select id="selectMotivoCancelarId"
+        class="form-control"
+        name="motivoCancelar"
+        required
+        ng-options="motivo._id as motivo.descripcion for motivo in elegirMotivoCancelar.motivos"
+        ng-model="elegirMotivoCancelar.motivo">
+    <option value="">SELECCIONA UN MOTIVO</option>
+</select>

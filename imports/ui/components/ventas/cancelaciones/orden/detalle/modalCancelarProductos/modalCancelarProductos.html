@@ -1,0 +1,165 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <!--TITULO MODAL-->
+    <div class="col-sm-10">
+        <h2>
+            {{modalCancelarProductos.resolve.partida.numProductos}}
+            {{modalCancelarProductos.resolve.partida.producto().unidad}}
+            {{modalCancelarProductos.resolve.partida.producto().marca().nombre}}
+            {{modalCancelarProductos.resolve.partida.producto().campoBusqueda}}
+        </h2>
+    </div>
+    <!-- TACHE (CERRAR MODAL)-->
+    <div class="col-sm-2">
+        <div class="ibox-tools">
+            <br>
+            <a ng-click="modalCancelarProductos.cerrar()"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <!-- BODY MODAL -->
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="ibox-content">
+            <h2 class="text-center">Cancelar Producto</h2>
+            <!--INPUT PARA INTRODUCIR LA CANTIDAD RECIBIDA-->
+            <form id="modalCancelarProductosFrmId" name="modalCancelarProductosFrm">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : modalCancelarProductosFrm.numProductosCancelados.$invalid && !modalCancelarProductosFrm.numProductosCancelados.$pristine}">
+                            <div ng-messages="modalCancelarProductosFrm.numProductosCancelados.$dirty && modalCancelarProductosFrm.numProductosCancelados.$error"
+                                 role="alert">
+                                <label>
+                                    Cantidad a cancelar *
+                                    <span class="animated fadeIn" style="color:red;" ng-message="min">Min 1</span>
+                                    <span class="animated fadeIn" style="color:red;" ng-message="max">Max
+                                        {{
+                                        modalCancelarProductos.resolve.partida.numProductos
+                                                - modalCancelarProductos.resolve.partida.numCancelados
+                                                - modalCancelarProductos.resolve.partida.numEntregados
+                                        }}
+                                    </span>
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="step">No decimales</span>
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="required">requerido</span>
+                                </label>
+                                <input id="numProductosCanceladosId"
+                                       class="form-control"
+                                       type="number"
+                                       placeholder="Ingresa"
+                                       name="numProductosCancelados"
+                                       max="{{
+                                       modalCancelarProductos.resolve.partida.numProductos
+                                               - modalCancelarProductos.resolve.partida.numEntregados
+                                               - modalCancelarProductos.resolve.partida.numCancelados
+                                       }}"
+                                       min="1"
+                                       step="1"
+                                       required
+                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success' || modalCancelarProductos.resolve.partida.numProductos === modalCancelarProductos.resolve.partida.numEntregados"
+                                       ng-model="modalCancelarProductos.numProductosCancelados">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" ng-if="modalCancelarProductos.resolve.partida.numEntregados > 0">
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : modalCancelarProductosFrm.numProductosDevolver.$invalid
+                             && !modalCancelarProductosFrm.numProductosDevolver.$pristine}">
+                            <div ng-messages="modalCancelarProductosFrm.numProductosDevolver.$dirty
+                            && modalCancelarProductosFrm.numProductosDevolver.$error"
+                                 role="alert">
+                                <label>
+                                    Cantidad a Devolver *
+                                    <span class="animated fadeIn" style="color:red;" ng-message="min">Min 1</span>
+                                    <span class="animated fadeIn" style="color:red;" ng-message="max">Max
+                                        {{modalCancelarProductos.resolve.partida.numEntregados}}
+                                    </span>
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="step">No decimales</span>
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="required">requerido</span>
+                                </label>
+                                <input id="numProductosDevolverId"
+                                       class="form-control"
+                                       type="number"
+                                       placeholder="Ingresa"
+                                       name="numProductosDevolver"
+                                       max="{{modalCancelarProductos.resolve.partida.numEntregados}}"
+                                       min="1"
+                                       step="1"
+                                       required
+                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success' || modalCancelarProductos.resolve.partida.numProductos === modalCancelarProductos.resolve.partida.numEntregados"
+                                       ng-model="modalCancelarProductos.numProductosDevolver">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group"
+                             ng-class="{ 'has-error' : modalCancelarProductosFrm.motivoCancelar.$invalid
+                             && !modalCancelarProductosFrm.motivoCancelar.$pristine}">
+                            <div ng-messages="modalCancelarProductosFrm.motivoCancelar.$dirty
+                            && modalCancelarProductosFrm.motivoCancelar.$error"
+                                 role="alert">
+                                <label>
+                                    Motivo Devolucion *
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="step">No decimales</span>
+                                    <span class="animated fadeIn" style="color:red;"
+                                          ng-message="required">requerido</span>
+                                </label>
+                                <elegir-motivo-cancelar motivo="modalCancelaProductos.motivo">
+                                </elegir-motivo-cancelar>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    ng-click="modalCancelarProductos.aceptar()"
+                                    ng-disabled="modalCancelarProductosFrm.$invalid">
+                                Aceptar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-1">
+
+                </div>
+                <div class="col-sm-9 text-center">
+                    <alertas tipo="modalCancelarProductos.tipoMsj"
+                             mensaje="modalCancelarProductos.msj">
+                    </alertas>
+                </div>
+            </form>
+            <!--TABLA HISTORIAL DE CANCELACIONES-->
+            <table class="table table-hover no-margins" ng-show="modalCancelarProductos.cancelaciones.length > 0">
+                <thead>
+                <tr>
+                    <th>Cantidad cancelada</th>
+                    <th>Empleado que canceló</th>
+                    <th>Fecha / Hora</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="cancelacion in modalCancelarProductos.cancelaciones">
+                    <!--CANTIDAD-->
+                    <td>
+                        {{cancelacion.numProductos}}&nbsp;&nbsp;
+                    </td>
+                    <!--NOMBR DE QUIEN CANCELÓ-->
+                    <td>
+                        {{cancelacion.empleado().nombreCompleto}}
+                    </td>
+                    <!--FECHA RECIBIMIENTO-->
+                    <td>
+                        {{cancelacion.fechaCreacion | date : 'MMM-dd-yy h:mm a'}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--FOOTER MODAL-->
+
+</div>

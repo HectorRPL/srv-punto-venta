@@ -1,0 +1,97 @@
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="text-right">#</th>
+            <th class="text-right">Tipo</th>
+            <th class="text-left">Producto</th>
+            <th class="text-center">Acción</th>
+            <th class="text-right">Recibidos</th>
+            <th class="text-right">Cancelados</th>
+            <th class="text-right">Estatus</th>
+            <th class="text-right">Costo/U</th>
+            <th class="text-right">Importe</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="partida in listaVentaPartidas.partidas">
+            <!--CANTIDAD-->
+            <td class="text-right">
+                {{partida.numProductos}}
+            </td>
+            <!--UNIDAD-->
+            <td class="text-right">
+                {{partida.producto().unidad}}
+            </td>
+            <!--NOMBRE DE PRODUCTO-->
+            <td class="text-left">
+                {{partida.producto().marca().nombre}}
+                {{partida.producto().campoBusqueda}}
+            </td>
+            <!--CALLS TO ACTIONS (La clase que voy a usar es btn-link)-->
+            <td class="pull-right">
+                <div class="pull-right">
+                    <button class="btn-white btn btn-xs"
+                            uib-popover="Recibir productos"
+                            popover-trigger="'mouseenter'"
+                            ng-disabled="(partida.numProductos === partida.numCancelados) ||
+                                         (partida.numProductos === (partida.numEntregados - partida.numCancelados)) ||
+                                         (partida.numCancelados === (partida.numProductos - partida.numEntregados))
+                                        "
+                            ng-click="listaVentaPartidas.modalProductos(partida)">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn-white btn btn-xs"
+                            uib-popover="Ver el historial de la partida"
+                            popover-trigger="'mouseenter'"
+                            ng-click="listaVentaPartidas.modalHistorialComprasPartidas(partida)">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn-white btn btn-xs"
+                            uib-popover="Cancelar productos"
+                            popover-trigger="'mouseenter'"
+                            ng-disabled="partida.numProductos === (partida.numCancelados + partida.numEntregados)"
+                            ng-click="listaVentaPartidas.modalCancelaciones(partida)">
+                        <i class="fa fa-trash-o"aria-hidden="true"></i>
+                    </button>
+                </div>
+            </td>
+            <!--RECIBIDOS-->
+            <td class="text-right">
+                {{partida.numEntregados}}
+            </td>
+            <!--CANCELACIONES-->
+            <td class="text-right">
+                {{partida.numCancelados}}
+            </td>
+            <!--ESTATUS-->
+            <td class="text-right">
+                    <span class="label label-warning"
+                          ng-show="(partida.numCancelados + partida.numEntregados < partida.numProductos)">
+                        {{partida.numProductos - (partida.numCancelados + partida.numEntregados)}}
+                        Pendientes
+                    </span>
+                <span class="label label-success"
+                      ng-show="(partida.numCancelados + partida.numEntregados) === partida.numProductos
+                                && (partida.numEntregados > 0)">
+                        Recibida
+                    </span>
+                <span class="label label-danger" ng-show="partida.numProductos === partida.numCancelados">
+                        Cancelada
+                    </span>
+            </td>
+            <!--COSTO UNITARIO-->
+            <td class="text-right">
+                ${{partida.precioFinal * (1 + (partida.iva/100))| number : 2}}
+            </td>
+            <!--IMPORTE-->
+            <td class="text-right">
+                    <span class="text-muted"
+                          ng-class="{'tachar-texto' : partida.numProductos === partida.numCancelados}">
+                        ${{(partida.precioFinal * partida.numProductos * (1 + (partida.iva/100))) | number:2}}
+                    </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

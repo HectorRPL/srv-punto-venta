@@ -1,0 +1,9 @@
+<div class="input-group m-b">
+    <input type="text"
+           class="form-control"
+           placeholder="Buscar Orden de Venta"
+           typeahead-on-select="buscarVentaOrden.regresarResp($item, $model, $label, $event)"
+           uib-typeahead="ventaOrden as ventaOrden.numVentaOrden for ventaOrden in buscarVentaOrden.buscar($viewValue)"
+           ng-model="buscarVentaOrden.ventaOrden">
+    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+</div>

@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-title">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="text-muted small pull-right">Creada:&nbsp;{{detalleVentaOrden.orden.fechaCreacion | date : 'yyyy-MMMM-dd h:mm a'}}</span>
+                        <h5>Orden de Venta: {{detalleVentaOrden.orden.numVentaOrden}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <address>
+                            <h5>Cliente:</h5>
+                            <mostrar-datos-cliente
+                                    cliente-id="detalleVentaOrden.orden.clienteId"></mostrar-datos-cliente>
+                            <h5>Dirección de Entrega:&nbsp; &nbsp;</h5>
+                            <mostrar-direccion direccion-id="detalleVentaOrden.orden.direccionEntregaId">
+                            </mostrar-direccion>
+                        </address>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <h5>Comprobate:&nbsp;&nbsp;</h5>
+                        <mostrar-datos-fiscales
+                                datos-fiscales-id="finalizarVenta.ordenesVenta.datosFiscalesId">
+                        </mostrar-datos-fiscales>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 font-normal">
+                        <h5>Vendedor: {{detalleVentaOrden.orden.empleado().nombreCompleto}}</h5>
+                    </div>
+                </div>
+                <br>
+                <!--LISTA DE COMPRAS-->
+                <lista-venta-partidas
+                        venta-orden-id="detalleVentaOrden.ventaOrdenId">
+                </lista-venta-partidas>
+                <!--DEGLOSE-->
+                <table class="table invoice-total">
+                    <tbody>
+                    <tr>
+                        <td><strong>Sub Total :</strong></td>
+                        <td>${{detalleVentaOrden.orden.subTotal | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IVA :</strong></td>
+                        <td>${{detalleVentaOrden.orden.total - detalleVentaOrden.orden.subTotal | number: 2}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL :</strong></td>
+                        <td>${{detalleVentaOrden.orden.total | number: 2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--IMPRIMIR-->
+                <div class="row">
+                    <div class="col-sm-8">
+                        <alertas tipo="detalleVentaOrden.tipoMsj" mensaje="compraOrden.msj"></alertas>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary pull-right"
+                                ng-disabled="detalleVentaOrden.orden.impresa === true"
+                                ng-click="detalleVentaOrden.imprimir()"><i class="fa fa-print"></i> Imprimir
+                        </button>
+                    </div>
+                </div>
+                <div class="text-right">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
