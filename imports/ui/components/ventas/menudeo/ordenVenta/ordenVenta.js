@@ -67,7 +67,7 @@ class OrdenVenta {
         crearVenta.callPromise(ordenCompra)
             .then(this.$bindToContext((result) => {
                 this.limpiar();
-                this.state.go('app.venta.finalizar.entregas', {ventaId: result});
+                this.state.go('app.ventas.finalizar.entregas', {ventaId: result});
             }))
             .catch(this.$bindToContext((err) => {
                 console.log(err);

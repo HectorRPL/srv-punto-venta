@@ -1,5 +1,5 @@
 {
-  "name": "app-operativo",
+  "name": "app-punto-venta",
   "private": true,
   "scripts": {
     "start": "meteor run --port 3001 --settings settings.json"

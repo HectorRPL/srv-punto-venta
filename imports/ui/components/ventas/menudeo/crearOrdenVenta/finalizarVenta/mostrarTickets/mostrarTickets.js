@@ -41,7 +41,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.finalizar.tickets', {
+        .state('app.ventas.finalizar.tickets', {
             url: '/tickets',
             template: '<mostrar-tickets></mostrar-tickets>',
             resolve: {

@@ -14,7 +14,7 @@ class Main {}
 const name = 'main';
 
 export default angular
-    .module('app-operativo', [
+    .module('app-punto-venta', [
         angularMeteor,
         angularUBoostrap,
         angularMessages,
@@ -25,6 +25,6 @@ export default angular
 function config($locationProvider, $urlRouterProvider, $stateProvider) {
     'ngInject';
     $locationProvider.html5Mode(true);
-    $urlRouterProvider.otherwise('/app/venta/menudeo');
+    $urlRouterProvider.otherwise('/app/ventas/menudeo');
 }
 

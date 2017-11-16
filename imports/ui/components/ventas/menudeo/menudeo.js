@@ -19,10 +19,6 @@ class Menudeo {
         'ngInject';
         $reactive(this).attach($scope);
         this.$uibModal = $uibModal;
-        this.subTotal = 0;
-        this.importeIva = 0;
-        this.total = 0;
-        this.iva = 16;
         this.productoSelec = '';
         this.clienteId = '';
         this.tiendaId = Session.get('estacionTrabajoId');
@@ -119,7 +115,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.menudeo', {
+        .state('app.ventas.menudeo', {
             url: '/menudeo',
             template: '<menudeo></menudeo>'
         });

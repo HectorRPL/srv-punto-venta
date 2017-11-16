@@ -42,7 +42,7 @@ class ProductosEntregar {
 
         actualizarNumVentaOrden.callPromise(venta)
             .then(this.$bindToContext((result) => {
-                this.$state.go('app.venta.finalizar.tickets');
+                this.$state.go('app.ventas.finalizar.tickets');
             }))
             .catch(this.$bindToContext((err) => {
                 console.log(err);
@@ -72,7 +72,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.finalizar.entregas', {
+        .state('app.ventas.finalizar.entregas', {
             url: '/entregas',
             template: '<productos-entregar></productos-entregar>',
             resolve: {

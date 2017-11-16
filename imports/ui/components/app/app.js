@@ -6,7 +6,7 @@ import "metismenu/dist/metisMenu.js";
 import {name as CapitalizarInputs} from "../directives/capitalizarInputs/capitalizarInputs";
 import {name as Navigation} from "./navigation/navigation";
 import {name as TopNavbar} from "./topNavbar/topNavbar";
-import {name as PuntoVenta} from "../puntoVenta/puntoVenta";
+import {name as Ventas} from "../ventas/ventas";
 import {name as Alertas} from "../comun/alertas/alertas";
 import template from "./app.html";
 
@@ -27,7 +27,7 @@ export default angular
         CapitalizarInputs,
         Navigation,
         TopNavbar,
-        PuntoVenta,
+        Ventas,
         Alertas
     ]).component(name, {
         template: template.default,

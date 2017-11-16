@@ -37,7 +37,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.orden', {
+        .state('app.ventas.orden', {
             url: '/orden/:ventaId',
             template: '<crear-orden-venta></crear-orden-venta>',
             abstract: true

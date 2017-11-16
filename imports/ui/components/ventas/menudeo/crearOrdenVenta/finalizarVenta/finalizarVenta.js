@@ -125,7 +125,7 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta.finalizar', {
+        .state('app.ventas.finalizar', {
             url: '/:ventaId/finalizar',
             abstract: true,
             template: '<finalizar-venta></finalizar-venta>',

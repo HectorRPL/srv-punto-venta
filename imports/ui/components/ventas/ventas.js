@@ -1,10 +1,10 @@
 /**
  * Created by Héctor on 06/03/2017.
  */
-import template from "./puntoVenta.html";
+import template from "./ventas.html";
 import {name as Menudeo} from "./menudeo/menudeo";
 
-class PuntoVenta {
+class Ventas {
 
     constructor($scope, $reactive) {
         'ngInject';
@@ -12,7 +12,7 @@ class PuntoVenta {
     }
 }
 
-const name = 'puntoVenta';
+const name = 'ventas';
 
 export default angular
     .module(name, [
@@ -21,7 +21,7 @@ export default angular
     .component(name, {
         template: template.default,
         controllerAs: name,
-        controller: PuntoVenta
+        controller: Ventas
     })
     .config(config);
 
@@ -29,9 +29,9 @@ function config($stateProvider) {
     'ngInject';
 
     $stateProvider
-        .state('app.venta', {
-            url: '/venta',
-            template: '<punto-venta></punto-venta>',
+        .state('app.ventas', {
+            url: '/ventas',
+            template: '<ventas></ventas>',
             abstract: true
         });
 }
