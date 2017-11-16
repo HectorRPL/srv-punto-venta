@@ -14,10 +14,6 @@ if (Meteor.isServer) {
             this.ready();
         } else {
             const selector = filter;
-            options.fields = {
-                numProductos: 1, precioFinal: 1, productoId: 1,
-                numEntregados: 1, numCancelados: 1, ventaOrdenId: 1
-            };
 
             return {
                 find: function () {
