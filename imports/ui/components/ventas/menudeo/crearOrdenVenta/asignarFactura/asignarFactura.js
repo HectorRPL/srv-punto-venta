@@ -26,10 +26,11 @@ class AsignarFactura {
     }
 
     guardar() {
-        this.dtsFiscales.propietarioId = this.resolve.clienteId;
+        // this.dtsFiscales.propietarioId = this.resolve.clienteId;
         const datosFinales = angular.copy(this.dtsFiscales);
         delete datosFinales.colonias;
 
+        console.log('Los datos fiscales que vamos a enviar', datosFinales);
         crearDatoFiscal.callPromise(datosFinales)
             .then(this.$bindToContext((result) => {
                 return actualizarVentDatsFiscls.callPromise({

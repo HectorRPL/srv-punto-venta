@@ -1,4 +1,4 @@
-<ng-form name="datosFiscalesForm">
+<ng-form name="datosFiscalesFrm">
     <!-- BOTONES = PERSONA FISICA / PERSONA MORAL -->
     <div class="col-sm-6">
         <label class="control-label">Persona *</label>
@@ -23,129 +23,71 @@
             </div>
         </div>
     </div>
-    <span class="animated fadeIn">
-        <!-- PERSONA FISICA -->
-        <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PF'">
-            <!--RFC PERSONA FÍSCA-->
-            <div class="col-sm-6">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.rfcPersonaFisica.$invalid && !datosFiscalesForm.rfcPersonaFisica.$pristine}">
-                    <div ng-messages="datosFiscalesForm.rfcPersonaFisica.$dirty && datosFiscalesForm.rfcPersonaFisica.$error"
-                         role="alert">
-                        <label>RFC *
-                            <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
-                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
-                            <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
-                        </label>
-                        <!--PERSONA FISICA-->
-                        <input class="form-control"
-                               name="rfcPersonaFisica"
-                               type="text"
-                               aria-describedby="sizing-addon1"
-                               ng-pattern="/^([A-ZÑ&]{4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
-                               required
-                               capitalize
-                               buscar-rfc
-                               ng-model="formaDatosFiscales.datos.rfc">
-                    </div>
-                </div>
-            </div>
-            <!--NOMBRE-->
-            <div class="col-sm-6">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.nombres.$invalid && !datosFiscalesForm.nombres.$pristine}">
-                    <div ng-messages="datosFiscalesForm.nombres.$dirty && datosFiscalesForm.nombres.$error" role="alert">
-                        <label>Nombre(s) *
-                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
-                        </label>
-                        <input id="nombreId" class="form-control"
-                               name="nombre" type="text" aria-describedby="sizing-addon1"
-                               minlength="2" maxlength="51" ng-minlength="2" ng-maxlength="50"
-                               ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                               ng-model="formaDatosFiscales.datos.nombres">
-                    </div>
-                </div>
-            </div>
-            <!--APELLIDOS-->
-            <div class="col-sm-6">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.apellidos.$invalid && !datosFiscalesForm.apellidos.$pristine}">
-                    <div ng-messages="datosFiscalesForm.apellidos.$dirty && datosFiscalesForm.apellidos.$error"
-                         role="alert">
-                        <label>Apellidos *
-                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;"ng-message="pattern">caracter no válido</span>
-                        </label>
-                        <input id="apellidosId" class="form-control"
-                               name="apellidos" type="text" aria-describedby="sizing-addon1"
-                               minlength="2" maxlength="51" ng-minlength="2" ng-maxlength="50"
-                               ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                               ng-model="formaDatosFiscales.datos.apellidos">
-                    </div>
-                </div>
+    <!--RFC PERSONA FÍSCA-->
+    <div class="col-sm-6" ng-if="formaDatosFiscales.datos.tipoPersona === 'PF'">
+        <div class="form-group"
+             ng-class="{ 'has-error' : datosFiscalesFrm.rfcPersonaFisica.$invalid && !datosFiscalesFrm.rfcPersonaFisica.$pristine}">
+            <div ng-messages="datosFiscalesFrm.rfcPersonaFisica.$dirty && datosFiscalesFrm.rfcPersonaFisica.$error"
+                 role="alert">
+                <label>RFC *
+                    <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                    <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                    <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
+                </label>
+                <!--PERSONA FISICA-->
+                <input class="form-control"
+                       name="rfcPersonaFisica"
+                       type="text"
+                       aria-describedby="sizing-addon1"
+                       ng-pattern="/^([A-ZÑ&]{4}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
+                       required
+                       capitalize
+                       buscar-rfc
+                       ng-model="formaDatosFiscales.datos.rfc">
             </div>
         </div>
-        <!-- PERSONA MORAL -->
-        <div class="animated fadeIn" ng-if="formaDatosFiscales.datos.tipoPersona === 'PM'">
-            <!--RFC PERSONA MORAL-->
-            <div class="col-sm-6">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.rfcPersonaMoral.$invalid && !datosFiscalesForm.rfcPersonaMoral.$pristine}">
-                    <div ng-messages="datosFiscalesForm.rfcPersonaMoral.$dirty && datosFiscalesForm.rfcPersonaMoral.$error"
-                         role="alert">
-                        <label>RFC *
-                            <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
-                            <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
-                            <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
-                        </label>
-                        <!--PERSONA MORAL -->
-                        <input class="form-control"
-                               name="rfcPersonaMoral"
-                               type="text"
-                               aria-describedby="sizing-addon1"
-                               ng-pattern="/^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
-                               required
-                               capitalize
-                               buscar-rfc
-                               ng-model="formaDatosFiscales.datos.rfc">
-                    </div>
-                </div>
-            </div>
-            <!--RAZÓN SOCIAL-->
-            <div class="col-sm-8">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.razonSocial.$invalid && !datosFiscalesForm.razonSocial.$pristine}">
-                    <div ng-messages="datosFiscalesForm.razonSocial.$dirty && datosFiscalesForm.razonSocial.$error"
-                         role="alert">
-                        <label>Razón Social *
-                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 50 letras</span>
-                            <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
-                        </label>
-                        <input id="razonSocialId" class="form-control"
-                               name="razonSocial" type="text" aria-describedby="sizing-addon1"
-                               minlength="2" maxlength="81" ng-minlength="2" ng-maxlength="81"
-                               ng-pattern="/^[a-zA-ZñÑ\s]+$/" required
-                               ng-model="formaDatosFiscales.datos.razonSocial">
-                    </div>
-                </div>
-            </div>
-            <!--TIPO DE SOCIEDAD-->
-            <div class="col-sm-4">
-                <div class="form-group"
-                     ng-class="{ 'has-error' : datosFiscalesForm.elegirTipoSociedad.$invalid && !datosFiscalesForm.elegirTipoSociedad.$pristine}">
-                    <div ng-messages="datosFiscalesForm.elegirTipoSociedad.$dirty && datosFiscalesForm.elegirTipoSociedad.$error"
-                         role="alert">
-                        <label>&nbsp;
-                            <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
-                        </label>
-                        <elegir-tipo-sociedad tiposociedad="formaDatosFiscales.datos.tipoSociedad"></elegir-tipo-sociedad>
-                    </div>
-                </div>
+    </div>
+    <!--RFC PERSONA MORAL-->
+    <div class="col-sm-6" ng-if="formaDatosFiscales.datos.tipoPersona === 'PM'">
+        <div class="form-group"
+             ng-class="{ 'has-error' : datosFiscalesFrm.rfcPersonaMoral.$invalid && !datosFiscalesFrm.rfcPersonaMoral.$pristine}">
+            <div ng-messages="datosFiscalesFrm.rfcPersonaMoral.$dirty && datosFiscalesFrm.rfcPersonaMoral.$error"
+                 role="alert">
+                <label>RFC *
+                    <span style="color:red;" class="animated fadeIn" ng-message="required">requerido</span>
+                    <span style="color:red;" class="animated fadeIn" ng-message="pattern">inválido</span>
+                    <span style="color:red;" class="animated fadeIn" ng-message="existerfc">registrado</span>
+                </label>
+                <!--PERSONA MORAL -->
+                <input class="form-control"
+                       name="rfcPersonaMoral"
+                       type="text"
+                       aria-describedby="sizing-addon1"
+                       ng-pattern="/^([A-ZÑ&]{3}) ?(?:- ?)?(\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])) ?(?:- ?)?([A-Z\d]{2})([A\d])$/"
+                       required
+                       capitalize
+                       buscar-rfc
+                       ng-model="formaDatosFiscales.datos.rfc">
             </div>
         </div>
-    </span>
+    </div>
+    <!--RAZÓN SOCIAL-->
+    <div class="col-sm-12">
+        <div class="form-group"
+             ng-class="{ 'has-error' : datosFiscalesFrm.razonSocial.$invalid && !datosFiscalesFrm.razonSocial.$pristine}">
+            <div ng-messages="datosFiscalesFrm.razonSocial.$dirty && datosFiscalesFrm.razonSocial.$error"
+                 role="alert">
+                <label>Razón Social *
+                    <span class="animated fadeIn" style="color:red;" ng-message="required">requerido</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">min 2, max 80 letras</span>
+                    <span class="animated fadeIn" style="color:red;" ng-message="pattern">caracter no válido</span>
+                </label>
+                <input id="razonSocialId" class="form-control"
+                       name="razonSocial" type="text" aria-describedby="sizing-addon1"
+                       maxlength="80" ng-minlength="2"
+                       ng-pattern="/^[a-zA-ZñÑáéíóúÁÉÍÓÚ&_.\s\d]+$/" required
+                       ng-model="formaDatosFiscales.datos.razonSocial">
+            </div>
+        </div>
+    </div>
 </ng-form>
