@@ -1,18 +1,17 @@
 /**
  * Created by jvltmtz on 7/08/17.
  */
+import {DatosFiscales} from "../../../../../../api/datosFiscales/collection";
+import {crearDatoFiscal, actualizarDatoFiscal} from '../../../../../../api/datosFiscales/methods';
+import {actualizarVentDatsFiscls} from '../../../../../../api/ventas/ordenes/methods';
 import {name as FormaDireccion} from '../../../../comun/formas/formaDireccion/formaDireccion';
 import {name as FormaDatosFiscales} from '../../../../comun/formas/formaDatosFiscales/formaDatosFiscales';
 import {name as FormaEditarDatosFiscales} from '../../../../comun/formas/formaEditarDatosFiscales/formaEditarDatosFiscales';
 import {name as BuscarDatosFiscales} from '../../../../comun/busquedas/buscarDatosFiscales/buscarDatosFiscales';
-import {actualizarVentDatsFiscls} from '../../../../../../api/ventas/ordenes/methods';
-import {crearDatoFiscal, actualizarDatoFiscal} from '../../../../../../api/datosFiscales/methods';
 import template from './asignarFactura.html';
-import {Session} from "meteor/session";
-import {DatosFiscales} from "../../../../../../api/datosFiscales/collection";
 
 class AsignarFactura {
-    constructor($scope, $reactive, $state, $stateParams) {
+    constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
         this.dtsFiscalesSelec = '';
@@ -26,7 +25,6 @@ class AsignarFactura {
     }
 
     guardar() {
-        // this.dtsFiscales.propietarioId = this.resolve.clienteId;
         const datosFinales = angular.copy(this.dtsFiscales);
         delete datosFinales.colonias;
 
@@ -76,13 +74,10 @@ class AsignarFactura {
     cerrar() {
         this.modalInstance.dismiss('Cancelado');
     }
-
-
 }
 
 const name = 'asignarFactura';
 
-// create a module
 export default angular
     .module(name, [
         FormaDireccion,

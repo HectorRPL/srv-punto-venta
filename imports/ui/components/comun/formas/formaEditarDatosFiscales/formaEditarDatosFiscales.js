@@ -7,23 +7,7 @@ import {name as ElegirTipoSociedad} from "../../selects/elegirTipoSociedad/elegi
 class FormaEditarDatosFiscales {
     constructor($scope) {
         'ngInject';
-        // this.datos.abreviacion = '';
     }
-
-    esPersonaMoral() {
-        delete this.datos.nombres;
-        delete this.datos.apellidos;
-        delete this.datos.rfc;
-        this.datos.tipoPersona = 'PM';
-    }
-    esPersonaFisica() {
-        delete this.datos.razonSocial;
-        delete this.datos.tipoSociedad;
-        delete this.datos.rfc;
-        this.datos.tipoPersona = 'PF';
-
-    }
-
 }
 
 const name = 'formaEditarDatosFiscales';
