@@ -14,6 +14,7 @@ const ventasPartidasHooks = {
 
     },
     _updateComprsOrdns(doc) {
+        console.log(doc);
 
         const subTotal = (doc.precioFinal * doc.numProductos);
         const total = subTotal * (1 + (doc.iva / 100));
