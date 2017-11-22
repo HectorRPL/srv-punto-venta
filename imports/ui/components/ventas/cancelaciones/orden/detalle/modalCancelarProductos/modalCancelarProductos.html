@@ -102,12 +102,11 @@
                                 <label>
                                     Motivo Devolucion *
                                     <span class="animated fadeIn" style="color:red;"
-                                          ng-message="step">No decimales</span>
-                                    <span class="animated fadeIn" style="color:red;"
                                           ng-message="required">requerido</span>
                                 </label>
                                 <elegir-motivo-cancelar motivo="modalCancelaProductos.motivo">
                                 </elegir-motivo-cancelar>
+                                {{modalCancelaProductos.motivo}}
                             </div>
                         </div>
                     </div>
