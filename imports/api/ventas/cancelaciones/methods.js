@@ -9,19 +9,20 @@ import {CallPromiseMixin}     from "meteor/didericis:callpromise-mixin";
 import {PermissionsMixin}     from "meteor/didericis:permissions-mixin";
 import {Empleados}            from '../../empleados/collection';
 import {VentasCancelaciones} from './collection';
+import {VentasOrdenes} from "../ordenes/collection";
 
 const CAMPOS_COMPRAS_CANCELACIONES = [
     'partidaId',
     'tiendaId',
-    'compraOrdenId',
-    'observaciones',
+    'ventaOrdenId',
     'numProductos',
+    'motivo',
     'fechaCancelacion',
     'fechaCreacion'
 ];
 
-export const crearVentasCancelacion = new ValidatedMethod({
-    name: 'ventasCancelaciones.crearVentasCancelacion',
+export const crearVentaCancelacion = new ValidatedMethod({
+    name: 'ventasCancelaciones.crearVentaCancelacion',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -30,46 +31,52 @@ export const crearVentasCancelacion = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ventasCancelaciones.crearVentasCancelacion',
+        name: 'ventasCancelaciones.crearVentaCancelacion',
         message: () => {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: VentasCancelaciones.simpleSchema().pick(CAMPOS_COMPRAS_CANCELACIONES).validator({
-        clean: true,
-        filter: false
-    }),
     run({
-        partidaId,
-        tiendaId,
-        compraOrdenId,
-        observaciones,
-        numProductos
-    }) {
+            partidaId,
+            tiendaId,
+            ventaOrdenId,
+            motivo,
+            numProductos
+        }) {
         if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
+
+            const empleado = Empleados.findOne({propietarioId: this.userId}, {fields:{nombre:1}});
+            const venta = VentasOrdenes.findOne({_id: ventaOrdenId});
+
+            let hoy = new Date().setHours(0, 0, 0, 0);
             return VentasCancelaciones.insert(
                 {
                     partidaId,
                     tiendaId,
-                    compraOrdenId,
+                    ventaOrdenId,
                     empleadoCanceloId: empleado._id,
-                    observaciones,
-                    numProductos
+                    motivo,
+                    numProductos,
+                    requiereNota: venta.fechaCreacion < hoy
                 },
                 (err) => {
                     if (err) {
+                        console.log(err);
                         throw new Meteor.Error(500, 'Error al realizar la operación.', 'compras-cancelaciones-no-creada');
                     }
                 }
             );
         }
-    }
+    },
+    validate: VentasCancelaciones.simpleSchema().pick(CAMPOS_COMPRAS_CANCELACIONES).validator({
+        clean: true,
+        filter: false
+    })
 });
 
 const VENTAS_CANCELACIONES_METHODS = _.pluck(
     [
-        crearVentasCancelacion
+        crearVentaCancelacion
     ],
     'name'
 );

@@ -2,41 +2,32 @@
  * Created by Héctor on 19/10/2017.
  */
 import {_} from 'meteor/underscore';
-import {VentasCancelaciones} from './collection';
 import {VentasPartidasOrdenes} from '../ordenes/partidas/collection';
+import {VentasNotasPartidas} from "../notasCredito/partidas/collection";
 
 const ventasCancelacionesHooks = {
-    _updatePartidasVentas(doc) {
-        const selecCancelaciones = [
-            {$match: {partidaId: doc.partidaId}},
-            {
-                $group: {
-                    _id: '$partidaId',
-                    totalCancelados: {$sum: '$numProductos'}
-                }
-            }
-        ];
-        const sumaProductosCancelados = Meteor.wrapAsync(VentasCancelaciones.rawCollection().aggregate, VentasCancelaciones.rawCollection());
-        try {
-            const numTotalProductosCancelados = sumaProductosCancelados(selecCancelaciones);
+    _insertPartidasNotas(doc) {
 
-            if (numTotalProductosCancelados.length > 0) {
-                const totalCancelados = numTotalProductosCancelados[0].totalCancelados;
+        if (doc.requiereNota) {
+            console.log(doc);
+            const partida = VentasPartidasOrdenes.findOne({_id: doc.partidaId});
 
-                VentasPartidasOrdenes.update({_id: doc.partidaId},
-                    {
-                        $set: {
-                            numCancelados: totalCancelados
-                        }
-                    });
-            }
-        } catch (e) {
-            console.log(e);
+            VentasNotasPartidas.insert({
+                productoId: partida.productoId,
+                factorId: partida.factorId,
+                iva: partida.iva,
+                precioBase: partida.precioBase,
+                precioFinal: partida.precioFinal,
+                partidaId: doc.partidaId,
+                numProductos: doc.numProductos,
+                cancelacionId: doc._id
+            });
         }
+
     },
 
-    afterInsertComprsCanclcns(doc) {
-        this._updatePartidasVentas(doc);
+    afterInsertVentasCanclcns(doc) {
+        this._insertPartidasNotas(doc);
     }
 };
 
