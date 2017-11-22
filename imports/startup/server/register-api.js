@@ -21,4 +21,6 @@ import "../../api/datosFiscales/methods";
 import "../../api/ventas/entregas/methods";
 import "../../api/ventas/ordenes/partidas/productos/server/publish";
 import "../../api/ventas/entregas/server/publish";
+import "../../api/ventas/cancelaciones/server/publish";
+import "../../api/ventas/cancelaciones/methods";
 
