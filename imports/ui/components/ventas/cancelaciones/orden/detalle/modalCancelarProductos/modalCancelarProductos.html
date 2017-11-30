@@ -31,11 +31,7 @@
                                     Cantidad a cancelar *
                                     <span class="animated fadeIn" style="color:red;" ng-message="min">Min 1</span>
                                     <span class="animated fadeIn" style="color:red;" ng-message="max">Max
-                                        {{
-                                        modalCancelarProductos.resolve.partida.numProductos
-                                                - modalCancelarProductos.resolve.partida.numCancelados
-                                                - modalCancelarProductos.resolve.partida.numEntregados
-                                        }}
+                                        {{modalCancelarProductos.resolve.partida.numProductos}}
                                     </span>
                                     <span class="animated fadeIn" style="color:red;"
                                           ng-message="step">No decimales</span>
@@ -47,21 +43,18 @@
                                        type="number"
                                        placeholder="Ingresa"
                                        name="numProductosCancelados"
-                                       max="{{
-                                       modalCancelarProductos.resolve.partida.numProductos
-                                               - modalCancelarProductos.resolve.partida.numEntregados
-                                               - modalCancelarProductos.resolve.partida.numCancelados
-                                       }}"
+                                       max="{{modalCancelarProductos.resolve.partida.numProductos}}"
                                        min="1"
                                        step="1"
                                        required
-                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success' || modalCancelarProductos.resolve.partida.numProductos === modalCancelarProductos.resolve.partida.numEntregados"
+                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success'"
                                        ng-model="modalCancelarProductos.numProductosCancelados">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3" ng-if="modalCancelarProductos.resolve.partida.numEntregados > 0">
-                        <div class="form-group"
+                    <div class="col-sm-3">
+                        <div class="form-group" ng-if="modalCancelarProductos.numProductosCancelados >
+                        (modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numEntregados)"
                              ng-class="{ 'has-error' : modalCancelarProductosFrm.numProductosDevolver.$invalid
                              && !modalCancelarProductosFrm.numProductosDevolver.$pristine}">
                             <div ng-messages="modalCancelarProductosFrm.numProductosDevolver.$dirty
@@ -86,11 +79,16 @@
                                        max="{{modalCancelarProductos.resolve.partida.numEntregados}}"
                                        min="1"
                                        step="1"
-                                       required
-                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success' || modalCancelarProductos.resolve.partida.numProductos === modalCancelarProductos.resolve.partida.numEntregados"
+                                       ng-required="modalCancelarProductos.numProductosCancelados >
+                                       (modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numEntregados)"
+                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success'"
                                        ng-model="modalCancelarProductos.numProductosDevolver">
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-3"
+                         ng-if="modalCancelarProductos.resolve.partida.numEntregados ">
+
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group"
