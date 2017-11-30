@@ -41,7 +41,7 @@ Schema.ventasOrdenes = new SimpleSchema({
     ventaId:            {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId:           {type: String, regEx: SimpleSchema.RegEx.Id},
     mesesSinInteres:    {type: Number, optional: true},
-    numVentaOrden:      {type: String, optional: true},
+    numVentaOrden:      {type: Number, optional: true},
     fechaCreacion:      {type: Date, autoValue: function() {
         if (this.isInsert) {
             return new Date();
