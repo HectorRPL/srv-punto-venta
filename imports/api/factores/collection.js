@@ -33,7 +33,13 @@ Factores.schema = new SimpleSchema({
     factor8:       {type:  Number, defaultValue: 0.0, decimal: true},
     factorCosto:   {type:  Number, defaultValue: 0.0, decimal: true},
     activo:        {type: Boolean, defaultValue:true},
-    fechaCreacion: {type:  Date,   defaultValue: new Date(), denyUpdate: true}
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
 });
 
 Factores.attachSchema(Factores.schema);

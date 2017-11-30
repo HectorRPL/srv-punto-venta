@@ -51,7 +51,13 @@ Schema.ventasPartidasOrdenes = new SimpleSchema({
     comision: {type: Number, decimal: true, optional: true},
     numEntregados:        {type: Number,  defaultValue: 0},
     numCancelados:        {type: Number,  defaultValue: 0},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true}
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
 
 });
 

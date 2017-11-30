@@ -15,7 +15,13 @@ Productos.deny({
 
 Productos.schema = new SimpleSchema({
     _id:                {type: String,  regEx: SimpleSchema.RegEx.Id},
-    fechaCreacion:      {type: Date,    defaultValue: new Date(), denyUpdate: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     marcaId:            {type: String,  regEx: SimpleSchema.RegEx.Id},
     factorDefaultId:    {type: String,  regEx: SimpleSchema.RegEx.Id},
     codigoProveedor:    {type: String},

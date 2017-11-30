@@ -30,7 +30,13 @@ Schema.productosInventarios = new SimpleSchema({
     productoId: {type: String, regEx: SimpleSchema.RegEx.Id},
     marcaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     factorId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     cantidad: {type: Number, defaultValue: 0},
     costo: {type: Number, decimal: true},
     promocionId: {type: String, regEx: SimpleSchema.RegEx.Id},

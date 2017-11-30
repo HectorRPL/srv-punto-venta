@@ -1,12 +1,12 @@
 /**
- * Created by jvltmtz on 30/11/17.
+ * Created by jvltmtz on 6/06/17.
  */
 import {Mongo} from "meteor/mongo";
 import {Ventas} from "../../ventas/collection";
 import {Empleados} from "../../empleados/collection";
 import {Clientes} from "../../clientes/collection";
 
-class VentasDevolucionesCollection extends Mongo.Collection {
+class VentasNotasCreditoCollection extends Mongo.Collection {
     insert(doc, callback) {
         const result = super.insert(doc, callback);
         return result;
@@ -14,14 +14,14 @@ class VentasDevolucionesCollection extends Mongo.Collection {
 
     update(selector, modifier, options, callback) {
         const result = super.update(selector, modifier, options, callback);
-        //ventasDevolucionesHooks.afterUpdateVentsOrdns(selector, modifier, options);
+        //ventasNotasCreditoHooks.afterUpdateVentsOrdns(selector, modifier, options);
         return result;
     }
 }
 
-export const VentasDevoluciones = new VentasDevolucionesCollection('ventasDevoluciones');
+export const VentasNotasCredito = new VentasNotasCreditoCollection('ventasNotasCredito');
 
-VentasDevoluciones.deny({
+VentasNotasCredito.deny({
     insert() {
         return true;
     },
@@ -35,11 +35,11 @@ VentasDevoluciones.deny({
 
 const Schema = {};
 
-Schema.ventasDevoluciones = new SimpleSchema({
+Schema.ventasNotasCredito = new SimpleSchema({
     _id:                {type: String, regEx: SimpleSchema.RegEx.Id},
     ventaOrdenId:       {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId:           {type: String, regEx: SimpleSchema.RegEx.Id},
-    numDevolucion:      {type: String, optional: true},
+    numNotaCredito:     {type: String, optional: true},
     fechaCreacion: {
         type: Date, denyUpdate: true, autoValue: function () {
             if (this.isInsert) {
@@ -48,15 +48,17 @@ Schema.ventasDevoluciones = new SimpleSchema({
         }
     },
     empleadoId:         {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    datosFiscalesId:    {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     total:              {type: Number, defaultValue: 0, decimal: true},
     subTotal:           {type: Number, defaultValue: 0, decimal: true},
     numTotalProductos:  {type: Number, defaultValue: 0, optional: true},
-    impresa:            {type: Boolean, optional: true, defaultValue: false}
+    impresa:            {type: Boolean, optional: true, defaultValue: false},
+    notaFiscalId:       {type: Number, optional: true}
 });
 
-VentasDevoluciones.attachSchema(Schema.ventasDevoluciones);
+VentasNotasCredito.attachSchema(Schema.ventasNotasCredito);
 
-VentasDevoluciones.helpers({
+VentasNotasCredito.helpers({
     empleado() {
         return Empleados.findOne({_id: this.empleadoId});
     },

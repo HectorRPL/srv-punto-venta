@@ -6,13 +6,6 @@ import {VentasOrdenes} from '../../ordenes/collection';
 import {VentasPartidasOrdenes} from './collection.js';
 
 const ventasPartidasHooks = {
-    _updateOrdenEntregada(selector) {
-
-    },
-    _updateOrdenCancelada(selector) {
-
-
-    },
     _updateComprsOrdns(doc) {
         console.log(doc);
 
@@ -32,13 +25,6 @@ const ventasPartidasHooks = {
     },
     afterUpdatePartida(selector, modifier) {
 
-        if (_.has(modifier.$set, 'numEntregados')) {
-            this._updateOrdenEntregada(selector);
-        }
-
-        if (_.has(modifier.$set, 'numCancelados')) {
-            this._updateOrdenCancelada(selector, modifier);
-        }
     },
 
     afterInsertPartidas(doc) {

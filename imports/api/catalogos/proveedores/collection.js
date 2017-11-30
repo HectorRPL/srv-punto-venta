@@ -18,9 +18,11 @@ Proveedores.schema = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id
     },
     fechaCreacion: {
-        type: Date,
-        defaultValue: new Date(),
-        denyUpdate: true
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
     },
     nombre: {
         type: String,

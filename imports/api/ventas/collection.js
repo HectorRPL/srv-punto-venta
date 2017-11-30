@@ -21,7 +21,13 @@ const Schema = {};
 Schema.ventas = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    fechaCreacion: {type: Date, defaultValue: new Date()}
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
 });
 
 Ventas.attachSchema(Schema.ventas);
