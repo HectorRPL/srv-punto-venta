@@ -43,7 +43,6 @@ class AsignarCliente {
         delete this.cliente.nombreCompleto;
         actualizarCliente.callPromise(this.cliente).then(this.$bindToContext((result) => {
             this.modalInstance.close({clienteId: this.cliente._id});
-            return this.cliente._id;
         }))
         .catch(this.$bindToContext((err) => {
             this.tipoMsj = 'danger';
@@ -51,13 +50,6 @@ class AsignarCliente {
         }));
     }
 
-    aceptar() {
-        this.modalInstance.close(true);
-    }
-
-    cerrar() {
-        this.modalInstance.dismiss('Cancelado');
-    }
 
     aceptar() {
         this.modalInstance.close(true);

@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <address>
+                            <h5>Cliente:
+                                <button class="btn btn-xs btn-white" ng-click="crearVentaOrden.abrirModalCliente()">
+                                    <i class="fa fa-plus-square-o fa-2x"></i>
+                                </button>
+                                <br>
+                                <mostrar-datos-cliente
+                                        cliente-id="crearVentaOrden.clienteId">
+                                </mostrar-datos-cliente>
+                            </h5>
+                        </address>
+                    </div>
+                </div>
+                <!-- Partidas de la venta -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <partidas-venta-orden></partidas-venta-orden>
+
+                        <table class="table invoice-total">
+                            <tbody>
+                            <tr>
+                                <td><strong>Sub Total :</strong></td>
+                                <td>${{crearVentaOrden.ventaSubTotal | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IVA :</strong></td>
+                                <td>${{crearVentaOrden.ventaTotal - crearVentaOrden.ventaSubTotal | number : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TOTAL :</strong></td>
+                                <td>${{crearVentaOrden.ventaTotal | number : 2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary pull-left"
+                                ng-click="crearVentaOrden.limpiar()">
+                            <i class="fa fa-eraser"></i> Limpiar
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <alertas tipo="crearVentaOrden.tipoMsj" mensaje="crearVentaOrden.msj"></alertas>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary pull-right"
+                                ng-show="crearVentaOrden.esVendedor"
+                                ng-disabled="crearVentaOrden.ventaSubTotal === 0 || !crearVentaOrden.clienteId"
+                                ng-click="crearVentaOrden.generar()">
+                            <i class="fa fa-dollar"></i> Generar Venta
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

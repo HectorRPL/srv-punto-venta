@@ -1,6 +1,8 @@
 /**
  * Created by Héctor on 16/05/2017.
  */
+import {Session} from "meteor/session";
+import {_} from "meteor/underscore";
 import template from "./existenciaOtrasTiendas.html";
 import {ProductosInventarios} from "../../../../../../api/inventarios/productosInventarios/collection";
 
@@ -8,40 +10,27 @@ class ExistenciaOtrasTiendas {
     constructor($scope, $reactive) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.subscribe('productosInventarios.todasTiendas', () => [
-            {
-                productoId: this.getReactively('productoid'),
-                tiendaId: this.getReactively('tiendaid')
-            }
-        ]);
+        this.tiendaId = Session.get('estacionTrabajoId');
 
         this.helpers({
             otrosInventarios() {
-                return ProductosInventarios.find();
+                return ProductosInventarios.find({
+                    tiendaId: {$ne: this.tiendaId},
+                    cantidad: {$gt: 0}
+                });
             }
         });
 
-    }
-
-    generarProdsTiendas(productoTienda) {
-        productoTienda.numProds = 0;
     }
 
     totalProductosTiendas() {
-        let total = 0;
-        this.otrosInventarios.forEach((item) => {
-            if (item.numProds && item.numProds > 0) {
-                const prod = {
-                    proveedorId: item.tiendaId,
-                    noProductos: item.numProds,
-                    deMiInventario: false,
-                    tiendaGrupo: true
-                };
-                this.productostienda.set(item._id, prod);
-                total += item.numProds;
-            }
-        });
-        this.total = total;
+        let sumProds = 0;
+        sumProds = _.reduce(this.otrosInventarios, function (total, prod) {
+            return total += prod.cantidadSolicitada || 0;
+        }, 0);
+
+        this.productos = Array.from(this.otrosInventarios);
+        this.totalProductos = sumProds
     }
 
 
@@ -56,9 +45,7 @@ export default angular
         controllerAs: name,
         controller: ExistenciaOtrasTiendas,
         bindings: {
-            tiendaid: '<',
-            productoid: '<',
-            productostienda: '=',
-            total: '='
+            productos: '=',
+            totalProductos: '='
         }
     });
