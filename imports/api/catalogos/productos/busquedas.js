@@ -15,10 +15,15 @@ export const buscarProductoDescp = new ValidatedMethod({
         codigo: {type: String}
     }).validator(),
     run({codigo}) {
-        const selector = {campoBusqueda: {$regex: codigo, $options: 'i'}};
-
-        let options = {fields: {_id: 1, marcaId:1, campoBusqueda: 1}, limit: 10};
+        let selector = {campoBusqueda: {$regex: codigo, $options: 'i'}};
+        let options = {
+            fields: {
+                _id: 1, marcaId: 1, campoBusqueda: 1,
+                unidad: 1, descontinuado: 1, importado: 1, calidad: 1
+            }, limit: 10
+        };
         const resultado = Productos.find(selector, options).fetch();
+
         return resultado;
     }
 });
