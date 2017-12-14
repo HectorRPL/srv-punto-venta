@@ -16,7 +16,7 @@ class BuscarVentaOrden {
     buscar(valor) {
         return buscarVentasOrdenes.callPromise({
             tiendaId: this.tiendaId,
-            codigo: valor
+            numVentaOrden: Number(valor)
         }).then(function (result) {
             return result;
         });
