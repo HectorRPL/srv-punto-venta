@@ -2,8 +2,10 @@
  * Created by Héctor on 29/09/2017.
  */
 import {Meteor} from "meteor/meteor";
+import {Session} from "meteor/session";
 import {Empleados} from "../../../../../api/empleados/collection";
 import {name as Alertas} from "../../../comun/alertas/alertas";
+import {crearVentaId} from "../../../../../api/ventas/methods";
 import template from "./navTopLoginLinea.html";
 
 class NavTopLoginLinea {
@@ -11,6 +13,8 @@ class NavTopLoginLinea {
         'ngInject';
         this.$state = $state;
         $reactive(this).attach($scope);
+
+        this.tiendaId = Session.get('estacionTrabajoId');
         this.credentials = {
             username: '',
             password: ''
@@ -20,7 +24,7 @@ class NavTopLoginLinea {
 
         this.subscribe('empleados.logeado');
         this.helpers({
-            empleado(){
+            empleado() {
                 return Empleados.findOne();
             }
         })
@@ -31,11 +35,13 @@ class NavTopLoginLinea {
         Meteor.loginWithPassword(this.credentials.username, this.credentials.password,
             this.$bindToContext((err) => {
                 if (err) {
-                    console.log(err);
                     this.msj = 'Error Usuario y/o Constraseña';
                     this.tipoMsj = 'danger';
                 } else {
-                    console.log('Se logeo con exito');
+                    crearVentaId.callPromise({tiendaId: this.tiendaId})
+                        .then(this.$bindToContext((result) => {
+                            this.$state.go('app.ventas.menudeo.crear', {ventaId: result});
+                        }));
                 }
             })
         );
