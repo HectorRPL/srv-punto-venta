@@ -5,6 +5,7 @@ import {Mongo} from "meteor/mongo";
 import {_} from 'meteor/underscore';
 import {Productos} from "../../../catalogos/productos/collection"
 import ventasPartidasHooks from './ventasPartidasHooks';
+import {Marcas} from "../../../catalogos/marcas/collection";
 
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -15,9 +16,13 @@ class VentasPartidasOrdenesCollection extends Mongo.Collection {
     }
 
     update(selector, modifier, options, callback) {
-
         const result = super.update(selector, modifier, options, callback);
-        ventasPartidasHooks.afterUpdatePartida(selector, modifier);
+        return result;
+    }
+
+    remove(selector, callback) {
+        ventasPartidasHooks.beforeRemovePartida(selector);
+        const result = super.remove(selector, callback);
         return result;
     }
 }
@@ -67,5 +72,9 @@ VentasPartidasOrdenes.helpers({
 
     producto(){
         return Productos.findOne({_id: this.productoId});
+    },
+    marca() {
+        const producto = Productos.findOne({_id: this.productoId});
+        return Marcas.findOne({_id: producto.marcaId});
     }
 });

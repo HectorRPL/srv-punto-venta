@@ -38,11 +38,12 @@ const ventasOrdenesHooks = {
 
     afterUpdateVentsOrdns(selector, modifier, options) {
 
-        if (_.has(modifier, '$set') &&_.has(modifier.$set, 'numVentaOrden')) {
+        if (_.has(modifier, '$set') && _.has(modifier.$set, 'numVentaOrden')
+            && _.has(selector, 'tipo') && selector.tipo === 'menudeo') {
+
             VentasProductosPartidas.find({ventaOrdenId: selector._id},
-                {fields: {productoInventarioId: 1, numProductos:1}})
+                {fields: {productoInventarioId: 1, numProductos: 1}})
                 .forEach((producto) => {
-                    console.log(producto);
                     if (producto.saldo) {
                         this._updateInventrioSaldo(producto);
                     } else {

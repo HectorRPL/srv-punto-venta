@@ -38,29 +38,31 @@ const Schema = {};
 
 Schema.ventasOrdenes = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-    ventaId:            {type: String, regEx: SimpleSchema.RegEx.Id},
-    tiendaId:           {type: String, regEx: SimpleSchema.RegEx.Id},
-    mesesSinInteres:    {type: Number, optional: true},
-    numVentaOrden:      {type: Number, optional: true},
-    fechaCreacion:      {type: Date, autoValue: function() {
-        if (this.isInsert) {
-            return new Date();
+    ventaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    mesesSinInteres: {type: Number, defaultValue: 0},
+    numVentaOrden: {type: Number, optional: true},
+    fechaCreacion: {
+        type: Date, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
         }
-    }},
-    tipo:               {type: String},
-    empleadoId:         {type: String, regEx: SimpleSchema.RegEx.Id},
-    clienteId:          {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    },
+    tipo: {type: String},
+    empleadoId: {type: String, regEx: SimpleSchema.RegEx.Id},
+    clienteId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     direccionEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    datosFiscalesId:    {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    total:              {type: Number, defaultValue: 0, decimal: true},
-    subTotal:           {type: Number, defaultValue: 0, decimal: true},
-    saldoPorCobrar:     {type: Number, defaultValue: 0, decimal: true},
-    totalPagado:        {type: Number, defaultValue: 0, decimal: true},
-    numTotalProductos:  {type: Number, defaultValue: 0},
+    datosFiscalesId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    total: {type: Number, defaultValue: 0, decimal: true},
+    subTotal: {type: Number, defaultValue: 0, decimal: true},
+    saldoPorCobrar: {type: Number, defaultValue: 0, decimal: true},
+    totalPagado: {type: Number, defaultValue: 0, decimal: true},
+    numTotalProductos: {type: Number, defaultValue: 0},
     numTotalCancelados: {type: Number, defaultValue: 0},
     numTotalEntregados: {type: Number, defaultValue: 0},
-    impresa:            {type: Boolean, optional: true, defaultValue: false},
-    cs:                 {type: Number, optional: true}
+    impresa: {type: Boolean, optional: true, defaultValue: false},
+    cs: {type: Number, optional: true}
 });
 
 VentasOrdenes.attachSchema(Schema.ventasOrdenes);

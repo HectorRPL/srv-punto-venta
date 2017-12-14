@@ -67,5 +67,21 @@ if (Meteor.isServer) {
     });
 
 
+    Meteor.publish('ventas.totales', function (filter) {
+
+        if (Object.keys(filter).length === 0 && filter.constructor === Object) {
+            this.ready();
+        } else {
+
+            const selector = filter;
+            Counts.publish(this, 'ventaTotal', VentasOrdenes.find(selector),
+                {countFromField: 'total'}, {noReady: false}
+            );
+            Counts.publish(this, 'ventaSubTotal', VentasOrdenes.find(selector),
+                {countFromField: 'subTotal'}, {noReady: false}
+            );
+        }
+    });
+
 
 }

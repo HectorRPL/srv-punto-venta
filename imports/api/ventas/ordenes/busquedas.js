@@ -14,13 +14,17 @@ export const buscarVentasOrdenes = new ValidatedMethod({
     mixins: [CallPromiseMixin],
     validate: new SimpleSchema({
         tiendaId: {type: String},
-        codigo: {type: String}
+        numVentaOrden: {type: Number}
     }).validator(),
-    run({tiendaId, codigo}) {
-        let selector = {tiendaId: tiendaId, numVentaOrden: codigo};
-        let options = {fields: {_id: 1, tiendaId: 1, numVentaOrden: 1}, limit: 10};
-        const resultado = VentasOrdenes.find(selector, options).fetch();
-        return resultado;
+    run({tiendaId, numVentaOrden}) {
+        if (Meteor.isServer) {
+            let selector = {tiendaId: tiendaId, numVentaOrden: numVentaOrden};
+            let options = {fields: {_id: 1, tiendaId: 1, numVentaOrden: 1}, limit: 10};
+            const resultado = VentasOrdenes.find(selector, options).fetch();
+
+            return resultado;
+        }
+
     }
 });
 

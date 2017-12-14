@@ -123,7 +123,7 @@ VentasOperaciones = {
                     {$inc: {seq: 1}},
                     {returnOriginal: false, upsert: true});
                 const noOrden = result.value.seq;
-                VentasOrdenes.update({_id: orden._id},
+                VentasOrdenes.update({_id: orden._id, tipo: 'menudeo'},
                     {$set: {numVentaOrden: noOrden, fechaCreacion: new Date()}});
                 count++;
             } catch (e) {
