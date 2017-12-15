@@ -23,4 +23,7 @@ import "../../api/ventas/ordenes/partidas/productos/server/publish";
 import "../../api/ventas/entregas/server/publish";
 import "../../api/ventas/cancelaciones/server/publish";
 import "../../api/ventas/cancelaciones/methods";
+import "../../api/ventas/ordenes/partidas/server/publish";
+import "../../api/ventas/ordenes/partidas/methods";
+import "../../api/ventas/ordenes/partidas/productos/methods";
 

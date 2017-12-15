@@ -10,7 +10,7 @@ import {_} from "meteor/underscore";
 import {VentasPagos} from './collection';
 
 const ID = ['_id'];
-const CAMPOS_VENTAS_PAGOS = ['ventaId', 'tiendaId', 'ventaOrdenId', 'tipoPagoId', 'tipoTarjetaId', 'bancoId', 'referencia', 'monto', 'fechaCreacion',];
+const CAMPOS_VENTAS_PAGOS = ['ventaId', 'tiendaId', 'ventaOrdenId', 'tipoPagoId', 'tipoTarjetaId', 'bancoId', 'referencia', 'monto'];
 
 export const crearVentaPago = new ValidatedMethod({
     name: 'ventasPagos.crearVentaPago',
@@ -32,11 +32,11 @@ export const crearVentaPago = new ValidatedMethod({
         filter: false
     }),
     run({
-        ventaId, tiendaId, ventaOrdenId, tipoPagoId, tipoTarjetaId, bancoId, referencia, monto, fechaCreacion
+        ventaId, tiendaId, ventaOrdenId, tipoPagoId, tipoTarjetaId, bancoId, referencia, monto
     }) {
         if (Meteor.isServer) {
             const pago = {
-                ventaId, tiendaId, ventaOrdenId, tipoPagoId, tipoTarjetaId, bancoId, referencia, monto, fechaCreacion
+                ventaId, tiendaId, ventaOrdenId, tipoPagoId, tipoTarjetaId, bancoId, referencia, monto
             };
             return VentasPagos.insert(pago, (err) => {
                 if (err) {

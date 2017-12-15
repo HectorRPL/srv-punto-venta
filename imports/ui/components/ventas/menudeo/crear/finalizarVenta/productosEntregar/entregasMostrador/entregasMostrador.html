@@ -3,7 +3,8 @@
     <div class="input-group input-group-sm"
          ng-class="{ 'has-error' : entregasFrm['numProductos'+ entregasMostrador.index].$invalid
                                 && !entregasFrm['numProductos'+ entregasMostrador.index].$pristine}">
-        <input id="{{entregasMostrador.partida._id}}" name="numProductos{{entregasMostrador.index}}" type="number"
+        <input id="{{entregasMostrador.partida._id}}"
+               name="numProductos{{entregasMostrador.index}}" type="number"
                class="form-control input-xs" placeholder="Cantidad Productos"
                aria-describedby="sizing-addon1" required min="0"
                cantidad-invalida ng-model="entregasMostrador.partida.prodctsEntregar">

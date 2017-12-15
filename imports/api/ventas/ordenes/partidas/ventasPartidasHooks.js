@@ -4,17 +4,10 @@
 import {_} from 'meteor/underscore';
 import {VentasOrdenes} from '../../ordenes/collection';
 import {VentasPartidasOrdenes} from './collection.js';
+import {VentasProductosPartidas} from "./productos/collection";
 
 const ventasPartidasHooks = {
-    _updateOrdenEntregada(selector) {
-
-    },
-    _updateOrdenCancelada(selector) {
-
-
-    },
     _updateComprsOrdns(doc) {
-        console.log(doc);
 
         const subTotal = (doc.precioFinal * doc.numProductos);
         const total = subTotal * (1 + (doc.iva / 100));
@@ -30,19 +23,32 @@ const ventasPartidasHooks = {
                 }
             });
     },
-    afterUpdatePartida(selector, modifier) {
+    _deleteProductosPartida(doc) {
 
-        if (_.has(modifier.$set, 'numEntregados')) {
-            this._updateOrdenEntregada(selector);
-        }
+        const subTotal = (doc.precioFinal * doc.numProductos);
+        const total = subTotal * (1 + (doc.iva / 100));
+        VentasOrdenes.update({_id: doc.ventaOrdenId},
+            {
+                $inc: {
+                    total: -total,
+                    subTotal: -subTotal,
+                    saldoPorCobrar: -total,
+                    numTotalProductos: -doc.numProductos
+                }
+            });
+        VentasProductosPartidas.remove({partidaId: doc._id});
 
-        if (_.has(modifier.$set, 'numCancelados')) {
-            this._updateOrdenCancelada(selector, modifier);
-        }
     },
+
 
     afterInsertPartidas(doc) {
         this._updateComprsOrdns(doc);
+    },
+    beforeRemovePartida(selector) {
+        VentasPartidasOrdenes.find(selector)
+            .forEach((partida) => {
+                this._deleteProductosPartida(partida);
+            });
     }
 
 };

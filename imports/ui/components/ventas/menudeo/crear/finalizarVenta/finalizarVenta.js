@@ -1,6 +1,8 @@
 /**
  * Created by jvltmtz on 16/08/17.
  */
+import {name as AsignarDireccionEntrega} from "../asignarDireccionEntrega/asignarDireccionEntrega";
+import {name as AsignarFactura} from "../asignarFactura/asignarFactura";
 import {name as ProductosEntregar} from './productosEntregar/productosEntregar';
 import {name as MostrarDatosCliente} from "../../../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
 import {name as MostrarDireccion} from "../../../../comun/mostrar/mostrarDireccion/mostrarDireccion";
@@ -8,7 +10,6 @@ import {name as MostrarDatosFiscales} from "../../../../comun/mostrar/mostrarDat
 import {name as MostrarTickets} from "./mostrarTickets/mostrarTickets";
 import {actualizarQuitrDatsFiscls, actualizarQuitrDirccn} from '../../../../../../api/ventas/ordenes/methods';
 import {VentasOrdenes} from '../../../../../../api/ventas/ordenes/collection';
-import {Ventas} from '../../../../../../api/ventas/collection';
 import template from './finalizarVenta.html';
 
 class FinalizarVenta {
@@ -22,9 +23,6 @@ class FinalizarVenta {
         this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}, {limit: 1}]);
 
         this.helpers({
-            venta() {
-                return Ventas.findOne({_id: this.ventaId});
-            },
             ordenesVenta() {
                 return VentasOrdenes.findOne({ventaId: this.ventaId});
             }
@@ -34,6 +32,7 @@ class FinalizarVenta {
     abrirModlDirccin() {
         const ventaId = this.ventaId;
         const clienteId = this.ordenesVenta.clienteId;
+        console.log(this.ordenesVenta.clienteId);
 
         var modalInstance = this.uibModal.open({
             animation: true,
@@ -112,7 +111,9 @@ export default angular
         MostrarDatosCliente,
         MostrarDireccion,
         MostrarDatosFiscales,
-        MostrarTickets
+        MostrarTickets,
+        AsignarDireccionEntrega,
+        AsignarFactura
     ])
     .component(name, {
         template: template.default,

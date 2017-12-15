@@ -1,24 +1,24 @@
 /**
  * Created by Héctor on 19/10/2017.
  */
-import {Meteor}               from "meteor/meteor";
-import {DDPRateLimiter}       from "meteor/ddp-rate-limiter";
-import {_}                    from "meteor/underscore";
-import {ValidatedMethod}      from "meteor/mdg:validated-method";
-import {CallPromiseMixin}     from "meteor/didericis:callpromise-mixin";
-import {PermissionsMixin}     from "meteor/didericis:permissions-mixin";
-import {Empleados}            from '../../empleados/collection';
+import {Meteor} from "meteor/meteor";
+import {DDPRateLimiter} from "meteor/ddp-rate-limiter";
+import {_} from "meteor/underscore";
+import {ValidatedMethod} from "meteor/mdg:validated-method";
+import {CallPromiseMixin} from "meteor/didericis:callpromise-mixin";
+import {PermissionsMixin} from "meteor/didericis:permissions-mixin";
+import {Empleados} from '../../empleados/collection';
 import {VentasCancelaciones} from './collection';
 import {VentasOrdenes} from "../ordenes/collection";
 
-const CAMPOS_COMPRAS_CANCELACIONES = [
+const CAMPOS_VENTAS_CANCELACIONES = [
     'partidaId',
     'tiendaId',
     'ventaOrdenId',
+    'productoId',
     'numProductos',
     'motivo',
-    'fechaCancelacion',
-    'fechaCreacion'
+    'requiereNota'
 ];
 
 export const crearVentaCancelacion = new ValidatedMethod({
@@ -36,28 +36,33 @@ export const crearVentaCancelacion = new ValidatedMethod({
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
+    validate: VentasCancelaciones.simpleSchema()
+        .pick(CAMPOS_VENTAS_CANCELACIONES)
+        .validator({
+            clean: true,
+            filter: false
+        }),
     run({
             partidaId,
             tiendaId,
             ventaOrdenId,
+            productoId,
             motivo,
             numProductos
         }) {
         if (Meteor.isServer) {
 
-            const empleado = Empleados.findOne({propietarioId: this.userId}, {fields:{nombre:1}});
-            const venta = VentasOrdenes.findOne({_id: ventaOrdenId});
+            const empleado = Empleados.findOne({propietarioId: this.userId}, {fields: {nombre: 1}});
 
-            let hoy = new Date().setHours(0, 0, 0, 0);
             return VentasCancelaciones.insert(
                 {
                     partidaId,
                     tiendaId,
                     ventaOrdenId,
+                    productoId,
                     empleadoCanceloId: empleado._id,
                     motivo,
-                    numProductos,
-                    requiereNota: venta.fechaCreacion < hoy
+                    numProductos
                 },
                 (err) => {
                     if (err) {
@@ -67,11 +72,7 @@ export const crearVentaCancelacion = new ValidatedMethod({
                 }
             );
         }
-    },
-    validate: VentasCancelaciones.simpleSchema().pick(CAMPOS_COMPRAS_CANCELACIONES).validator({
-        clean: true,
-        filter: false
-    })
+    }
 });
 
 const VENTAS_CANCELACIONES_METHODS = _.pluck(

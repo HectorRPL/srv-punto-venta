@@ -17,36 +17,17 @@ if (Meteor.isServer) {
         return ProductosInventarios.find(selector, options);
     });
 
-    Meteor.publishComposite('productosInventarios.todasTiendas', function (filter) {
+    Meteor.publishComposite('productosInventarios.lista', function (filter, options) {
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
             this.ready();
         } else {
-            const selector = {$and: [{productoId: filter.productoId}, {tiendaId: {$ne: filter.tiendaId}},
-                {cantidad: {$gt: 0}}]};
-            const options = {fields: {marcaId:0, inventarioId:0, fechaCreacion:0} };
-            return {
-                find: function () {
-                    return ProductosInventarios.find(selector, options);
-                },
-                children: [
-                    {
-                        find: function (productoInventario) {
-                            return Tiendas.find({_id: productoInventario.tiendaId}, {fields:{nombre:1}})
-                        }
-                    }
-                ]
-            };
+            const selector = filter;
+            if (options) {
+                options.files = {fields: {marcaId: 0, inventarioId: 0, fechaCreacion: 0}};
+            } else {
+                options = {fields: {marcaId: 0, inventarioId: 0, fechaCreacion: 0}};
+            }
 
-        }
-
-    });
-
-    Meteor.publishComposite('productosInventarios.miInventario', function (filter) {
-        if (Object.keys(filter).length === 0 && filter.constructor === Object) {
-            this.ready();
-        } else {
-            const selector = {$and: [filter]};
-            const options = {fields: {marcaId:0, inventarioId:0, fechaCreacion:0} };
 
             return {
                 find: function () {

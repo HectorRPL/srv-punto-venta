@@ -43,9 +43,13 @@ Schema.ventasProductosPartidas = new SimpleSchema({
     proveedorId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     productoInventarioId: {type: String, regEx: SimpleSchema.RegEx.Id},
     numProductos: {type: Number},
-    deMiInventario: {type: Boolean, optional: true},
-    fechaCreacion: {type: Date, defaultValue: new Date, denyUpdate: true},
-    tiendaGrupo: {type: Boolean, optional: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     compraOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     descontado: {type: Boolean, optional: true}
 });

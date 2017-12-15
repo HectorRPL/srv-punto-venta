@@ -41,7 +41,13 @@ Schema.ventasPagos = new SimpleSchema({
     bancoId:       {type: String, optional: true},
     referencia:    {type: String, optional: true},
     monto:         {type: Number, decimal : true},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true}
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
 
 });
 

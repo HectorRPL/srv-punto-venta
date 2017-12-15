@@ -37,7 +37,13 @@ Schema.ventasEntregas = new SimpleSchema({
     partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     fechaEntrega: {type: Date, optional: true},
     numProductos: {type: Number},
     empleadoEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},

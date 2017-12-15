@@ -6,7 +6,7 @@
             <th class="text-right">Tipo</th>
             <th class="text-left">Producto</th>
             <th class="text-center">Acción</th>
-            <th class="text-right">Recibidos</th>
+            <th class="text-right">Entregados</th>
             <th class="text-right">Cancelados</th>
             <th class="text-right">Estatus</th>
             <th class="text-right">Costo/U</th>
@@ -50,7 +50,6 @@
                     <button class="btn-white btn btn-xs"
                             uib-popover="Cancelar productos"
                             popover-trigger="'mouseenter'"
-                            ng-disabled="partida.numProductos === (partida.numCancelados + partida.numEntregados)"
                             ng-click="listaVentaPartidas.modalCancelaciones(partida)">
                         <i class="fa fa-trash-o"aria-hidden="true"></i>
                     </button>
@@ -74,7 +73,7 @@
                 <span class="label label-success"
                       ng-show="(partida.numCancelados + partida.numEntregados) === partida.numProductos
                                 && (partida.numEntregados > 0)">
-                        Recibida
+                        Entregada
                     </span>
                 <span class="label label-danger" ng-show="partida.numProductos === partida.numCancelados">
                         Cancelada

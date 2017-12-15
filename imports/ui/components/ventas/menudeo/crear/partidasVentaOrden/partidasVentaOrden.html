@@ -1,0 +1,60 @@
+<div class="table-responsive m-t">
+    <table class="table table-hover invoice-table">
+        <thead>
+        <tr>
+            <th class="text-left">Cantidad</th>
+            <th class="text-left">Unidad</th>
+            <th class="text-left">Producto</th>
+            <th class="text-left">Precio</th>
+            <th class="text-right">% Descuento</th>
+            <th class="text-right">Precio Final</th>
+            <th class="text-left">Importe</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="partida in partidasVentaOrden.partidas">
+            <!--CANTIDAD-->
+            <td>
+                <button type="button"
+                        class="pull-left close"
+                        uib-popover="Quitar partida"
+                        popover-trigger="'mouseenter'"
+                        aria-label="Close"
+                        ng-click="partidasVentaOrden.quitarArticulo(partida._id)">
+                    <span aria-hidden="true"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                {{partida.numProductos}}
+            </td>
+            <!--UNIDAD-->
+            <td class="text-center">
+                {{partida.producto().unidad}}
+            </td>
+            <!--DESCRIPCIÓN DE PRODUCTO-->
+            <td>
+                <div class="text-center">
+                    &nbsp;&nbsp; {{partida.marca().nombre}} {{partida.producto().campoBusqueda}}
+                </div>
+            </td>
+            <!--PRECIO-->
+            <td class="text-center">
+                ${{partida.precioBase | number : 2}}
+            </td>
+            <!--DESCUENTO EN PORCENTAJE Y CANTIDAD-->
+            <td class="text-center">
+                <a>
+                   <span class="text-navy pull-right">
+                      (- {{partida.descuento  | number : 0}}
+                       %)&nbsp;&nbsp;${{(partida.precioBase * partida.descuento/100) * (1 + (partida.iva/100)) | number : 2}}
+                   </span>
+                </a>
+            </td>
+            <!--PRECIO FINAL DESCUENTO-->
+            <td class="text-right">
+                ${{partida.precioFinal * (1 + (partida.iva/100))  | number : 2}}
+            </td>
+            <!--IMPORTE-->
+            <td>${{(partida.precioFinal * partida.numProductos)  * (1 + (partida.iva/100)) | number : 2}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

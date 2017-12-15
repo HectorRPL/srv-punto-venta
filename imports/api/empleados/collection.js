@@ -18,7 +18,13 @@ Empleados.deny({
 
 Empleados.schema = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-    fechaCreacion: {type: Date, defaultValue: new Date(), denyUpdate: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     email: {
         type: String,
         regEx: SimpleSchema.RegEx.Email,

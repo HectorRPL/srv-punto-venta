@@ -1,81 +1,171 @@
 /**
  * Created by Héctor on 04/05/2017.
  */
+import {Session} from "meteor/session";
 import template from "./eligeProductoInventarios.html";
-import {Productos} from "../../../../../api/catalogos/productos/collection";
-import {Marcas} from "../../../../../api/catalogos/marcas/collection";
+import {crearVentaOrden} from "../../../../../api/ventas/ordenes/methods";
+import {crearPartidaOrden, borrarPartidaOrden} from "../../../../../api/ventas/ordenes/partidas/methods";
+import {crearProductosPartida} from "../../../../../api/ventas/ordenes/partidas/productos/methods";
 import {ProductosInventarios} from "../../../../../api/inventarios/productosInventarios/collection";
+import {ConfiguracionesGlobales} from "../../../../../api/catalogos/configuracionesGlobales/collection";
 import {name as ExistenciaOtrasTiendas} from "./existenciaOtrasTiendas/existenciaOtrasTiendas";
 import {name as ElegirMesesIntereses} from "../../../comun/selects/elegirMesesIntereses/elegirMesesIntereses";
+import {VentasOrdenes} from "../../../../../api/ventas/ordenes/collection";
+import {VentasPartidasOrdenes} from "../../../../../api/ventas/ordenes/partidas/collection";
 
 class EligeProductoInventarios {
 
-    constructor($scope, $reactive) {
+    constructor($scope, $reactive, $stateParams) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.totalProductosTiendas = 0;
+        this.sumProductosTiendas = 0;
+        this.tiendaId = Session.get('estacionTrabajoId');
+        this.ventaId = $stateParams.ventaId;
+        this.productosTiendas = [];
         this.cantidadSolicitada = 0;
-        this.productosTiendas = new Map();
-        this.precioFinal = '';
+        this.precioFinal = 0;
         this.descuentoFinal = 0;
-        this.mesesSinInteres = '0';
+        this.mesesSinInteres = 0;
 
-        this.subscribe('productos.id', ()=> [{_id: this.getReactively('resolve.producto._id')}]);
-        this.subscribe('marcas.id', ()=> [{_id: this.getReactively('resolve.producto.marcaId')}]);
-        this.subscribe('productosInventarios.miInventario', ()=> [
+        this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}]);
+        this.subscribe('configuracionesGlobales.lista', () => [{_id: 'iva'}]);
+        this.subscribe('productosInventarios.lista', () => [
             {
-                tiendaId: this.getReactively('resolve.producto.tiendaId'),
                 productoId: this.getReactively('resolve.producto._id')
             }]);
 
+
         this.helpers({
-            marca(){
-                return Marcas.findOne();
-            },
-            producto() {
-                return Productos.findOne();
-            },
             miInventario() {
-                return ProductosInventarios.findOne();
-            }
+                return ProductosInventarios.findOne({tiendaId: this.tiendaId});
+            },
+            ventasOrdenes() {
+                return VentasOrdenes.find({ventaId: this.ventaId});
+            },
+            conf() {
+                return ConfiguracionesGlobales.findOne({_id: "iva"})
+            },
         });
     }
 
 
     aceptar() {
-        let prodFaltante = 0;
-        if(this.cantidadSolicitada > this.miInventario.cantidad){
-            prodFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
+
+        const ventaOrden = VentasOrdenes.findOne({
+            ventaId: this.ventaId,
+            mesesSinInteres: Number(this.mesesSinInteres)
+        });
+
+        if (ventaOrden) {
+            this.obtenerPartida(this.ventaId, ventaOrden._id);
+        } else {
+            this.crearOrden();
         }
-
-        const miProd = {
-            proveedorId: this.resolve.producto.tiendaId,
-            noProductos: (this.cantidadSolicitada - prodFaltante),
-            prodFaltante: prodFaltante,
-            deMiInventario: true,
-        };
-
-        this.productosTiendas.set(this.miInventario._id, miProd);
-
-        const prod = {
-            _id: this.producto._id,
-            marcaDesc: this.marca.nombre,
-            descripcion: this.producto.campoBusqueda,
-            unidad: this.producto.unidad,
-            tiendas: Array.from(this.productosTiendas),
-            factorId: this.miInventario.factorId,
-            precioFinal: this.precioFinal,
-            precioBase: this.miInventario.precioUno(),
-            descuento: this.descuentoFinal,
-            total: this.cantidadSolicitada + this.totalProductosTiendas,
-            mesesSinInteres: this.mesesSinInteres
-        };
-
-        this.modalInstance.close(prod);
     }
 
-    calcularPrecioMeses() {
+    crearOrden() {
+        const ordenVentaFinal = {
+            ventaId: this.ventaId,
+            tiendaId: this.tiendaId,
+            mesesSinInteres: Number(this.mesesSinInteres),
+            tipo: 'menudeo'
+        };
+        crearVentaOrden.callPromise(ordenVentaFinal)
+            .then(this.$bindToContext((result) => {
+                this.obtenerPartida(this.ventaId, result);
+            }))
+            .catch(this.$bindToContext((err) => {
+                console.log(err);
+            }));
+    }
 
+    obtenerPartida(ventaId, ventaOrdenId) {
+
+        let partida = VentasPartidasOrdenes.findOne({
+            ventaId: ventaId, productoId: this.resolve.producto._id
+        });
+
+        if (partida) {
+            Meteor.defer(() => {
+                borrarPartidaOrden.callPromise({_id: partida._id})
+                    .then(this.$bindToContext((result) => {
+                        console.log(result);
+                    }))
+                    .catch(this.$bindToContext((error) => {
+                        console.log(error);
+                    }));
+            });
+
+        }
+        const nuevaPartida = {
+            ventaId: ventaId,
+            ventaOrdenId: ventaOrdenId,
+            productoId: this.resolve.producto._id,
+            factorId: this.miInventario.factorId,
+            precioBase: this.miInventario.precioUno(),
+            precioFinal: this.precioFinal,
+            descuento: this.descuentoFinal,
+            numProductos: this.cantidadSolicitada + this.sumProductosTiendas,
+            iva: this.conf.valor
+        };
+        this.crearPartida(nuevaPartida);
+    }
+
+
+    crearPartida(partida) {
+        crearPartidaOrden.callPromise(partida)
+            .then(this.$bindToContext((result) => {
+                this.creaProductos(result, partida.ventaOrdenId);
+            }))
+            .catch(this.$bindToContext((error) => {
+                console.log(error);
+            }))
+    }
+
+    creaProductos(partidaId, ventaOrdenId) {
+
+        let prodFaltante = 0;
+        if (this.cantidadSolicitada > 0) {
+            if (this.cantidadSolicitada > this.miInventario.cantidad) {
+                let cantFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
+                console.log(cantFaltante);
+                if (cantFaltante > 0) {
+                    const prodFaltante = {
+                        _id: this.resolve.producto._id,
+                        cantidadSolicitada: cantFaltante
+                    };
+                    this.productosTiendas.push(prodFaltante);
+                    this.miInventario.cantidadSolicitada = (this.cantidadSolicitada - cantFaltante);
+                    this.productosTiendas.push(this.miInventario);
+                }
+            } else {
+                this.miInventario.cantidadSolicitada = this.cantidadSolicitada;
+                this.productosTiendas.push(this.miInventario);
+            }
+
+        }
+
+        console.log(this.productosTiendas);
+
+
+        const producto = {
+            tiendaOrigenId: this.tiendaId,
+            partidaId: partidaId,
+            ventaOrdenId: ventaOrdenId,
+            productos: this.productosTiendas
+        };
+
+
+        //var sequence = Promise.resolve();
+
+        crearProductosPartida.callPromise(producto)
+            .then(this.$bindToContext((result) => {
+                console.log(result);
+                this.modalInstance.close('agregado');
+            }))
+            .catch(this.$bindToContext((error) => {
+                console.log(error);
+            }));
     }
 
     cancelarCerrar() {

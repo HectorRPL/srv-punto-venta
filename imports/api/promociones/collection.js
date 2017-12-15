@@ -22,7 +22,13 @@ Promociones.schema = new SimpleSchema({
     _id:            {type:  String, regEx: SimpleSchema.RegEx.Id},
     nombre:         {type:  String},
     descuento:      {type:  Number, min:1, max:99},
-    fechaCreacion:  {type:  Date,   defaultValue: new Date(), denyUpdate: true},
+    fechaCreacion:  {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
     fechaInicio:    {type:  Date},
     fechaFin:       {type:  Date}
 });

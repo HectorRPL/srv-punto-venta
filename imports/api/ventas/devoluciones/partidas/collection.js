@@ -1,11 +1,11 @@
 /**
- * Created by jvltmtz on 11/17/17.
+ * Created by jvltmtz on 30/11/17.
  */
 import {Mongo} from "meteor/mongo";
 import {_} from 'meteor/underscore';
 import {Productos} from "../../../catalogos/productos/collection"
 
-class VentasNotasPartidasCollection extends Mongo.Collection {
+class VentasDevolucionesPartidasCollection extends Mongo.Collection {
     insert(doc, callback) {
 
         const result = super.insert(doc, callback);
@@ -18,9 +18,9 @@ class VentasNotasPartidasCollection extends Mongo.Collection {
         return result;
     }
 }
-export const VentasNotasPartidas = new VentasNotasPartidasCollection('ventasNotasPartidas');
+export const VentasDevolucionesPartidas = new VentasDevolucionesPartidasCollection('ventasDevolucionesPartidas');
 
-VentasNotasPartidas.deny({
+VentasDevolucionesPartidas.deny({
     insert() {
         return true;
     },
@@ -34,9 +34,9 @@ VentasNotasPartidas.deny({
 
 const Schema = {};
 
-Schema.ventasNotasPartidas = new SimpleSchema({
+Schema.ventasDevolucionesPartidas = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
-    notaCreditoId: {type: String, regEx: SimpleSchema.RegEx.Id, optional:true},
+    devolucionId: {type: String, regEx: SimpleSchema.RegEx.Id, optional:true},
     cancelacionId: {type: String, regEx: SimpleSchema.RegEx.Id},
     ventaPartidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     productoId: {type: String, regEx: SimpleSchema.RegEx.Id},
@@ -55,4 +55,4 @@ Schema.ventasNotasPartidas = new SimpleSchema({
 
 });
 
-VentasNotasPartidas.attachSchema(Schema.ventasNotasPartidas);
+VentasDevolucionesPartidas.attachSchema(Schema.ventasDevolucionesPartidas);

@@ -7,6 +7,61 @@ import {VentasProductosPartidas} from "./collection";
 import {_} from "meteor/underscore";
 import {ProductosInventarios} from "../../../../inventarios/productosInventarios/collection";
 
+export const crearProductosPartida = new ValidatedMethod({
+    name: 'ventasProductosPartidas.crearProductosPartida',
+    mixins: [PermissionsMixin, CallPromiseMixin],
+    allow: [
+        {
+            roles: ['crea_ventas_ordenes'],
+            group: 'ventas_ordenes'
+        }
+    ],
+    permissionsError: {
+        name: 'ventasProductosPartidas.crearProductosPartida',
+        message: () => {
+            return 'Este usuario no cuenta con los permisos necesarios.';
+        }
+    },
+    validate: new SimpleSchema({
+        tiendaOrigenId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
+        productos: {type: [Object], blackbox: true}
+    }).validator(),
+    run({
+            tiendaOrigenId, partidaId, ventaOrdenId, productos
+        }) {
+
+        if (Meteor.isServer) {
+
+            productos.forEach((prod) => {
+                console.log(prod);
+                if (prod.cantidadSolicitada > 0) {
+                    const producto = {
+                        partidaId: partidaId,
+                        ventaOrdenId: ventaOrdenId,
+                        tiendaOrigenId: tiendaOrigenId,
+                        proveedorId: prod.tiendaId,
+                        productoInventarioId: prod._id,
+                        numProductos: prod.cantidadSolicitada
+                    };
+
+                    VentasProductosPartidas.insert(producto, (err) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+
+
+            });
+
+
+        }
+    }
+
+});
+
 export const actualizarProdtsMiInvt = new ValidatedMethod({
     name: 'ventasProductosPartidas.actualizarProdtsMiInvt',
     mixins: [PermissionsMixin, CallPromiseMixin],
@@ -79,7 +134,9 @@ export const actualizarComprOrdnId = new ValidatedMethod({
 const VENTAS_PRODUCTOS_PARTIDAS = _.pluck(
     [
         actualizarProdtsMiInvt,
-        actualizarComprOrdnId
+        actualizarComprOrdnId,
+        crearProductosPartida
+
     ], 'name');
 if (Meteor.isServer) {
     DDPRateLimiter.addRule({

@@ -1,17 +1,14 @@
 /**
  * Created by Héctor on 19/06/2017.
  */
-import {Meteor}                           from "meteor/meteor";
-import {Session}                          from "meteor/session";
-import {Roles}                            from "meteor/alanning:roles";
-import {buscarProductoDescp}              from "../../../../api/catalogos/productos/busquedas";
+import {Session} from "meteor/session";
+import {Productos} from "../../../../api/catalogos/productos/collection";
+import {Marcas} from "../../../../api/catalogos/marcas/collection";
+import {name as CrearVentaOrden} from "./crear/crearVentaOrden";
+import {buscarProductoDescp} from "../../../../api/catalogos/productos/busquedas";
 import {name as EligeProductoInventarios} from "./eligeProductoInventarios/eligeProductoInventarios";
-import {name as OrdenVenta}               from "./ordenVenta/ordenVenta";
-import {name as CrearOrdenVenta}          from "./crearOrdenVenta/crearOrdenVenta";
-import {name as AsignarCliente}           from "../menudeo/crearOrdenVenta/asignarCliente/asignarCliente";
-import {name as MostrarDatosCliente}      from "../../comun/mostrar/mostrarDatosCliente/mostrarDatosCliente";
-import template                           from "./menudeo.html";
-import {ConfiguracionesGlobales} from "../../../../api/catalogos/configuracionesGlobales/collection";
+
+import template from "./menudeo.html";
 
 class Menudeo {
 
@@ -19,78 +16,48 @@ class Menudeo {
         'ngInject';
         $reactive(this).attach($scope);
         this.$uibModal = $uibModal;
-        this.productoSelec = '';
-        this.clienteId = '';
+        this.prodSelec = '';
         this.tiendaId = Session.get('estacionTrabajoId');
-        this.pedido = Session.get('ventaenCurso') || [] ;
-        this.subscribe('configuracionesGlobales.lista', () => [{_id: 'iva'}]);
+
+        this.subscribe('productos.id', () => [{_id: this.getReactively('prodSelec._id')}]);
+        this.subscribe('marcas.id', () => [{_id: this.getReactively('prodSelec.marcaId')}]);
 
         this.helpers({
-            esVendedor(){
-                return Roles.userIsInRole(Meteor.userId(), 'vendedores', 'vendedores');
+            marca() {
+                return Marcas.findOne();
             },
-            conf(){
-                return ConfiguracionesGlobales.findOne({_id: "iva"})
-            }
+            producto() {
+                return Productos.findOne();
+            },
         });
     }
 
-    abrirModal(prodBuscado) {
-        prodBuscado.tiendaId = this.tiendaId;
-        prodBuscado.iva = this.conf.valor;
+    abrirModal($item, $model, $label, $event) {
+
+        let productoFinal = $model;
         var modalInstance = this.$uibModal.open({
             animation: true,
             component: "EligeProductoInventarios",
             size: 'lg',
             resolve: {
                 producto: function () {
-                    return prodBuscado;
+                    return productoFinal;
                 }
 
             }
         }).result.then(this.$bindToContext((result) => {
-            const index = this.pedido.findIndex((item)=> {
-                return item._id === result._id;
-            });
-            if (index === -1) {
-                this.pedido.push(result);
-            } else {
-                this.pedido.splice(index, 1, result);
-            }
-            Session.setPersistent('ventaenCurso', this.pedido);
+            console.log(result);
         }, function (reason) {
-
+            console.log(reason);
         }));
-    }
-
-    abrirModalCliente() {
-        let clienteId = '';
-        var modalInstance = this.$uibModal.open({
-            animation: true,
-            component: 'AsignarCliente',
-            size: 'lg',
-            resolve: {
-                clienteId: function () {
-                    return clienteId;
-                }
-            }
-        }).result.then(this.$bindToContext((result) => {
-            this.clienteId = result;
-        }, function (reason) {
-            console.log('[reason]', reason);
-        }));
-    }
-
-    prueba(item) {
-        this.abrirModal(item);
     }
 
     buscarProducto(valor) {
         return buscarProductoDescp.callPromise({
             codigo: valor
-        }).then(function (result) {
+        }).then(this.$bindToContext((result) => {
             return result;
-        });
+        }));
     }
 }
 
@@ -99,10 +66,7 @@ const name = 'menudeo';
 export default angular
     .module(name, [
         EligeProductoInventarios,
-        OrdenVenta,
-        CrearOrdenVenta,
-        AsignarCliente,
-        MostrarDatosCliente
+        CrearVentaOrden
     ])
     .component(name, {
         template: template.default,

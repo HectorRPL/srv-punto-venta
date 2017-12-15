@@ -123,8 +123,8 @@ VentasOperaciones = {
                     {$inc: {seq: 1}},
                     {returnOriginal: false, upsert: true});
                 const noOrden = result.value.seq;
-                VentasOrdenes.update({_id: orden._id},
-                    {$set: {numVentaOrden: noOrden,}});
+                VentasOrdenes.update({_id: orden._id, tipo: 'menudeo'},
+                    {$set: {numVentaOrden: noOrden, fechaCreacion: new Date()}});
                 count++;
             } catch (e) {
                 throw  new Meteor.Error(401, 'Error al actualizar no orden venta ', 'no-empleado-noEncontrado');

@@ -32,7 +32,8 @@ Schema.ventasCancelaciones = new SimpleSchema({
     _id:                {type: String, regEx: SimpleSchema.RegEx.Id},
     partidaId:          {type: String, regEx: SimpleSchema.RegEx.Id},
     tiendaId:           {type: String, regEx: SimpleSchema.RegEx.Id},
-    ventaOrdenId:      {type: String, regEx: SimpleSchema.RegEx.Id},
+    ventaOrdenId:       {type: String, regEx: SimpleSchema.RegEx.Id},
+    productoId:         {type: String, regEx: SimpleSchema.RegEx.Id},
     empleadoCanceloId:  {type: String, regEx: SimpleSchema.RegEx.Id},
     empleadoAutorizaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional:true},
     notaCreditoId:      {type: String, regEx: SimpleSchema.RegEx.Id, optional:true},
@@ -40,9 +41,14 @@ Schema.ventasCancelaciones = new SimpleSchema({
     motivo:             {type: String},
     numProductos:       {type: Number},
     numDevoluciones:    {type: Number, optional: true},
-    requiereNota:       {type: Boolean, defaultValue: false},
-    fechaCreacion:      {type: Date, defaultValue: new Date(), denyUpdate: true},
-
+    devolucionId:       {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    fechaCreacion: {
+        type: Date, denyUpdate: true, autoValue: function () {
+            if (this.isInsert) {
+                return new Date();
+            }
+        }
+    },
 });
 
 VentasCancelaciones.attachSchema(Schema.ventasCancelaciones);

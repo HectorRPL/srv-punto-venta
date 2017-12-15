@@ -2,6 +2,7 @@
  * Created by jvltmtz on 1/08/17.
  */
 import {Direcciones} from '../../../../../../api/direcciones/collection';
+import {name as FormaDireccion} from "../../../../comun/formas/formaDireccion/formaDireccion";
 import {actualizarDireccion, crearDireccion} from '../../../../../../api/direcciones/methods';
 import {actualizarDirccnEntrg} from '../../../../../../api/ventas/ordenes/methods';
 import template from './asignarDireccionEntrega.html';
@@ -79,7 +80,9 @@ const name = 'asignarDireccionEntrega';
 
 // create a module
 export default angular
-    .module(name, [])
+    .module(name, [
+        FormaDireccion
+    ])
     .component(name, {
         template: template.default,
         controllerAs: name,

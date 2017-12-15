@@ -33,15 +33,16 @@ class ModalCancelarProductos {
     }
 
     aceptar() {
-        console.log(this.motivo);
+
         let cancelacion = {
             partidaId: this.resolve.partida._id,
             tiendaId: this.tiendaId,
             ventaOrdenId: this.ventaOrdenId,
+            productoId: this.resolve.partida.productoId,
             numProductos: this.numProductosCancelados,
             motivo: '1'
         };
-        console.log(cancelacion);
+
         crearVentaCancelacion.callPromise(cancelacion).then(this.$bindToContext((result) => {
             this.tipoMsj = 'success';
             this.limpiarForma();
