@@ -5,6 +5,7 @@ import {Meteor} from "meteor/meteor";
 import {VentasPartidasOrdenes} from "../collection";
 import {Productos} from "../../../../catalogos/productos/collection";
 import {Marcas} from "../../../../catalogos/marcas/collection";
+import {VentasProductosPartidas} from "../productos/collection";
 
 if (Meteor.isServer) {
 
@@ -37,6 +38,18 @@ if (Meteor.isServer) {
                                 }
                             }
                         ]
+                    },
+                    {
+                        find: function (partida) {
+                            return VentasProductosPartidas.find({partidaId: partida._id}, {
+                                fields: {
+                                    partidaId: 1,
+                                    tiendaOrigenId: 1,
+                                    proveedorId: 1,
+                                    numProductos: 1
+                                }
+                            });
+                        }
                     }
                 ]
             };

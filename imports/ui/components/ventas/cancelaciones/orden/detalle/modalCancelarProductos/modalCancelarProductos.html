@@ -20,7 +20,7 @@
         <div class="ibox-content">
             <h2 class="text-center">Cancelar Producto</h2>
             <!--INPUT PARA INTRODUCIR LA CANTIDAD RECIBIDA-->
-            <form id="modalCancelarProductosFrmId" name="modalCancelarProductosFrm">
+            <form id="modalCancelarProductosFrmId" name="modalCancelarProductosFrm" ng-show="modalCancelarProductos.cancelPendientes.length === 0">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group"
@@ -31,7 +31,7 @@
                                     Cantidad a cancelar *
                                     <span class="animated fadeIn" style="color:red;" ng-message="min">Min 1</span>
                                     <span class="animated fadeIn" style="color:red;" ng-message="max">Max
-                                        {{modalCancelarProductos.resolve.partida.numProductos}}
+                                        {{modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numCancelados}}
                                     </span>
                                     <span class="animated fadeIn" style="color:red;"
                                           ng-message="step">No decimales</span>
@@ -43,28 +43,28 @@
                                        type="number"
                                        placeholder="Ingresa"
                                        name="numProductosCancelados"
-                                       max="{{modalCancelarProductos.resolve.partida.numProductos}}"
+                                       max="{{modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numCancelados}}"
                                        min="1"
                                        step="1"
                                        required
+                                       ng-change="modalCancelarProductos.calcularProdsDev()"
                                        ng-disabled="modalCancelarProductos.tipoMsj === 'success'"
-                                       ng-model="modalCancelarProductos.numProductosCancelados">
+                                       ng-model="modalCancelarProductos.numProductosACancelar">
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="form-group" ng-if="modalCancelarProductos.numProductosCancelados >
-                        (modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numEntregados)"
+                        <div class="form-group" ng-if="modalCancelarProductos.numProductosDevolver > 0 "
                              ng-class="{ 'has-error' : modalCancelarProductosFrm.numProductosDevolver.$invalid
                              && !modalCancelarProductosFrm.numProductosDevolver.$pristine}">
                             <div ng-messages="modalCancelarProductosFrm.numProductosDevolver.$dirty
                             && modalCancelarProductosFrm.numProductosDevolver.$error"
                                  role="alert">
                                 <label>
-                                    Cantidad a Devolver *
+                                    Cantidad a Recibir *
                                     <span class="animated fadeIn" style="color:red;" ng-message="min">Min 1</span>
                                     <span class="animated fadeIn" style="color:red;" ng-message="max">Max
-                                        {{modalCancelarProductos.resolve.partida.numEntregados}}
+                                        {{modalCancelarProductos.numProductosDevolver}}
                                     </span>
                                     <span class="animated fadeIn" style="color:red;"
                                           ng-message="step">No decimales</span>
@@ -76,12 +76,10 @@
                                        type="number"
                                        placeholder="Ingresa"
                                        name="numProductosDevolver"
-                                       max="{{modalCancelarProductos.resolve.partida.numEntregados}}"
+                                       max="{{modalCancelarProductos.numProductosDevolver}}"
                                        min="1"
                                        step="1"
-                                       ng-required="modalCancelarProductos.numProductosCancelados >
-                                       (modalCancelarProductos.resolve.partida.numProductos - modalCancelarProductos.resolve.partida.numEntregados)"
-                                       ng-disabled="modalCancelarProductos.tipoMsj === 'success'"
+                                       ng-disabled="true"
                                        ng-model="modalCancelarProductos.numProductosDevolver">
                             </div>
                         </div>
@@ -133,20 +131,31 @@
             <table class="table table-hover no-margins" ng-show="modalCancelarProductos.cancelaciones.length > 0">
                 <thead>
                 <tr>
-                    <th>Cantidad cancelada</th>
-                    <th>Empleado que canceló</th>
+                    <th># Cancelada</th>
+                    <th># Recibir</th>
+                    <th>Canceló</th>
+                    <th>Aprovación</th>
                     <th>Fecha / Hora</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="cancelacion in modalCancelarProductos.cancelaciones">
-                    <!--CANTIDAD-->
+                    <!--CANTIDAD CANCELA-->
                     <td>
                         {{cancelacion.numProductos}}&nbsp;&nbsp;
                     </td>
+                    <!--CANTIDAD recibir-->
+                    <td>
+                        {{cancelacion.numDevoluciones}}&nbsp;&nbsp;
+                    </td>
                     <!--NOMBR DE QUIEN CANCELÓ-->
                     <td>
-                        {{cancelacion.empleado().nombreCompleto}}
+                        {{cancelacion.empleadoCancelo().nombreCompleto}}
+                    </td>
+                    <!--NOMBR DE QUIEN APROVÓ-->
+                    <td>
+                        <span ng-show="cancelacion.empleadoAutorizaId">{{cancelacion.empleadoAutorizo().nombreCompleto}}</span>
+                        <span ng-hide="cancelacion.empleadoAutorizaId">Esperando Autoriazacion...</span>
                     </td>
                     <!--FECHA RECIBIMIENTO-->
                     <td>

@@ -17,10 +17,6 @@
                        ng-maxlength="{{producto.cantidad}}"
                        ng-change="existenciaOtrasTiendas.totalProductosTiendas()"
                        ng-model="producto.cantidadSolicitada">
-                <!-- div ng-messages="existenciaOtrasTiendasFrm['cantidad'+$index].$dirty
-                        && existenciaOtrasTiendasFrm['cantidad'+$index].$error" role="alert">
-                        <span class="animated fadeIn" style="color:red;" ng-message="minlength, maxlength">Cantidad invalida</span>
-                </div -->
             </div>
             <span class="label label-default">{{producto.cantidad}}</span>&nbsp;&nbsp;
             <small>
@@ -28,5 +24,4 @@
             </small>
         </li>
     </ul>
-    <pre>{{existenciaOtrasTiendas.otrosInventarios}}</pre>
 </ng-form>

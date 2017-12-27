@@ -40,7 +40,7 @@ Schema.ventasCancelaciones = new SimpleSchema({
     fechaAutorizacion:  {type: Date, optional:true},
     motivo:             {type: String},
     numProductos:       {type: Number},
-    numDevoluciones:    {type: Number, optional: true},
+    numDevoluciones:    {type: Number, defaultValue: 0},
     devolucionId:       {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     fechaCreacion: {
         type: Date, denyUpdate: true, autoValue: function () {
@@ -54,7 +54,10 @@ Schema.ventasCancelaciones = new SimpleSchema({
 VentasCancelaciones.attachSchema(Schema.ventasCancelaciones);
 
 VentasCancelaciones.helpers({
-    empleado(){
+    empleadoCancelo(){
         return Empleados.findOne({_id: this.empleadoCanceloId});
+    },
+    empleadoAutorizo(){
+        return Empleados.findOne({_id: this.empleadoAutorizaId});
     }
 });

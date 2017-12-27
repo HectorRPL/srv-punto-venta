@@ -6,47 +6,39 @@ import {VentasPartidasOrdenes} from '../ordenes/partidas/collection';
 import {VentasNotasPartidas} from "../notasCredito/partidas/collection";
 import {VentasOrdenes} from "../ordenes/collection";
 import {VentasDevolucionesPartidas} from "../devoluciones/partidas/collection";
+import {VentasNotasCredito} from "../devoluciones/collection";
+import {VentasCancelaciones} from "./collection";
 
 const ventasCancelacionesHooks = {
-    _insertPartidasNotas(doc) {
+
+    _insertVentasNotas(doc) {
 
         const venta = VentasOrdenes.findOne({_id: doc.ventaOrdenId});
-        const partida = VentasPartidasOrdenes.findOne({_id: doc.partidaId}, {
-            fields: {factorId: 1, iva: 1, precioFinal: 1, precioBase: 1}
-        });
 
         let hoy = new Date().setHours(0, 0, 0, 0);
 
         if (venta.fechaCreacion < hoy) {
-
-            VentasNotasPartidas.insert({
-                productoId: doc.productoId,
-                factorId: partida.factorId,
-                iva: partida.iva,
-                precioBase: partida.precioBase,
-                precioFinal: partida.precioFinal,
-                ventaPartidaId: doc.partidaId,
-                numProductos: doc.numProductos,
-                cancelacionId: doc._id
+            const notaCredito = VentasNotasCredito.findOne({
+                ventaOrdenId: doc.ventaOrdenId,
+                numNotaCredito: {$exists: false}
             });
-        } else{
-           VentasDevolucionesPartidas.insert({
-                   productoId: doc.productoId,
-                   factorId: partida.factorId,
-                   iva: partida.iva,
-                   precioBase: partida.precioBase,
-                   precioFinal: partida.precioFinal,
-                   ventaPartidaId: doc.partidaId,
-                   numProductos: doc.numProductos,
-                   cancelacionId: doc._id
-               }
-           );
+            if (notaCredito) {
+                const notaCreditoId = VentasNotasCredito.insert({
+                    ventaOrdenId: doc.ventaOrdenId,
+                    tiendaId: doc.tiendaId,
+                });
+                VentasCancelaciones.update({_id: doc._id}, {$set: {notaCreditoId: notaCreditoId}});
+
+            } else {
+                VentasCancelaciones.update({_id: doc._id}, {$set: {notaCreditoId: notaCredito._id}});
+            }
         }
 
     },
 
     afterInsertVentasCanclcns(doc) {
-        this._insertPartidasNotas(doc);
+
+        this._insertVentasNotas(doc);
     }
 };
 

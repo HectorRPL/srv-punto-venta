@@ -26,6 +26,11 @@ if (Meteor.isServer) {
                         find: function (ventasCancelacion) {
                             return Empleados.find({_id: ventasCancelacion.empleadoCanceloId}, {fields: {nombreCompleto: 1}});
                         }
+                    },
+                    {
+                        find: function (ventasCancelacion) {
+                            return Empleados.find({_id: ventasCancelacion.empleadoAutorizaId}, {fields: {nombreCompleto: 1}});
+                        }
                     }
                 ]
             }

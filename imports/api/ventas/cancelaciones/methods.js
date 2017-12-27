@@ -17,6 +17,7 @@ const CAMPOS_VENTAS_CANCELACIONES = [
     'ventaOrdenId',
     'productoId',
     'numProductos',
+    'numDevoluciones',
     'motivo',
     'requiereNota'
 ];
@@ -48,7 +49,8 @@ export const crearVentaCancelacion = new ValidatedMethod({
             ventaOrdenId,
             productoId,
             motivo,
-            numProductos
+            numProductos,
+            numDevoluciones
         }) {
         if (Meteor.isServer) {
 
@@ -62,7 +64,8 @@ export const crearVentaCancelacion = new ValidatedMethod({
                     productoId,
                     empleadoCanceloId: empleado._id,
                     motivo,
-                    numProductos
+                    numProductos,
+                    numDevoluciones
                 },
                 (err) => {
                     if (err) {

@@ -1,7 +1,6 @@
 /**
  * Created by jvltmtz on 23/08/17.
- */
-import {name as ProductosMiInvtr} from "./productosMiInvntr/productosMiInvntr";
+ */;
 import {name as EntregasPartidas} from "./entregasPartidas/entregasPartidas";
 import {name as EntregasMostrador} from "./entregasMostrador/entregasMostrador";
 import {actualizarNumVentaOrden} from '../../../../../../../api/ventas/methods';
@@ -57,7 +56,6 @@ const name = 'productosEntregar';
 
 export default angular
     .module(name, [
-        ProductosMiInvtr,
         EntregasMostrador,
         EntregasPartidas
     ])

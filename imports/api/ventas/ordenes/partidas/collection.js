@@ -6,6 +6,7 @@ import {_} from 'meteor/underscore';
 import {Productos} from "../../../catalogos/productos/collection"
 import ventasPartidasHooks from './ventasPartidasHooks';
 import {Marcas} from "../../../catalogos/marcas/collection";
+import {VentasProductosPartidas} from "./productos/collection";
 
 class VentasPartidasOrdenesCollection extends Mongo.Collection {
     insert(doc, callback) {
@@ -76,5 +77,8 @@ VentasPartidasOrdenes.helpers({
     marca() {
         const producto = Productos.findOne({_id: this.productoId});
         return Marcas.findOne({_id: producto.marcaId});
+    },
+    numMiInvt(){
+        return VentasProductosPartidas.findOne({partidaId: this._id, $where: "this.proveedorId == this.tiendaOrigenId" });
     }
 });
