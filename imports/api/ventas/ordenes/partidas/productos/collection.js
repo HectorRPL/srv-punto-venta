@@ -39,8 +39,8 @@ Schema.ventasProductosPartidas = new SimpleSchema({
     _id: {type: String, regEx: SimpleSchema.RegEx.Id},
     partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
     ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
-    tiendaOrigenId: {type: String, regEx: SimpleSchema.RegEx.Id},
     proveedorId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    tiendaProveedorId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     productoInventarioId: {type: String, regEx: SimpleSchema.RegEx.Id},
     numProductos: {type: Number},
     fechaCreacion: {

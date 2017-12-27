@@ -35,16 +35,16 @@ export const crearProductosPartida = new ValidatedMethod({
         if (Meteor.isServer) {
 
             productos.forEach((prod) => {
-                console.log(prod);
                 if (prod.cantidadSolicitada > 0) {
                     const producto = {
                         partidaId: partidaId,
                         ventaOrdenId: ventaOrdenId,
-                        tiendaOrigenId: tiendaOrigenId,
-                        proveedorId: prod.tiendaId,
                         productoInventarioId: prod._id,
                         numProductos: prod.cantidadSolicitada
                     };
+                    if (prod.tiendaId) {
+                        producto.tiendaProveedorId = prod.tiendaId
+                    }
 
                     VentasProductosPartidas.insert(producto, (err) => {
                         if (err) {
