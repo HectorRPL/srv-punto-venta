@@ -10,7 +10,6 @@ import {Counts} from "meteor/tmeasday:publish-counts";
 if (Meteor.isServer) {
 
     Meteor.publishComposite('ventasOrdenes.lista', function (filter, options) {
-        console.log('ventasOrdenes.lista', filter);
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
             this.ready();
         } else {

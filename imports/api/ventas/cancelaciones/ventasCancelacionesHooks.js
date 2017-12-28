@@ -23,14 +23,16 @@ const ventasCancelacionesHooks = {
                 numNotaCredito: {$exists: false}
             });
             if (notaCredito) {
+                VentasCancelaciones.update({_id: doc._id},
+                    {$set: {notaCreditoId: notaCredito._id}});
+
+            } else {
                 const notaCreditoId = VentasNotasCredito.insert({
                     ventaOrdenId: doc.ventaOrdenId,
                     tiendaId: doc.tiendaId,
                 });
-                VentasCancelaciones.update({_id: doc._id}, {$set: {notaCreditoId: notaCreditoId}});
-
-            } else {
-                VentasCancelaciones.update({_id: doc._id}, {$set: {notaCreditoId: notaCredito._id}});
+                VentasCancelaciones.update({_id: doc._id},
+                    {$set: {notaCreditoId: notaCreditoId}});
             }
         }
 
