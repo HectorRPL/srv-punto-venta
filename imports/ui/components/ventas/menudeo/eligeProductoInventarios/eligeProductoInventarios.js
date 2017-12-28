@@ -128,10 +128,9 @@ class EligeProductoInventarios {
         if (this.cantidadSolicitada > 0) {
             if (this.cantidadSolicitada > this.miInventario.cantidad) {
                 let cantFaltante = this.cantidadSolicitada - this.miInventario.cantidad;
-                console.log(cantFaltante);
                 if (cantFaltante > 0) {
                     const prodFaltante = {
-                        _id: this.resolve.producto._id,
+                        _id: this.miInventario._id,
                         cantidadSolicitada: cantFaltante
                     };
                     this.productosTiendas.push(prodFaltante);
