@@ -34,7 +34,7 @@ export const buscarCantidaAlmacen = new ValidatedMethod({
     }).validator(),
     run({partidaId, proveedorId}) {
         if (Meteor.isServer) {
-            const selector = {partidaId: partidaId, proveedorId: proveedorId};
+            const selector = {partidaId: partidaId, tiendaProveedorId: proveedorId};
             const producto = VentasProductosPartidas.findOne(selector);
             return producto ? producto.numProductos : 0;
         }

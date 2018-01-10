@@ -46,10 +46,10 @@ Schema.productosInventarios = new SimpleSchema({
 ProductosInventarios.attachSchema(Schema.productosInventarios);
 
 ProductosInventarios.helpers({
-    tienda(){
+    tienda() {
         return Tiendas.findOne({_id: this.tiendaId});
     },
-    precioUno(){
+    precioUno() {
         let precio = 0.0;
         const factor = Factores.findOne({_id: this.factorId});
         if (factor) {
@@ -57,7 +57,7 @@ ProductosInventarios.helpers({
         }
         return precio;
     },
-    precioMeses(){
+    precioMeses() {
         let precio = 0.0;
         const factor = Factores.findOne({_id: this.factorId});
         if (factor) {
@@ -66,24 +66,26 @@ ProductosInventarios.helpers({
         return precio;
     },
     //Validar fecha final del descuento.
-    descuentoPromo(){
+    descuentoPromo() {
         let descuento = 0;
         if (this.promocionId) {
-            const desc = Promociones.findOne({_id: this.promocionId});
-            if (desc) {
-                descuento = desc.descuento;
+            const promo = Promociones.findOne({_id: this.promocionId});
+            let fechaHoy = new Date();
+            if (promo && fechaHoy >= promo.fechaInicio
+                && fechaHoy <= promo.fechaFin) {
+                descuento = promo.descuento;
             }
         }
         return descuento;
     },
-    precioDescuento(){
+    precioDescuento() {
         let precio = 0;
         if (this.promocionId) {
             const promo = Promociones.findOne({_id: this.promocionId});
             if (promo) {
                 if (promo.precioLista) {
                     const factor = Factores.findOne({_id: this.factorId});
-                    if(factor){
+                    if (factor) {
                         precio = (this.costo * factor.factor1) * (1 - (promo.descuento / 100));
                     }
                 } else {

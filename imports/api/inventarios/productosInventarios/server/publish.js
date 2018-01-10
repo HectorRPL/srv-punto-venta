@@ -43,8 +43,9 @@ if (Meteor.isServer) {
                     {
                         find: function (productoInventario) {
                             if(productoInventario.promocionId){
+
                                 return Promociones.find({_id: productoInventario.promocionId},
-                                    {fields:{fechaCreacion:0, fechaInicio:0, fechaFin: 0}})
+                                    {fields:{fechaCreacion:0}});
                             }
 
                         }

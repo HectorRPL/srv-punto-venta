@@ -144,8 +144,6 @@ class EligeProductoInventarios {
 
         }
 
-        console.log(this.productosTiendas);
-
 
         const producto = {
             tiendaOrigenId: this.tiendaId,
@@ -154,12 +152,8 @@ class EligeProductoInventarios {
             productos: this.productosTiendas
         };
 
-
-        //var sequence = Promise.resolve();
-
         crearProductosPartida.callPromise(producto)
             .then(this.$bindToContext((result) => {
-                console.log(result);
                 this.modalInstance.close('agregado');
             }))
             .catch(this.$bindToContext((error) => {

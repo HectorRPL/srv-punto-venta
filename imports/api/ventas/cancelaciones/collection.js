@@ -8,7 +8,6 @@ import {Empleados} from '../../empleados/collection';
 class VentasCancelacionesCollection extends Mongo.Collection {
     insert(doc, callback) {
         const result = super.insert(doc, callback);
-        ventasCancelacionesHooks.afterInsertVentasCanclcns(doc);
         return result;
     }
 

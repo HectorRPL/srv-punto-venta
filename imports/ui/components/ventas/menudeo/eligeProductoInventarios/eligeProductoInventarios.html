@@ -92,7 +92,7 @@
                                     </label>
                                 </div>
                             </li>
-                            <li class="list-group-item" ng-if="eligeProductoInventarios.miInventario.precioDescuento() > 0">
+                            <li class="list-group-item" ng-if="eligeProductoInventarios.miInventario.descuentoPromo() > 0">
                                 <span class="pull-right label label-success">
                                     <h5>{{eligeProductoInventarios.miInventario.precioDescuento
                                             () * (1 + (eligeProductoInventarios.conf.valor/100)) | currency}}</h5>

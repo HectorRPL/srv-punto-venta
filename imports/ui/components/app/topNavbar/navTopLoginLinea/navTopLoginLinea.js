@@ -48,7 +48,11 @@ class NavTopLoginLinea {
     }
 
     salir() {
-        Meteor.logout();
+        Meteor.logout((err)=>{
+            if(!err){
+                this.$state.go('app.ventas.menudeo');
+            }
+        });
     }
 }
 
