@@ -53,7 +53,8 @@ Schema.ventasNotasCredito = new SimpleSchema({
     subTotal:           {type: Number, defaultValue: 0, decimal: true},
     numTotalProductos:  {type: Number, defaultValue: 0, optional: true},
     impresa:            {type: Boolean, optional: true, defaultValue: false},
-    notaFiscalId:       {type: Number, optional: true}
+    notaFiscalId: {type: Number, optional: true},
+    tipo: {type: String, optional: true}
 });
 
 VentasNotasCredito.attachSchema(Schema.ventasNotasCredito);
