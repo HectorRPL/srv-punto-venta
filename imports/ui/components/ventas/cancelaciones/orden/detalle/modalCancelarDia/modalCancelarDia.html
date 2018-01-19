@@ -20,7 +20,7 @@
         <div class="ibox-content">
             <h2 class="text-center">Cancelar Producto Dia</h2>
             <!--INPUT PARA INTRODUCIR LA CANTIDAD RECIBIDA-->
-            <form id="modalCancelarDiaFrmId" name="modalCancelarDiaFrm">
+            <form id="modalCancelarDiaFrmId" name="modalCancelarDiaFrm" ng-show="modalCancelarDia.cancelaciones.length === 0">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group"
@@ -123,7 +123,8 @@
                     </td>
                     <!--NOMBR DE QUIEN CANCELÓ-->
                     <td>
-                        {{cancelacion.empleado().nombreCompleto}}
+                        <span ng-show="cancelacion.empleadoAutorizaId">{{cancelacion.empleadoAutorizo().nombreCompleto}}</span>
+                        <span ng-hide="cancelacion.empleadoAutorizaId">Esperando Autoriazacion...</span>
                     </td>
                     <!--FECHA RECIBIMIENTO-->
                     <td>

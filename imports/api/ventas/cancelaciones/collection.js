@@ -8,6 +8,7 @@ import {Empleados} from '../../empleados/collection';
 class VentasCancelacionesCollection extends Mongo.Collection {
     insert(doc, callback) {
         const result = super.insert(doc, callback);
+        ventasCancelacionesHooks.afterInsertVentasCanclcns(doc);
         return result;
     }
 
@@ -40,7 +41,6 @@ Schema.ventasCancelaciones = new SimpleSchema({
     motivo:             {type: String},
     numProductos:       {type: Number},
     numDevoluciones:    {type: Number, defaultValue: 0},
-    devolucionId:       {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     fechaCreacion: {
         type: Date, denyUpdate: true, autoValue: function () {
             if (this.isInsert) {
