@@ -44,7 +44,7 @@ if (Meteor.isServer) {
                             return VentasProductosPartidas.find({partidaId: partida._id}, {
                                 fields: {
                                     partidaId: 1,
-                                    tiendaOrigenId: 1,
+                                    tiendaProveedorId: 1,
                                     proveedorId: 1,
                                     numProductos: 1
                                 }
