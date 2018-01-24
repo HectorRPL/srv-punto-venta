@@ -40,7 +40,8 @@
                                            max="5000"
                                            ng-model="eligeProductoInventarios.cantidadSolicitada">
                                 </span>
-                                <span class="label label-primary">{{eligeProductoInventarios.miInventario.cantidad}}</span>&nbsp;&nbsp;{{eligeProductoInventarios.miInventario.tienda().nombre}}
+                                <span class="label label-primary">{{eligeProductoInventarios.miInventario.cantidad}}</span>&nbsp;&nbsp;{{eligeProductoInventarios.miInventario.tienda
+                                    ().nombre}}
                             </li>
                         </ul>
                         <existencia-otras-tiendas
@@ -58,56 +59,13 @@
                         </ul>
                     </div>
                     <div class="col-sm-5">
-                        <h4>Precios{{eligeProductoInventarios.conf.valor}}</h4>
-                        <ul class="list-group clear-list m-t">
-                            <li class="list-group-item">
-                                <span class="pull-right label label-success">
-                                    <h5>
-                                        {{eligeProductoInventarios.miInventario.precioUno
-                                                () * (1 + (eligeProductoInventarios.conf.valor/100)) | currency}}
-                                    </h5>
-                                </span>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="precio" id="precioContadoId"
-                                               ng-value="eligeProductoInventarios.miInventario.precioUno()"
-                                               ng-model="eligeProductoInventarios.precioFinal" required>
-                                        Contado
-                                    </label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <span class="pull-right label label-success">
-                                    <h5>
-                                        {{eligeProductoInventarios.precioMeses = (eligeProductoInventarios.miInventario.precioUno() * eligeProductoInventarios.mesInteres.factor * (1 + (eligeProductoInventarios.conf.valor/100))) | currency}}
-                                    </h5>
-                                </span>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="precio" id="precioMesesId"
-                                               ng-value="eligeProductoInventarios.precioMeses"
-                                               ng-model="eligeProductoInventarios.precioFinal"
-                                               ng-click="eligeProductoInventarios.asignarMeses(eligeProductoInventarios.mesInteres._id)" required>
-                                        <elegir-meses-intereses mes="eligeProductoInventarios.mesInteres"></elegir-meses-intereses>
-                                    </label>
-                                </div>
-                            </li>
-                            <li class="list-group-item" ng-if="eligeProductoInventarios.miInventario.descuentoPromo() > 0">
-                                <span class="pull-right label label-success">
-                                    <h5>{{eligeProductoInventarios.miInventario.precioDescuento
-                                            () * (1 + (eligeProductoInventarios.conf.valor/100)) | currency}}</h5>
-                                </span>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="precio" id="precioId"
-                                                ng-value="eligeProductoInventarios.miInventario.precioDescuento()"
-                                                ng-model="eligeProductoInventarios.precioFinal"
-                                                ng-click="eligeProductoInventarios.asignarDescuento(eligeProductoInventarios.miInventario.descuentoPromo())" required>
-                                        Promocion {{eligeProductoInventarios.miInventario.descuentoPromo()}}% descuento
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
+                        <precios-producto
+                                costo="eligeProductoInventarios.miInventario.costo"
+                                precio="eligeProductoInventarios.miInventario.costo
+                                * eligeProductoInventarios.miInventario.factorUno()"
+                                promocion-id="eligeProductoInventarios.miInventario.promocionId"
+                                respuesta="eligeProductoInventarios.asignarPrecios({mesesSinInteres, descuento, precioFinal, iva, comision})">
+                        </precios-producto>
                     </div>
                 </div>
             </div>

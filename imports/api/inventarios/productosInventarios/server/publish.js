@@ -37,22 +37,21 @@ if (Meteor.isServer) {
                     {
                         find: function (productoInventario) {
                             return Factores.find({_id: productoInventario.factorId},
-                                {fields:{fechaCreacion:0, marcaVieja:0}})
+                                {fields: {fechaCreacion: 0, marcaVieja: 0}})
                         }
                     },
                     {
                         find: function (productoInventario) {
-                            if(productoInventario.promocionId){
-
+                            if (productoInventario.promocionId) {
                                 return Promociones.find({_id: productoInventario.promocionId},
-                                    {fields:{fechaCreacion:0}});
+                                    {fields: {fechaCreacion: 0}});
                             }
 
                         }
                     },
                     {
                         find: function (productoInventario) {
-                            return Tiendas.find({_id: productoInventario.tiendaId}, {fields:{nombre:1}});
+                            return Tiendas.find({_id: productoInventario.tiendaId}, {fields: {nombre: 1}});
                         }
                     }
                 ]

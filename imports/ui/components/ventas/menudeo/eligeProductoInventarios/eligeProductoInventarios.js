@@ -7,9 +7,8 @@ import {crearVentaOrden} from "../../../../../api/ventas/ordenes/methods";
 import {crearPartidaOrden, borrarPartidaOrden} from "../../../../../api/ventas/ordenes/partidas/methods";
 import {crearProductosPartida} from "../../../../../api/ventas/ordenes/partidas/productos/methods";
 import {ProductosInventarios} from "../../../../../api/inventarios/productosInventarios/collection";
-import {ConfiguracionesGlobales} from "../../../../../api/catalogos/configuracionesGlobales/collection";
 import {name as ExistenciaOtrasTiendas} from "./existenciaOtrasTiendas/existenciaOtrasTiendas";
-import {name as ElegirMesesIntereses} from "../../../comun/selects/elegirMesesIntereses/elegirMesesIntereses";
+import {name as PreciosProductos} from "./preciosProducto/preciosProducto";
 import {VentasOrdenes} from "../../../../../api/ventas/ordenes/collection";
 import {VentasPartidasOrdenes} from "../../../../../api/ventas/ordenes/partidas/collection";
 
@@ -23,12 +22,11 @@ class EligeProductoInventarios {
         this.ventaId = $stateParams.ventaId;
         this.productosTiendas = [];
         this.cantidadSolicitada = 0;
-        this.precioFinal = 0;
-        this.descuentoFinal = 0;
-        this.mesesSinInteres = 0;
+
+        this.precios = {};
+
 
         this.subscribe('ventasOrdenes.lista', () => [{ventaId: this.ventaId}]);
-        this.subscribe('configuracionesGlobales.lista', () => [{_id: 'iva'}]);
         this.subscribe('productosInventarios.lista', () => [
             {
                 productoId: this.getReactively('resolve.producto._id')
@@ -41,10 +39,7 @@ class EligeProductoInventarios {
             },
             ventasOrdenes() {
                 return VentasOrdenes.find({ventaId: this.ventaId});
-            },
-            conf() {
-                return ConfiguracionesGlobales.findOne({_id: "iva"})
-            },
+            }
         });
     }
 
@@ -53,7 +48,7 @@ class EligeProductoInventarios {
 
         const ventaOrden = VentasOrdenes.findOne({
             ventaId: this.ventaId,
-            mesesSinInteres: Number(this.mesesSinInteres)
+            mesesSinInteres: Number(this.precios.mesesSinInteres)
         });
 
         if (ventaOrden) {
@@ -67,7 +62,7 @@ class EligeProductoInventarios {
         const ordenVentaFinal = {
             ventaId: this.ventaId,
             tiendaId: this.tiendaId,
-            mesesSinInteres: Number(this.mesesSinInteres),
+            mesesSinInteres: Number(this.precios.mesesSinInteres),
             tipo: 'menudeo'
         };
         crearVentaOrden.callPromise(ordenVentaFinal)
@@ -101,12 +96,13 @@ class EligeProductoInventarios {
             ventaId: ventaId,
             ventaOrdenId: ventaOrdenId,
             productoId: this.resolve.producto._id,
-            factorId: this.miInventario.factorId,
-            precioBase: this.miInventario.precioUno(),
-            precioFinal: this.precioFinal,
-            descuento: this.descuentoFinal,
+            iva: this.precios.iva,
+            costoProducto: this.miInventario.costo,
+            factor: this.miInventario.factorUno(),
+            precioFinal: this.precios.precioFinal,
             numProductos: this.cantidadSolicitada + this.sumProductosTiendas,
-            iva: this.conf.valor
+            descuento: this.precios.descuento,
+            comision: this.precios.comision
         };
         this.crearPartida(nuevaPartida);
     }
@@ -165,13 +161,11 @@ class EligeProductoInventarios {
         this.modalInstance.dismiss('Cancelado');
     }
 
-    asignarDescuento(desc) {
-        this.descuentoFinal = desc;
+    asignarPrecios(valores) {
+        angular.copy(valores, this.precios);
+        console.log(this.precios);
     }
 
-    asignarMeses(meses) {
-        this.mesesSinInteres = meses;
-    }
 
 }
 
@@ -181,7 +175,7 @@ const name = 'eligeProductoInventarios';
 export default angular
     .module(name, [
         ExistenciaOtrasTiendas,
-        ElegirMesesIntereses
+        PreciosProductos
     ])
     .component(name, {
         template: template.default,

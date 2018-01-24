@@ -1,0 +1,89 @@
+<ng-form name="preciosFrm">
+    <h4>Precios:</h4>
+    <ul class="list-group clear-list m-t">
+        <li class="list-group-item">
+            <h5 class="text-navy pull-right">
+                <strong>
+                    {{preciosProducto.precio * (1 + (preciosProducto.conf.valor / 100)) | currency}}
+                </strong>
+            </h5>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="precio" id="precioContadoId"
+                           ng-value="preciosProducto.precio"
+                           ng-model="preciosProducto.precioFinal"
+                           ng-click="preciosProducto.precioContado()"
+                           required>
+                    Contado
+                </label>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <label>
+                <a ng-click="preciosProducto.mostrarPreciosMeses()">
+                    Precios a Meses
+                </a>
+            </label>
+            <div uib-collapse="preciosProducto.mostrarMeses">
+                <ul ng-repeat="mes in preciosProducto.meses">
+                    <h5 class="text-navy pull-right">
+                        <strong>
+                            {{preciosProducto.precio * mes.factor * (1 + (preciosProducto.conf.valor / 100))| currency}}
+                        </strong>
+                    </h5>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="precio" id="precioMeses{{$index}}Id"
+                                   ng-value="preciosProducto.precio * mes.factor"
+                                   ng-model="preciosProducto.precioFinal"
+                                   ng-click="preciosProducto.precioMeses(mes)"
+                                   required>
+                            {{mes.descripcion}} sin Intereses
+                        </label>
+                    </div>
+                </ul>
+            </div>
+        </li>
+
+        <li class="list-group-item"
+            ng-if="preciosProducto.fechaHoy >= preciosProducto.promocion.fechaInicio
+          && preciosProducto.fechaHoy < preciosProducto.promocion.fechaFin">
+            <label>
+                <a ng-click="preciosProducto.mostrarPreciosPromo()">
+                    Promociones
+                </a>
+            </label>
+        </li>
+        <div uib-collapse="preciosProducto.mostrarPromo">
+            <ul>
+                <h5 class="text-navy pull-right">
+                    <strong ng-hide="preciosProducto.promocion.precioLista">
+                        {{preciosProducto.precio * (1 - (preciosProducto.promocion.descuento / 100)) *
+                        (1 + (preciosProducto.conf.valor / 100)) | currency}}
+                    </strong>
+                    <strong ng-show="preciosProducto.promocion.precioLista">
+                        {{preciosProducto.costo * (1 - (preciosProducto.promocion.descuento / 100)) *
+                        (1 + (preciosProducto.conf.valor / 100)) | currency}}
+                    </strong>
+                </h5>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="precio" id="precioPromo1Id"
+                               ng-hide="preciosProducto.promocion.precioLista"
+                               ng-value="preciosProducto.precio * (1 - (preciosProducto.promocion.descuento / 100))"
+                               ng-model="preciosProducto.precioFinal"
+                               ng-click="preciosProducto.precioDescuento()"
+                               required>
+                        <input type="radio" name="precio" id="precioPromo2Id"
+                               ng-show="preciosProducto.promocion.precioLista"
+                               ng-value="preciosProducto.costo * (1 - (preciosProducto.promocion.descuento / 100))"
+                               ng-model="preciosProducto.precioFinal"
+                               ng-click="preciosProducto.precioDescuento()"
+                               required>
+                        Promocion {{preciosProducto.promocion.descuento}}% descuento
+                    </label>
+                </div>
+            </ul>
+        </div>
+    </ul>
+</ng-form>

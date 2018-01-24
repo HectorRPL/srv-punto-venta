@@ -37,14 +37,14 @@
             </td>
             <!--PRECIO-->
             <td class="text-center">
-                ${{partida.precioBase | number : 2}}
+                ${{partida.costoProducto * partida.factor * (1 + (partida.iva/100)) | number : 2}}
             </td>
             <!--DESCUENTO EN PORCENTAJE Y CANTIDAD-->
             <td class="text-center">
                 <a>
                    <span class="text-navy pull-right">
                       (- {{partida.descuento  | number : 0}}
-                       %)&nbsp;&nbsp;${{(partida.precioBase * partida.descuento/100) * (1 + (partida.iva/100)) | number : 2}}
+                       %)&nbsp;&nbsp;${{(partida.precioFinal * partida.descuento/100) * (1 + (partida.iva/100)) | number : 2}}
                    </span>
                 </a>
             </td>

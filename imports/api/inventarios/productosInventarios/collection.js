@@ -49,51 +49,17 @@ ProductosInventarios.helpers({
     tienda() {
         return Tiendas.findOne({_id: this.tiendaId});
     },
-    precioUno() {
-        let precio = 0.0;
-        const factor = Factores.findOne({_id: this.factorId});
+    factorUno() {
+        const factor = Factores.findOne({_id: this.factorId}, {fields: {factor1: 1}});
         if (factor) {
-            precio = this.costo * factor.factor1;
+            return factor.factor1;
         }
-        return precio;
     },
-    precioMeses() {
-        let precio = 0.0;
-        const factor = Factores.findOne({_id: this.factorId});
-        if (factor) {
-            precio = this.costo * factor.factor7;
+    promocion() {
+        const promo = Promociones.findOne({_id: this.promocionId});
+        if (promo) {
+            return promo;
         }
-        return precio;
-    },
-    //Validar fecha final del descuento.
-    descuentoPromo() {
-        let descuento = 0;
-        if (this.promocionId) {
-            const promo = Promociones.findOne({_id: this.promocionId});
-            let fechaHoy = new Date();
-            if (promo && fechaHoy >= promo.fechaInicio
-                && fechaHoy <= promo.fechaFin) {
-                descuento = promo.descuento;
-            }
-        }
-        return descuento;
-    },
-    precioDescuento() {
-        let precio = 0;
-        if (this.promocionId) {
-            const promo = Promociones.findOne({_id: this.promocionId});
-            if (promo) {
-                if (promo.precioLista) {
-                    const factor = Factores.findOne({_id: this.factorId});
-                    if (factor) {
-                        precio = (this.costo * factor.factor1) * (1 - (promo.descuento / 100));
-                    }
-                } else {
-                    precio = this.costo * (1 - (promo.descuento / 100));
-                }
-            }
-        }
-        return precio;
     }
 });
 

@@ -10,8 +10,8 @@ import {VentasPartidasOrdenes} from "./collection";
 import {_} from "meteor/underscore";
 
 const CAMPOS_VENTAS_PARTIDAS = [
-    'ventaId', 'ventaOrdenId', 'productoId', 'factorId',
-    'precioBase', 'precioFinal', 'descuento', 'numProductos', 'iva'
+    'ventaId', 'ventaOrdenId', 'productoId', 'iva', 'costoProducto',
+    'factor', 'precioFinal', 'numProductos', 'descuento', 'comision',
 ];
 
 export const crearPartidaOrden = new ValidatedMethod({
@@ -36,22 +36,15 @@ export const crearPartidaOrden = new ValidatedMethod({
             filter: false
         }),
     run({
-            ventaId, ventaOrdenId, productoId, factorId, precioBase,
-            precioFinal, descuento, numProductos, iva
+            ventaId, ventaOrdenId, productoId, iva, costoProducto,
+            factor, precioFinal, numProductos, descuento, comision
         }) {
 
         if (Meteor.isServer) {
 
             const partidaFinal = {
-                ventaId,
-                ventaOrdenId,
-                productoId,
-                factorId,
-                precioBase,
-                precioFinal,
-                descuento,
-                numProductos,
-                iva
+                ventaId, ventaOrdenId, productoId, iva, costoProducto,
+                factor, precioFinal, numProductos, descuento, comision
             };
 
             return VentasPartidasOrdenes.insert(partidaFinal, (err) => {
