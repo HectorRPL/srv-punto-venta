@@ -17,15 +17,11 @@ class ProductosEntregar {
         this.$state = $state;
 
         this.subscribe('ventasPartidasOrdenes.lista', ()=> [{ventaId: this.ventaId}, {}]);
-        this.subscribe('ventas.count.totalProductos', () => [{ventaId: this.ventaId}]);
         this.subscribe('ventas.count.totalEntregas', () => [{ventaId: this.ventaId}]);
 
         this.helpers({
             partidasOrdenes(){
-                return VentasPartidasOrdenes.find();
-            },
-            totalProductos() {
-                return Counts.get('ventaNumTotalProductos');
+                return VentasPartidasOrdenes.find({ventaId: this.ventaId});
             },
             totalEntregas() {
                 return Counts.get('ventaNumTotalEntregas');

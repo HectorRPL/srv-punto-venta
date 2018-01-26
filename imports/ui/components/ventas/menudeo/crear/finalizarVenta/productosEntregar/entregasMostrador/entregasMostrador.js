@@ -3,8 +3,9 @@
  */
 import template from './entregasMostrador.html';
 import {Session} from "meteor/session";
-import {crearVentEntrg, actualiarNumProductos} from "../../../../../../../../api/ventas/entregas/methods";
+import {crearVentEntrg, actualiarEntrgNumProdts} from "../../../../../../../../api/ventas/entregas/methods";
 import {buscarCantidaAlmacen} from '../../../../../../../../api/ventas/ordenes/partidas/productos/busquedas';
+import {VentasEntregas} from "../../../../../../../../api/ventas/entregas/collection";
 
 class EntregasMostrador {
     constructor($scope, $reactive, $stateParams) {
@@ -12,13 +13,16 @@ class EntregasMostrador {
         $reactive(this).attach($scope);
         this.tiendaId = Session.get('estacionTrabajoId');
         this.ventaId = $stateParams.ventaId;
-        this.subscribe('ventasEntregas.count', ()=> [{
+        this.subscribe('ventasEntregas.lista', () => [{
             partidaId: this.getReactively('partida._id')
         }]);
 
         this.helpers({
-            numProdctsEnt(){
-                return Counts.get(`numPartidasEntregas.${this.getReactively('partida._id')}`);
+            entrega() {
+                return VentasEntregas.findOne({
+                    partidaId: this.getReactively('partida._id'),
+                    tipo: 'mostrador'
+                });
             }
         });
 
@@ -29,8 +33,8 @@ class EntregasMostrador {
             ventaOrdenId: partida.ventaOrdenId,
             tiendaId: this.tiendaId,
             partidaId: partida._id,
-            entrgsMos: partida.prodctsEntregar,
-            entrgsDom: partida.numProductos - partida.prodctsEntregar
+            numProductos: this.numProductos,
+            tipo: 'mostrador'
         };
 
         crearVentEntrg.callPromise(entrega)
@@ -43,14 +47,13 @@ class EntregasMostrador {
             }));
     }
 
-    actualizar(partida){
+    actualizar(partida) {
         const entrega = {
-            partidaId: partida._id,
-            entrgsMos: partida.prodctsEntregar,
-            entrgsDom: partida.numProductos - partida.prodctsEntregar
+            _id: this.entrega._id,
+            numProductos: this.numProductos,
         };
 
-        actualiarNumProductos.callPromise(entrega)
+        actualiarEntrgNumProdts.callPromise(entrega)
             .then(this.$bindToContext((result) => {
                 this.tipoMsj = 'success';
             }))
@@ -66,7 +69,7 @@ class EntregasMostrador {
 const name = 'entregasMostrador';
 
 export default angular
-    .module(name, [ ])
+    .module(name, [])
     .component(name, {
         template: template.default,
         controllerAs: name,

@@ -11,11 +11,12 @@ import {VentasEntregas} from './collection';
 import {_} from "meteor/underscore";
 
 const CAMPO_ID = ['_id'];
-const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'numProductos', 'usuarioSolicitaId', 'tipo'];
+const CAMPOS_VENTAS_ENTREGAS = ['partidaId', 'tiendaId', 'ventaOrdenId',
+    'numProductos', 'tipo'];
 
 
-export const actualizarVentEntrgMostrdr = new ValidatedMethod({
-    name: 'ventasEntregas.actualizarVentEntrgMostrdr',
+export const actualizarEntrgFecha = new ValidatedMethod({
+    name: 'ventasEntregas.actualizarEntrgFecha',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -24,7 +25,7 @@ export const actualizarVentEntrgMostrdr = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.actualizarEntregMostrdr',
+        name: 'ventasEntregas.actualizarEntrgFecha',
         message: () => {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
@@ -70,53 +71,33 @@ export const crearVentEntrg = new ValidatedMethod({
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
-    validate: new SimpleSchema({
-        ventaOrdenId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        tiendaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        entrgsMos: {type: Number},
-        entrgsDom: {type: Number}
-    }).validator(),
-    run({ventaOrdenId, tiendaId, partidaId, entrgsMos, entrgsDom}) {
+    validate: VentasEntregas.simpleSchema().pick(CAMPOS_VENTAS_ENTREGAS).validator({
+        clean: true,
+        filter: false
+    }),
+    run({partidaId, tiendaId, ventaOrdenId, numProductos, tipo}) {
         if (Meteor.isServer) {
             const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
 
             VentasEntregas.insert({
-                ventaOrdenId: ventaOrdenId,
-                tiendaId: tiendaId,
                 partidaId: partidaId,
-                tipo: 'mostrador',
-                numProductos: entrgsMos,
+                tiendaId: tiendaId,
+                ventaOrdenId: ventaOrdenId,
+                tipo: tipo,
+                numProductos: numProductos,
                 empleadoSolicitaId: empleado._id
             }, (err) => {
                 if (err) {
                     throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
                 }
             });
-
-
-            VentasEntregas.insert({
-                ventaOrdenId: ventaOrdenId,
-                tiendaId: tiendaId,
-                partidaId: partidaId,
-                tipo: 'domicilio',
-                numProductos: entrgsDom,
-                empleadoSolicitaId: empleado._id
-            }, (err) => {
-                if (err) {
-                    console.log(err);
-                    throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
-                }
-            });
-
-
         }
 
     }
 });
 
-export const actualiarNumProductos = new ValidatedMethod({
-    name: 'ventasEntregas.actualiarNumProductos',
+export const actualiarEntrgNumProdts = new ValidatedMethod({
+    name: 'ventasEntregas.actualiarEntrgNumProdts',
     mixins: [PermissionsMixin, CallPromiseMixin],
     allow: [
         {
@@ -125,26 +106,23 @@ export const actualiarNumProductos = new ValidatedMethod({
         }
     ],
     permissionsError: {
-        name: 'ventasEntregas.actualiarNumProductos',
+        name: 'ventasEntregas.actualiarEntrgNumProdts',
         message: () => {
             return 'Este usuario no cuenta con los permisos necesarios.';
         }
     },
     validate: new SimpleSchema({
-        partidaId: {type: String, regEx: SimpleSchema.RegEx.Id},
-        entrgsMos: {type: Number},
-        entrgsDom: {type: Number}
+        _id: {type: String, regEx: SimpleSchema.RegEx.Id},
+        numProductos: {type: Number}
     }).validator(),
-    run({partidaId, entrgsMos, entrgsDom}) {
+    run({_id, numProductos}) {
         if (Meteor.isServer) {
-            const empleado = Empleados.findOne({propietarioId: Meteor.userId()});
 
             VentasEntregas.update({
-                partidaId: partidaId,
-                tipo: 'mostrador'
+                _id: _id
             }, {
                 $set: {
-                    numProductos: entrgsMos
+                    numProductos: numProductos
                 }
             }, (err) => {
                 if (err) {
@@ -153,18 +131,6 @@ export const actualiarNumProductos = new ValidatedMethod({
             });
 
 
-            VentasEntregas.update({
-                partidaId: partidaId,
-                tipo: 'domicilio'
-            }, {
-                $set: {
-                    numProductos: entrgsDom
-                }
-            }, (err) => {
-                if (err) {
-                    throw new Meteor.Error(500, 'Error al guardar la entrega en mostrador', 'ventas-entrega-no-insertar');
-                }
-            });
 
 
         }
@@ -174,8 +140,8 @@ export const actualiarNumProductos = new ValidatedMethod({
 
 const ENTREGAS_VENTAS_METHODS = _.pluck(
     [
-        actualizarVentEntrgMostrdr,
-        actualiarNumProductos,
+        actualizarEntrgFecha,
+        actualiarEntrgNumProdts,
         crearVentEntrg
     ], 'name');
 if (Meteor.isServer) {

@@ -47,10 +47,10 @@ Schema.ventasEntregas = new SimpleSchema({
     fechaEntrega: {type: Date, optional: true},
     numProductos: {type: Number},
     empleadoEntregaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
-    empleadoSolicitaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+    empleadoCreaId: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
     observaciones: {type: String, optional: true},
     numProductosRechzds: {type: Number, optional: true},
-    tipo: {type: String, defaultValue: 'domicilio', optional: true}
+    tipo: {type: String, defaultValue: 'domicilio'}
 });
 
 VentasEntregas.attachSchema(Schema.ventasEntregas);

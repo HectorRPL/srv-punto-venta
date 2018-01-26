@@ -26,19 +26,6 @@ if (Meteor.isServer) {
         }
     });
 
-    Meteor.publish('ventas.count.totalProductos', function (filter) {
-
-        if (Object.keys(filter).length === 0 && filter.constructor === Object) {
-            this.ready();
-        } else {
-            const selector = filter;
-
-            Counts.publish(this, 'ventaNumTotalProductos', VentasOrdenes.find(selector),
-                {countFromField: 'numTotalProductos'}, {noReady: false}
-            );
-        }
-    });
-
     Meteor.publish('ventas.count.totalEntregas', function (filter) {
 
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
@@ -48,7 +35,7 @@ if (Meteor.isServer) {
 
             const selector = {ventaOrdenId: {$in: _.pluck(ventasOrdenes, '_id')}};
             Counts.publish(this, 'ventaNumTotalEntregas', VentasEntregas.find(selector),
-                {countFromField: 'numProductos'}, {noReady: false}
+                {noReady: false}
             );
         }
     });

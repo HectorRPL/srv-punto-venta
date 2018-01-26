@@ -53,7 +53,7 @@
                     <div class="col-sm-2">
                         <div class="col-sm-2">
                             <button class="btn btn-default pull-left"
-                                    ng-hide="productosEntregar.totalEntregas === productosEntregar.totalProductos"
+                                    ng-hide="productosEntregar.totalEntregas === productosEntregar.partidasOrdenes.length"
                                     ng-click="productosEntregar.cancelar()">
                                 <i class="fa fa-trash"></i>
                                 Cancelar
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-sm-2">
                         <button class="btn btn-primary pull-right"
-                                ng-hide="productosEntregar.totalEntregas < productosEntregar.totalProductos"
+                                ng-hide="productosEntregar.totalEntregas < productosEntregar.partidasOrdenes.length"
                                 ng-click="productosEntregar.finalizarVenta()">
                             <i class="fa fa-print"></i>
                             Tickets

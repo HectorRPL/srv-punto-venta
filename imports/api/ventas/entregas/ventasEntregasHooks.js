@@ -6,40 +6,30 @@ import {VentasEntregas} from './collection';
 import {VentasPartidasOrdenes} from '../ordenes/partidas/collection';
 
 const ventasEntregasHooks = {
-    _updatePartidasEntrega(doc) {
-        const selectorEntregas = [
-            {$match: {partidaId: doc.partidaId}},
-            {
-                $group: {
-                    _id: '$partidaId',
-                    sumEntregados: {$sum: '$numProductos'}
-                }
+    _updateVentaOrden(entrega) {
+        VentasPartidasOrdenes.update({_id: entrega.partidaId}, {
+            $inc: {
+                numEntregados: entrega.numProductos
             }
-        ];
-        const sumaProductos = Meteor.wrapAsync(VentasEntregas.rawCollection().aggregate,
-            VentasEntregas.rawCollection());
-        try {
+        });
 
-            const totalEntregados = sumaProductos(selectorEntregas);
-
-            if (totalEntregados.length > 0) {
-
-                VentasPartidasOrdenes.update({_id: doc.partidaId},
-                    {
-                        $set: {
-                            numEntregados: totalEntregados[0].sumEntregados
-                        }
-                    });
+        VentasOrdenes.update({_id: entrega.ventaOrdenId}, {
+            $inc: {
+                numTotalEntregados: entrega.numProductos
             }
-        } catch (e) {
-            console.log(e);
-        }
+        });
     },
     afterUpdateVentsEntrgs(selector, modifier, options) {
         if (_.has(modifier.$set, 'fechaEntrega')) {
-            VentasEntregas.find(selector, {fields: {partidaId: 1}}).forEach((entrega) => {
-                this._updatePartidasEntrega(doc);
-            });
+            VentasEntregas.find(selector, {
+                fields: {
+                    partidaId: 1, ventaOrdenId: 1,
+                    numProductos: 1
+                }
+            })
+                .forEach((entrega) => {
+                    this._updateVentaOrden(entrega);
+                });
 
         }
     }

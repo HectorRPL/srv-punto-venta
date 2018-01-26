@@ -10,7 +10,8 @@ if (Meteor.isServer) {
         if (Object.keys(filter).length === 0 && filter.constructor === Object) {
             this.ready();
         } else {
-            return VentasEntregas.find(filter, {fields: {fechaCreacion: 0}});
+            const selector = filter;
+            return VentasEntregas.find(selector, {fields: {fechaCreacion: 0}});
         }
     });
 
@@ -23,7 +24,7 @@ if (Meteor.isServer) {
 
             Counts.publish(this, `numPartidasEntregas.${filter.partidaId}`,
                 VentasEntregas.find(selector),
-                {countFromField:'numProductos'},
+                {countFromField: 'numProductos'},
                 {noReady: false}
             );
         }

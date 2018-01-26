@@ -7,8 +7,9 @@
                name="numProductos{{entregasMostrador.index}}" type="number"
                class="form-control input-xs" placeholder="Cantidad Productos"
                aria-describedby="sizing-addon1" required min="0"
-               cantidad-invalida ng-model="entregasMostrador.partida.prodctsEntregar">
-        <div ng-messages="entregasFrm['numProductos'+entregasMostrador.index].$dirty
+               cantidad-invalida
+               ng-model="entregasMostrador.numProductos">
+        <div ng-messages="entregasFrm['numProductos'+ entregasMostrador.index].$dirty
                                     && entregasFrm['numProductos'+entregasMostrador.index].$error"
              role="alert">
             <div style="color: red" ng-message="required">requerido</div>
@@ -18,13 +19,13 @@
     <!-- botones -->
     <button type="button" class="btn btn-sm btn-primary"
             ng-disabled="entregasFrm.$invalid"
-            ng-hide="entregasMostrador.partida.numProductos === entregasMostrador.numProdctsEnt"
+            ng-hide="entregasMostrador.entrega._id"
             ng-click="entregasMostrador.guardar(entregasMostrador.partida)">
         Guardar
     </button>
     <button class="btn btn-sm btn-primary" type="button"
             ng-disabled="entregasFrm.$invalid"
-            ng-show="entregasMostrador.partida.numProductos === entregasMostrador.numProdctsEnt"
+            ng-show="entregasMostrador.entrega._id"
             ng-click="entregasMostrador.actualizar(entregasMostrador.partida)">
         Actualizar
     </button>
